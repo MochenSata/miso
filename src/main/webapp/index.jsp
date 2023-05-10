@@ -42,7 +42,7 @@
 
             <div class="layui-col-xs1">
                 <div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-primary demo1 personcenter">
+                    <button type="button" class="layui-btn layui-btn-primary demo1 personcenter">
                         <div href="" class="personal-btn">
                             <div class="headshort"><img src="img/customer/headshort.svg" alt=""></div>
                             <div class="personal">
