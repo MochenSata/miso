@@ -1,0 +1,598 @@
+/*----------------------------nav--------------------------------------------------*/
+.main{
+    transform: scale(1,1);
+
+-webkit-transform: scale(0.9,0.9); /* Safari and Chrome */
+}
+.layui-container{
+    width: 100%;
+}
+.foundation{
+    /* background-color: skyblue; */
+    height:80px;
+    line-height: 80px;
+    border-bottom: 1px solid #DDDDDD;
+    width: 100%;
+}
+.nav{
+
+    width: 90%;
+    margin: 0 auto;
+    min-width: 1440px;
+}
+.nav div{
+    border-right: 1px solid white;
+}
+.nav .logopic{
+    float: left;
+    height: 60px;
+    margin-top: 10px;
+
+}
+.nav .slogn{
+    display: block;
+    float: left;
+    width: 160px;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 5px;
+    margin-top: 15px;
+    font-weight: 1000;
+    color: #ff385c;
+    font-size: 20px;
+    text-align: center;
+    font-family: YouYuan,system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    
+
+}
+.nav .search-area{
+    width: 325px;
+    height: 50px;
+    border: 1px solid #DDDDDD;
+    margin: 0 auto;
+    margin-top: 15px;
+    border-radius: 25px;
+    box-shadow: 0 1px 10px rgb(0 0 0 / 40%);
+}
+
+.nav .search-area input[type="text"]{
+    display: block;
+    float: left;
+    height: 40px;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding-left: 15px;
+    width: 250px;
+    border-radius: 25px;
+    border: none;
+}
+
+.nav .search-area input[type="button"]{
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 40px;
+    width: 40px;
+    border-radius: 25px;
+    float: right;
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+
+}
+.nav .search-area input[type="button"]:hover{
+       background-color:#E00B41;
+
+}
+.nav .login{
+    width: 60px;
+    height: 40px;
+    margin-top: 20px;
+
+    display: block;
+    float: right;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+
+    border-radius: 20px;
+}
+.nav .signup{
+    width: 60px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: 30px;
+    display: block;
+
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+
+    border-radius: 20px;
+}
+.nav .login:hover{
+    background-color: #DDDDDD
+}
+.nav .signup:hover{
+    background-color: #DDDDDD
+}
+.nav .personal-btn{
+    margin-top: 20px;
+    display: block;
+    height: 40px;
+    width: 120px;
+
+    border-radius: 40px;
+}
+.nav .personal{
+    width:60px;
+    height: 40px;
+
+
+    display: block;
+    float: left;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+
+    border-radius: 20px;
+}
+.nav .personal-btn:hover{
+    background-color: #DDDDDD
+}
+.nav .headshort{
+    float: left;
+
+    background-color: #717171;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    margin-right: 0px;
+}
+
+/* ========================标题===================================== */
+.main{
+    margin: 0 auto;
+    width: 80%;
+}
+.biaoti{
+    width: 100%;
+    height: 60px;
+    /* margin-top: 20px; */
+    
+    /* border-bottom: 1px solid red; */
+
+
+}
+
+
+
+.biaoti .wenzi{
+
+    height:10px;
+    margin-left: 200px;
+    
+
+}
+
+.biaoti .wenzi .ziti{
+    margin: 0;
+    padding: 0;
+    font-weight: 600 !important;
+}
+/* ========================标题结束===================================== */
+
+.left{
+    width: 50%;
+    height: 1000px;
+    
+    font-size: 18px;
+    /* background-color: #E00B41; */
+}
+
+.number{
+    border-top:1px solid #ddd ;
+    border-bottom:1px solid #ddd ;
+    height: 50px;
+    line-height: 50px;
+    
+}
+.number_n{
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.order_number{
+    margin-left: 10px;
+}
+
+.order_time{
+    height: 72px;
+}
+
+.in_type{
+    width: 100%;
+    font-weight: 800;
+    float: left;
+}
+
+.in_date{
+    width: 100%;
+    float: left;
+}
+
+
+.in_time{
+    width: 100%;
+    float: left;
+}
+
+.in{
+    text-align: center;
+    width: 50%;
+    float: left;
+    border-right: 1px solid #ddd;
+}
+
+.out{
+    text-align: center;
+    width: 49%;
+    float: right;
+}
+
+.house{
+    border-top: 1px solid#ddd;
+    width: 100%;
+    line-height: 40px;
+    /* background-color: antiquewhite; */
+    height: 40px;
+    float: left;
+    border-bottom: 1px solid#ddd;
+}
+
+.house_n{
+    height: 40%;
+    float: left;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.house_name{
+    height: 50%;
+    font-size: 20px;
+    margin-left: 10px;
+    color: #717171;
+    margin-top: 20px;
+    
+}
+
+.order_detail{
+    width:100%;
+    height: 80px;
+    float: left;
+    border-bottom: 1px solid#ddd;
+}
+
+.detail_n{
+    width: 100%;
+    height: 30%;
+    float: left;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+
+
+.live_in{
+    height: 70%;
+    border-right: 1px solid#ddd;
+    width: 50%;
+    float: left;
+}
+
+.check_in{
+    width: 100%;
+    font-weight: 800;
+    float: left;
+    text-align: center;
+}
+
+.live_name{
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+
+.house_num{
+    width: 49%;
+    float: left;
+    
+}
+
+.house_room{
+    width: 100%;
+    font-weight: 800;
+    float: left;
+    text-align: center;
+}
+
+.house_room_num{
+    width: 100%;
+    float: left;
+    text-align: center;
+}
+
+.cancel{
+    width: 100%;
+    height: 200px;
+    float: left;
+    border-bottom: 1px solid#ddd;
+}
+
+.cancel_n{
+    width: 100%;
+    height: 15%;
+    float: left;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.cancel_detail{
+    height: 85%;
+    float: left;
+    font-weight: 600;
+}
+
+
+.live{
+    width: 100%;
+    height: 120px;
+    float: left;
+    border-bottom: 1px solid#ddd;
+}
+
+.live_n{
+    width: 100%;
+    height: 15%;
+    float: left;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.live_detail{
+    height: 85%;
+    float: left;
+    margin-top: 5px;
+}
+
+.pay{
+    width: 100%;
+    height: 100px;
+    float: left;
+}
+
+.pay_n{
+    width: 100%;
+    height: 30%;
+    float: left;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.pay_all{
+    width: 100%;
+    height: 30%;
+    float: left;
+    font-weight: 600;
+}
+
+.pay_price{
+    width: 100%;
+    height: 40%;
+    float: left;
+}
+
+
+.bigright{
+    width: 25%;
+    height: 200px;
+    float:right ;
+    margin-right:350px; 
+}
+
+.right{
+    height: 500px;
+    width: 450px;
+    border: 1px solid #EBEBEB;
+    border-radius: 12px ; 
+    /* background-color: brown; */
+    /* position:sticky !important;  */
+    top: var(--navigation-bar-offset, 20px) !important;
+    z-index: 1 !important;
+    right: 20px;
+    margin-top: -1000px;
+    margin-left: 140px;
+}
+
+.right .r1{
+    display: block;
+    width: 405px;
+    height: 130px;
+    /* border: 1px solid red; */
+    margin-left: 40px;
+    margin-top: 15px;
+}
+
+.right .r1 .r2{
+    width: 125px;
+    height: 130px;
+    /* border: 1px solid darkturquoise; */
+}
+
+.right .r1 .r2 .tupian{
+    width: 125px;
+    height: 130px;
+}
+
+.right .r1 .r3 .biaoyu{
+    font-size: 16px;
+    color: rgb(72, 72, 72);
+    
+}
+
+.right .r1 .r3{
+    width: 270px;
+    height: 106px;
+    /* border: 1px solid darkturquoise; */
+    float: right;
+    margin-top: -130px;
+    
+}
+.right .r1 .pingfen{
+    width: 20px;
+    height: 20px;
+    margin-left: 135px;
+    /* border: 1px solid red; */
+    margin-top: -32px;
+    
+}
+
+.right .r1 .pf{
+    float: right;
+    margin-top: -30px;
+    margin-right: 225px;
+}
+
+.right .r4{
+    width: 405px;
+    height: 70px;
+    border-top: 1px solid #EBEBEB;
+    margin-left: 40px;
+    margin-top: 15px;
+}
+.right .r4 .r4_slogn{
+    display: block;
+    float: left;
+    /* width: 160px; */
+    /* height: 60px; */
+    line-height: 60px;
+    margin-left: 15px;
+    margin-top: 5px;
+    font-weight: 1000;
+    color: #ff385c;
+    font-size: 20px;
+    text-align: center;
+    font-family: YouYuan,system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.right .r4 .r4kuang{
+    width: 200px;
+    height: 50px;
+    /* border: 1px solid red; */
+    float: right;
+    margin-right: 40px;
+    margin-top: 20px;
+    
+}
+
+.right .r4 .r4_wenzi{
+    font-size: 18px;
+    color: #717171
+    
+    
+}
+
+
+.right .r5{
+    width: 405px;
+    height: 75px;
+    margin-left: 40px;
+    border-top: 1px solid #EBEBEB;
+    margin-top: 15px;
+}
+
+.right .r5 .r5ziti{
+    margin: 0;
+    padding: 0;
+    margin-top: 20px;
+    font-weight: 600 !important;
+}
+
+.right .r6{
+    width: 405px;
+    height: 130px;
+    /* border: 1px solid chartreuse; */
+    margin-left: 40px;
+    margin-top: 15px;
+}
+
+.right .r6 .r7{
+    width: 405px;
+    height: 30px;
+    /* border: 1px solid green; */
+    margin-top: 5px;
+}
+
+.right .r6 .r8{
+    width: 405px;
+    height: 30px;
+    /* border: 1px solid chocolate; */
+    margin-top: 5px;
+}
+
+.right .r6 .r9{
+    width: 405px;
+    height: 45px;
+     border-top: 1px solid #EBEBEB; 
+    margin-top: 5px;
+    padding-top: 5px;
+}
+
+.right .r6 .r7 .fangfeidanjia{
+    font-size: 16px;
+    color: rgb(72, 72, 72);
+
+}
+
+.right .r6 .r7 .tianshu{
+    font-size: 16px;
+    color: rgb(72, 72, 72);
+}
+
+.right .r6 .r7 .zongji{
+    float: right;
+    margin-right: 20px;
+    font-size: 16px;
+    color: rgb(72, 72, 72);
+}
+
+.right .r6 .r8 .qingjiefei{
+    font-size: 16px;
+    color: rgb(72, 72, 72);
+}
+.right .r6 .r8 .qingjie{
+    float: right;
+    margin-right: 20px;
+    font-size: 16px;
+    color: rgb(72, 72, 72);
+}
+
+.right .r6 .r9 .zongjia{
+    font-size: 16px;
+    color: #222222;
+    font-weight: 600 !important;
+}
+
+.right .r6 .r9 .zongjiaqian{
+    float: right;
+    margin-right: 20px;
+    font-size: 16px;
+    color: #222222;
+    font-weight: 600 !important;
+}

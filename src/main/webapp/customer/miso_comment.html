@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miso评价</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../css/customer/miso_comment.css">
+    <script src="../js/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <!--导航栏nav-->
+    <div class="foundation">
+      <div class="layui-container">
+        <div class="layui-row nav">
+          <div class="layui-col-xs2 logo">
+            <img src="../img/logo.png"  class="logopic">
+            <span class="slogn">让旅行更有味道</span>
+          </div>
+          <div class="layui-col-xs7">
+            <div class="search-area">
+              <form action="">
+                <input type="text" placeholder="请输入目的地">
+                <input type="button" value="搜索">
+              </form>
+            </div>
+          </div>
+          <div class="layui-col-xs1"><a href="../customer/login.html" ><span class="login">登录</span></a></div>
+          <div class="layui-col-xs1"><a href="../customer/signup.html" ><span class="signup">注册</span></a></div>
+            
+          <div class="layui-col-xs1">
+            <div class="layui-btn-container">
+              <button class="layui-btn layui-btn-primary demo1 personcenter">
+                <div href="" class="personal-btn">
+                  <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
+                  <div class="personal">
+                  <img src="../img/customer/hengxian.svg" class="hengxian">
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>                      
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="head">
+        <div class="container">
+          <!-- 内容 -->
+          <div class="left">
+            <!-- 左边的房屋信息 -->
+            <img class="houseimg" src="../img/house/chuanwu/chuanwu1/main.jpg">
+            <div class="house-detail">
+              <div class="line1">
+                <span class="homekind">类型:海景房</span>                      
+                <img src="../img/index/pingfen.png" class="pingfenico">
+                <span class="score">4.5</span>                      
+              </div>
+              <div class="house-name">
+                <span>苏州湾特色海景房</span>
+              </div>
+              <div class="house-info">
+                <span>促销！令人惊叹的6卧室，带健身房、按摩室和瑜伽厅</span>
+              </div>
+              <div class="line3">
+                <div class="house-price">
+                  <b>￥</b>
+                  <span class="price">2599</span><span class="houzhui">/晚</span>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+
+          <div class="right">
+            <!-- 右边评论的星级和内容 -->
+            <div class="comment-titleline">
+              <span class="comment-title">期待您的评价</span>        
+            </div>
+            <form action="miso_message.html">
+                <div class="comment-score">
+                  <span class="score-words">您的评分:</span>
+                  <div><div class="score-sc"></div></div> 
+
+                </div>
+
+                <div class="comment-container">
+                  <div class="comment-ipnut">
+                    <!-- <span class="">您的评论内容</span> -->
+                    <div >
+                      <textarea class="textarea" placeholder="写下您的评价吧"></textarea>
+                    </div>        
+                  </div>
+
+                  <div class="comment-submit">
+                    <!-- <span class="">提交区域</span>    -->
+                    <input type="submit" class="submit" value="提交">                 
+                  </div>
+                </div>
+            </form>
+          </div>              
+        </div> 
+      </div>
+    </div>
+</body>
+<script src="../layui/layui.js"></script>
+<script>
+  layui.use(['rate'], function(){
+    var rate = layui.rate;
+    rate.render({
+      elem: '.score-sc'
+      ,value: 3.5   //初始值
+      ,half: true   //开启半星
+      ,text: true   //开启文本
+      ,theme: '#ff385c'
+    })
+  });
+
+  
+</script>
+</html>

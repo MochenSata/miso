@@ -1,0 +1,99 @@
+.coupon-title{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.coupon-header{
+
+    height: 40px;
+    width: 90%;
+    margin: 0 auto;
+
+}
+.coupon-header .headl{
+    display: block;
+    float: left;
+    height: 100%;
+    width: 20%;
+
+}
+.coupon-header .coubtn{
+    margin-left: 10px;
+    background-color:#ff385c;
+}
+.layui-btn{
+    background-color:#ff385c;
+}
+.coupon-header .headr{
+    display: block;
+    float: right;
+    height: 100%;
+    width: 50%;
+
+}
+.coupon-header .couinput{
+    margin-left: 10px;
+    display: block;
+    float: left;
+    width: 150px;
+}
+.coulist{
+    margin: 0 auto;
+}
+.list-th{
+    margin-top: 20px;
+    display: block;
+    float: left;
+    text-align: center;
+    line-height: 40px;
+    width: 180px;
+    height: 40px;
+    border-bottom:  1px solid #717171;
+}
+.coulist td{
+    display: block;
+    float: left;
+    text-align: center;
+    line-height: 60px;
+    width: 180px;
+    height: 60px;
+    border-bottom:  1px solid #EBEBEB;
+}
+/*---------------------------page-----------------------------*/
+.pagearea{
+   display: block;
+   float: right;
+    width: 200px;
+    height: 40px;
+    margin-right: 80px;
+   margin-top: 20px;
+}
+.pagearea .pagebtn{
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    width: 60px;
+    border: 1px solid #DDDDDD;
+    text-align: center;
+    border-radius: 10px;
+    color: #717171;
+    font-size: 18px;
+}
+.pagearea .pagebtn:hover{
+    border: 1px solid #717171;
+}
+.pagearea .currentpage{
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    width: 50px;
+    border-radius: 10px;
+    border: 1px solid #DDDDDD;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}

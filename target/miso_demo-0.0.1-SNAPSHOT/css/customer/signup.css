@@ -1,0 +1,164 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.web{
+    width: 100%;
+    height:790px;
+    background: url("../img/bgc.png");
+}
+
+
+.clearfix{
+    display: block;
+    width: 730px;
+    height: 434px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgb(0 0 0 / 40%);
+    float: left;
+    margin-left: 440px;
+    margin-top: 150px;
+}
+.clearfix .left{
+    display: block;
+    float: left;
+    height: 434px;
+    width: 60%;
+
+}
+
+
+
+.clearfix .signup-title{
+    width: 430px;
+    height: 100px;
+    float: left;
+    display: block;
+
+
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    color:rgb(72, 72, 72);
+    line-height: 160px;
+
+    position: relative;
+    cursor: pointer;
+}
+.clearfix .signup-title:hover{
+    color:#ff385c;
+}
+
+.clearfix .msg{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: block;
+    float: left;
+    width: 100%;
+    text-align: center;
+    color: #E00B41;
+    height: 20px;
+
+
+}
+
+.clearfix .left  input{
+    margin-bottom: 5px;
+    margin-left: 55px;
+    width: 300px;
+    height: 40px;
+    padding-left: 10px;
+    border-radius: 15px;
+    background-color: #f6f7f9;
+    border: 1px solid #EBEBEB;
+    outline: none;
+}
+.clearfix #verification{
+    width: 170px;
+    padding-left: 10px;
+}
+.clearfix .send-verification{
+    background: #ff385c;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 0;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    color: #fff;
+  
+}
+.clearfix .send-verification:hover{
+    background-color: #E00B41; 
+}
+
+
+.clearfix .left #signup{
+    background: #ff385c;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 500;
+    border: 0;
+    width: 320px;
+    height: 42px;
+    margin-top: 10px;
+    margin-left: 54px;
+    color: #fff;
+    cursor: pointer;
+}
+.clearfix .left #signup:hover{
+    background-color: #E00B41; 
+}
+
+
+.tip{
+    display: block;
+    float: left;
+    width: 300px;
+    padding-left: 10px;
+    height: 15px;
+    color: #ff385c;
+    font-size: 12px;
+    margin-left: 55px;
+    line-height: 15px;
+}
+
+
+.clearfix .right{
+    display: block;
+    float: left;
+    height: 434px;
+    width: 40%;
+    background-color: #ff385c;
+    border-top-right-radius:  10px;  
+    border-bottom-right-radius: 10px; 
+
+}
+.clearfix .right .words{
+    float: left;
+    margin-left: 10px;
+    margin-top: 150px;
+    width: 100%;
+    height:60px;
+    line-height: 60px;
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+}
+.clearfix .right .tips{
+    float: left;
+
+
+    width: 100%;
+    height: 40px;
+    line-height: 80px;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    
+}
+

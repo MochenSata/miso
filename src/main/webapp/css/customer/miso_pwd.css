@@ -1,0 +1,254 @@
+/*----------------------------nav--------------------------------------------------*/
+.layui-container{
+    width: 100%;
+}
+.foundation{
+    /* background-color: skyblue; */
+    height:80px;
+    line-height: 80px;
+    border-bottom: 1px solid #DDDDDD;
+    width: 100%;
+}
+.nav{
+    
+    width: 90%;
+    margin: 0 auto;
+    min-width: 1440px;
+}
+.nav div{
+    border-right: 1px solid white;
+}
+.nav .logopic{
+    float: left;
+    height: 60px;
+    margin-top: 10px;
+
+}
+.nav .slogn{
+    display: block;
+    float: left;
+    width: 160px;
+    height: 60px;
+    line-height: 60px;
+    margin-left: 5px;
+    margin-top: 15px;
+    font-weight: 1000;
+    color: #ff385c;
+    font-size: 20px;
+    text-align: center;
+    font-family: YouYuan,system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    
+
+}
+.nav .search-area{
+    width: 325px;
+    height: 50px;
+    border: 1px solid #DDDDDD;
+    margin: 0 auto;
+    margin-top: 15px;
+    border-radius: 25px;
+    box-shadow: 0 1px 10px rgb(0 0 0 / 40%);
+}
+
+.nav .search-area input[type="text"]{
+    display: block;
+    float: left;
+    height: 40px;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding-left: 15px;
+    width: 250px;
+    border-radius: 25px;
+    border: none;
+}
+
+.nav .search-area input[type="button"]{
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 40px;
+    width: 40px;
+    border-radius: 25px;
+    float: right;
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+
+}
+.nav .search-area input[type="button"]:hover{
+       background-color:#E00B41;
+
+}
+.nav .login{
+    width: 60px;
+    height: 40px;
+    margin-top: 20px;
+
+    display: block;
+    float: right;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+
+    border-radius: 20px;
+}
+.nav .signup{
+    width: 60px;
+    height: 40px;
+    margin-top: 20px;
+    margin-left: 30px;
+    display: block;
+
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+
+    border-radius: 20px;
+}
+.nav .login:hover{
+    background-color: #DDDDDD
+}
+.nav .signup:hover{
+    background-color: #DDDDDD
+}
+.nav .personal-btn{
+    margin-top: 20px;
+    display: block;
+    height: 40px;
+    width: 120px;
+
+    border-radius: 40px;
+}
+.nav .personal{
+    width:60px;
+    height: 40px;
+
+
+    display: block;
+    float: left;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+
+    border-radius: 20px;
+}
+.nav .personal-btn:hover{
+    background-color: #DDDDDD
+}
+.nav .headshort{
+    float: left;
+
+    background-color: #717171;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    margin-right: 0px;
+}
+
+/*主体框架*/
+.miso_body{
+    margin: 0 auto;
+    width: 90%;
+    height: auto;
+    /* background-color: rebeccapurple; */
+}
+
+
+
+/*有东西的地方*/
+.miso_main{
+    
+    margin: 0 auto;
+    width: 90%;
+    height: auto;
+    /* background-color: antiquewhite; */
+}
+
+/*首页-用户中心容器*/
+.userT {
+    height: 40px;
+    line-height: 40px;
+    width: 90%;
+    margin: 10px auto;
+    /* border-bottom: 1px solid #eee; */
+}
+
+/*首页-用户中心*/
+.aGray {
+    color: #333;
+    text-decoration: none;
+}
+
+/*左边导航栏*/
+.userL {
+    width: 20%;
+    height: auto;
+    margin: auto;
+    /* background-color: yellow; */
+    float: left;
+    border-left: 1px solid #eee;
+    border-right:1px solid #eee ;
+    
+}
+
+/*在订单管理页面按钮变红*/
+.password{
+    background-color: #ff385c !important;
+    color: #eee;
+}
+
+/*右边具体业务*/
+.userR{
+    width: 77%;
+    height: auto;
+    margin: auto;
+    /* background-color: springgreen; */
+    float: right;
+}
+
+/*左边导航栏*/
+.userL_li{
+    list-style: none;
+    padding-top: 15px;
+    margin-left: 19px;
+}
+
+/*左边导航栏按钮*/
+.userLBtn{
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+    background-color:#f9f9f9;
+    border:1px solid #DDDDDD ;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 40%);
+   
+}
+
+
+
+/*左边导航栏按钮图片*/
+.userL_li_pic{
+    /* display: block; */
+     width: 20px;
+     height: 20px;
+     margin-right: 10px;
+     /* margin-bottom: 3px; */
+  }
+
+.userL_li_text{
+    font-weight: 700;
+    /* display: block; */
+     font-size: 14px;
+    line-height: 20px;
+    
+}
+
+/*超链接*/
+a{
+    text-decoration: none;
+}

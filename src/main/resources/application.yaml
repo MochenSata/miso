@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /miso
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.1.139:3307/misodb?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  mvc:
+    view:
+      suffix: /
+      prefix: .jsp
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
