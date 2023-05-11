@@ -19,3 +19,10 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+logging:
+  file:
+    path: D://mylog//springboot_demo_log
+
+  level:
+    com.chixing: debug
