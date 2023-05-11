@@ -22,7 +22,7 @@ mybatis-plus:
 
 logging:
   file:
-    path: D://mylog//springboot_demo_log
+    path: D://misolog//miso_demo_log
 
   level:
     com.chixing: debug
