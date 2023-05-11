@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: 17894
+  Date: 2023/5/11
+  Time: 13:59
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,12 +15,12 @@
     <link rel="stylesheet" href="../css/customer/login.css">
 </head>
 <body>
-    <div class="web">
-        <div class="clearfix">
-            <div class="left">
-                <div class="login-title">登录账号</div>
-                <span class="msg"></span>
-                <form action="../index.html" method="post">
+<div class="web">
+    <div class="clearfix">
+        <div class="left">
+            <div class="login-title">登录账号</div>
+            <span class="msg"></span>
+            <form action="../index.html" method="post">
                 <input type="text"  placeholder="您的手机号" class="usertelno">
                 <span class="tip usertelnoTip"></span>
                 <input type="password" placeholder="您的密码" class="userpwd">
@@ -21,19 +28,19 @@
 
                 <a href="signup.html">去注册</a>
                 <input type="submit" id="login" value="登录">
-                
-            </form>
-            </div>
 
-            <div class="right">
-                <span class="words">你好,Friend!</span>
-                <span class="tips">登录以享受您的旅途</span>
-                
-            </div>
+            </form>
+        </div>
+
+        <div class="right">
+            <span class="words">你好,Friend!</span>
+            <span class="tips">登录以享受您的旅途</span>
+
         </div>
     </div>
+</div>
 
-    <script src="../js/customer/login.js"></script>
+<script src="../js/customer/login.js"></script>
 
 </body>
 </html>
