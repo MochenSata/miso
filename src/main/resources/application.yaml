@@ -12,8 +12,8 @@ spring:
     password: root
   mvc:
     view:
-      suffix: /
-      prefix: .jsp
+      suffix: .jsp
+      prefix: /
 
 mybatis-plus:
   global-config:
