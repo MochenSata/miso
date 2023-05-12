@@ -133,7 +133,53 @@
         </li>
     </ul>
 </div>
+<script>
+    //进入首页加载热门推荐数据
+    var hotHtml="";
+    loadHotHouses();
+    function loadHotHouses(){
+        var url = "${pageContext.request.contextPath}/house/hot";
+        $.get(url
+            ,null
+            , function (result){
+                //console.log(JSON.stringify(result));
+                var hotList=result.data;//存放热门推荐房源的集合
 
+                for(var i=0;i<hotList.length;i++){
+                    var houseId=hotList[i].houseId;
+                    var houseName=hotList[i].houseName;
+                    var houseKind=hotList[i].houseKind;
+                    var houseMainpicture=hotList[i].houseMainpicture;
+                    var houseScore=hotList[i].houseScore;
+                    var housePrice=hotList[i].housePrice;
+                    var houseIntro=hotList[i].houseIntro;
+
+                    console.log(houseName)
+
+                    // 将得到的数据渲染到页面中
+
+                    var LiEle=
+                        '<div class="hot">'+
+                        '        <img src="'+houseMainpicture+'" class="hotpic"></img>'+
+                        '    <a href="${pageContext.request.contextPath}/house/'+houseId+'"><div class="hotdesc">'+
+                        '     <span class="housename">'+houseName+'</span>'+
+                        '    <span class="housekind">类型：<span>'+houseKind+'</span></span>'+
+                        '     <span class="introduction">'+houseIntro+'</span>'+
+                        '    <span class="houseprice">价格：￥<span><b>'+housePrice+'</b></span> 起</span>'+
+                        '    <span class="clicktodesc">点击查看详情</span>'+
+                        '    </div></a>'+
+                        '     </div>'
+                    hotHtml=hotHtml+LiEle;
+
+                    // $("#hothouses").append(LiEle);
+
+                    $("#hothouses").html(hotHtml);
+                }
+                console.log(hotHtml);
+
+            })
+    }
+</script>
 
 <!--民宿列表homelist-->
 <div class="homelist">
@@ -254,108 +300,10 @@
 
 
 
-<script src="js/index.js" charset="utf-8"></script>
+<script defer src="js/index.js" charset="utf-8"></script>
 
 <script>
-    layui.use(['carousel', 'form'], function(){
-        var carousel = layui.carousel
-            ,form = layui.form;
 
-        //设定各种参数
-        var ins3 = carousel.render({
-            elem: '#test3'
-            ,width:'1070px'
-            ,height:'498px'
-        });
-
-        //事件
-        carousel.on('change(test4)', function(res){
-            console.log(res)
-        });
-
-        var $ = layui.$, active = {
-            set: function(othis){
-                var THIS = 'layui-bg-normal'
-                    ,key = othis.data('key')
-                    ,options = {};
-
-                othis.css('background-color', '#5FB878').siblings().removeAttr('style');
-                options[key] = othis.data('value');
-                ins3.reload(options);
-            }
-        };
-
-        //监听开关
-        form.on('switch(autoplay)', function(){
-            ins3.reload({
-                autoplay: this.checked
-            });
-        });
-
-        $('.demoSet').on('keyup', function(){
-            var value = this.value
-                ,options = {};
-            if(!/^\d+$/.test(value)) return;
-
-            options[this.name] = value;
-            ins3.reload(options);
-        });
-
-        //其它示例
-        $('.demoTest .layui-btn').on('click', function(){
-            var othis = $(this), type = othis.data('type');
-            active[type] ? active[type].call(this, othis) : '';
-        });
-    });
-
-    //进入首页加载热门推荐数据
-    loadHotHouses();
-    function loadHotHouses(){
-        var url = "${pageContext.request.contextPath}/house/hot";
-        $.get(url
-            ,null
-            , function (result){
-                //console.log(JSON.stringify(result));
-                var hotList=result.data;//存放热门推荐房源的集合
-                for(var i=0;i<hotList.length;i++){
-                    var houseId=hotList[i].houseId;
-                    var houseName=hotList[i].houseName;
-                    var houseKind=hotList[i].houseKind;
-                    var houseMainpicture=hotList[i].houseMainpicture;
-                    var houseScore=hotList[i].houseScore;
-                    var housePrice=hotList[i].housePrice;
-                    var houseIntro=hotList[i].houseIntro;
-
-                    console.log(houseName)
-
-                    // 将得到的数据渲染到页面中
-                    var LiEle=
-                        '<div class="hot">'+
-                        '        <img src="'+houseMainpicture+'" class="hotpic"></img>'+
-                        '    <a href="${pageContext.request.contextPath}/house/'+houseId+'"><div class="hotdesc">'+
-                        '     <span class="housename">'+houseName+'</span>'+
-                        '    <span class="housekind">类型：<span>'+houseKind+'</span></span>'+
-                        '     <span class="introduction">'+houseIntro+'</span>'+
-                        '    <span class="houseprice">价格：￥<span><b>'+housePrice+'</b></span> 起</span>'+
-                        '    <span class="clicktodesc">点击查看详情</span>'+
-                        '    </div></a>'+
-                        '     </div>'
-                    $("#hothouses").append(LiEle);
-
-
-                }
-            })
-    }
-    // 重置轮播，不然有可能不显示
-    ins.reload({
-        elem: '#test3'
-        , width: '100%' //设置容器宽度
-        , height: '49vw'
-        , anim: 'default'
-        , indicator: 'inside'
-        , arrow: 'none'
-        , interval: 3000
-    });
 
 </script>
 </body>
