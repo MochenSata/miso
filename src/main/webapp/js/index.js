@@ -78,30 +78,6 @@ layui.use(['carousel', 'form'], function(){
     });
 
   });
-
-  //修改分类样式
-  // $(".classification").on("click", "button", function(event) {
-  //   var ele = event.target;
-  //   if (ele.nodeName == "BUTTON") {
-  //     var oldbtn = $(".selectkindbtn");
-  //     oldbtn.removeClass("selectkindbtn").addClass("kindbtn");
-  //     $(ele).addClass("selectkindbtn");
-  //     var selectbtnValue = $(ele).text();
-  //     console.log("被选中的" + selectbtnValue);
-  //   }
-  // });
-
-  // document.querySelector(".classification").onclick=(function(event) {
-  //   var ele = event.target;
-  //   if (ele.nodeName === "BUTTON") {
-  //     var oldbtn = document.querySelector(".selectkindbtn");
-  //     oldbtn.classList.remove("selectkindbtn");
-  //     oldbtn.classList.add("kindbtn");
-  //     ele.classList.add("selectkindbtn");
-  //     var selectbtnValue = ele.textContent;
-  //     console.log("被选中的" + selectbtnValue);
-  //   }
-  // });
   $(".classification").on("click", "button", function(event) {
     var ele = $(event.target).closest("button");
     if (ele.length) {
@@ -112,5 +88,8 @@ layui.use(['carousel', 'form'], function(){
       console.log("被选中的" + selectbtnValue);
     }
   });
+
+
+
 
   

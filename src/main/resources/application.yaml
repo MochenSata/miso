@@ -15,6 +15,12 @@ spring:
       suffix: .jsp
       prefix: /
 
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    password:
+
 mybatis-plus:
   global-config:
     db-config:
