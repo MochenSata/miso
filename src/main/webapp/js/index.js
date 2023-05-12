@@ -57,7 +57,7 @@ setTimeout(function (){
 
     ins3.reload({elem: '#test3'});//重置轮播图
   });
-},1500);
+},2000);
 
 
 
