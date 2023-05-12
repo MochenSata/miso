@@ -3,116 +3,105 @@ package com.chixing.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.serializer.*;
+import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
-    //过期时间-1天
-    private Duration timeToLive = Duration.ofDays(-1);
 
     /**
-     * RedisTemplate 先关配置
-     *
-     * @param factory
-     * @return
+     * 选择redis作为默认缓存工具
      */
     @Bean
-    @SuppressWarnings("all")
+    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory){
+        //设置缓存有效一小时
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.
+                defaultCacheConfig().entryTtl(Duration.ofHours(1));
+        return RedisCacheManager.builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory)).cacheDefaults(redisCacheConfiguration).build();
+    }
+
+    /**
+     * 配置redistemplate相关配置
+     */
+    @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
+
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        // 配置连接工厂
         template.setConnectionFactory(factory);
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+
+        //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
+        Jackson2JsonRedisSerializer jacksonSeial = new Jackson2JsonRedisSerializer(Object.class);
+
         ObjectMapper om = new ObjectMapper();
+        // 指定要序列化的域，field,get和set,以及修饰符范围，ANY是都有包括private和public
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        // 指定序列化输入的类型，类必须是非final修饰的，final修饰的类，比如String,Integer等会跑出异常
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jacksonSeial.setObjectMapper(om);
 
-        //LocalDatetime序列化
-        JavaTimeModule timeModule = new JavaTimeModule();
-        timeModule.addDeserializer(LocalDate.class,
-                new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        timeModule.addDeserializer(LocalDateTime.class,
-                new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        timeModule.addSerializer(LocalDate.class,
-                new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        timeModule.addSerializer(LocalDateTime.class,
-                new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        // 值采用json序列化
+        template.setValueSerializer(jacksonSeial);
+        //使用StringRedisSerializer来序列化和反序列化redis的key值
+        template.setKeySerializer(new StringRedisSerializer());
 
-        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        om.registerModule(timeModule);
-
-        jackson2JsonRedisSerializer.setObjectMapper(om);
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        // key采用String的序列化方式
-        template.setKeySerializer(stringRedisSerializer);
-        // hash的key也采用String的序列化方式
-        template.setHashKeySerializer(stringRedisSerializer);
-        // value序列化方式采用jackson
-        template.setValueSerializer(jackson2JsonRedisSerializer);
-        // hash的value序列化方式采用jackson
-        template.setHashValueSerializer(jackson2JsonRedisSerializer);
+        // 设置hash key 和value序列化模式
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(jacksonSeial);
         template.afterPropertiesSet();
+
         return template;
     }
 
-
-    @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        //默认1
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(timeToLive)
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()))
-                .disableCachingNullValues();
-        RedisCacheManager redisCacheManager = RedisCacheManager.builder(connectionFactory)
-                .cacheDefaults(config)
-                .transactionAware()
-                .build();
-        return redisCacheManager;
-    }
-
-    @Bean
-    RedisMessageListenerContainer listenerContainer(RedisConnectionFactory connectionFactory) {
-        RedisMessageListenerContainer listenerContainer = new RedisMessageListenerContainer();
-        listenerContainer.setConnectionFactory(connectionFactory);
-        return listenerContainer;
-    }
-
-
     /**
-     * key 类型
-     * @return
+     * 对hash类型的数据操作
      */
-    private RedisSerializer<String> keySerializer() {
-        return  new StringRedisSerializer();
+    public HashOperations<String,String,Object> hashOperations(RedisTemplate<String,Object> redisTemplate){
+        return redisTemplate.opsForHash();
     }
 
     /**
-     * 值采用JSON序列化
-     * @return
+     * 对redis字符串类型数据库操作
      */
-    private RedisSerializer<Object> valueSerializer() {
-        return new GenericJackson2JsonRedisSerializer();
+    @Bean
+    public ValueOperations<String, Object> valueOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForValue();
     }
 
+    /**
+     * 对链表类型的数据操作
+     */
+    @Bean
+    public ListOperations<String, Object> listOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForList();
+    }
+
+    /**
+     * 对无序集合Set操作
+     */
+    @Bean
+    public SetOperations<String, Object> setOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForSet();
+    }
+
+    /**
+     * 对有序集合
+     */
+    @Bean
+    public ZSetOperations<String, Object> zSetOperations(RedisTemplate<String, Object> redisTemplate) {
+        return redisTemplate.opsForZSet();
+    }
 }

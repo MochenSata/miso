@@ -61,7 +61,29 @@ setTimeout(function (){
 
 
 
-
+  var custId ;
+  getCurrentLoginCustomerInfo();
+  //获得当前登录用户信息
+  function getCurrentLoginCustomerInfo() {
+    var tokenStr = localStorage.getItem("token");
+    var token = JSON.parse(tokenStr);
+    console.log("从localStorage 中获得的token是：" + token);
+    $.ajax({
+      type: "get",
+      url: "customer/currentCustomer",
+      headers: {'token': token},
+      success: function (result) {
+        console.log(result);
+        custId = result.data.custId;
+        var custName = result.data.custName;
+        $(".hiddenable").hide();
+        $(".hiddenable1").show();
+        console.log("custId:" + custId);
+        console.log("custName:" + custName);
+        $(".custName").text(custName)
+      }
+    })
+  }
 
 
   

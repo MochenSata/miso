@@ -38,9 +38,10 @@
                     </form>
                 </div>
             </div>
-            <div class="layui-col-xs1"><a href="customer/login.html" ><span class="login">登录</span></a></div>
-            <div class="layui-col-xs1"><a href="customer/signup.html" ><span class="signup">注册</span></a></div>
-
+            <div class="layui-col-xs1 hiddenable"><a href="customer/login.jsp" ><span class="login">登录</span></a></div>
+            <div class="layui-col-xs1 hiddenable"><a href="customer/signup.html" ><span class="signup">注册</span></a></div>
+            <div class="layui-col-xs1 hiddenable1"><span class="login">欢迎</span></div>
+            <div class="layui-col-xs1 hiddenable1"><span class="custName"></span></div>
             <div class="layui-col-xs1">
                 <div class="layui-btn-container">
                     <button type="button" class="layui-btn layui-btn-primary demo1 personcenter">
