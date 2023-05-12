@@ -18,8 +18,11 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="layui/layui.js"></script>
-
-
+    <style>
+        .hiddenable1 {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <!--导航栏nav-->
