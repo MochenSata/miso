@@ -185,112 +185,51 @@
 <!--民宿列表homelist-->
 <div class="homelist">
 
-    <ul >
-        <a href="house/house.html"><li class="home">
-            <img src="img/house/chuanwu/chuanwu1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
+    <ul  class="homes">
 
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
 
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/haijingfang/haijingfang1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/haijingfang/haijingfang2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/luying/luying1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/muwu/muwu1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/muwu/muwu2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/rishilvguan/rishilvguan1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/haijingfang/haijingfang2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
     </ul>
 </div>
+<script>
+    // 项目刚开启的时候要想后端的 controller 层进行请求，访问数据
+    loadHouse();
+
+    // 加载首页需要的商品数据，产生 ajax 请求
+    function loadHouse(){
+        console.log("abc");
+        var url="${pageContext.request.contextPath}/house/hotlist";
+        $.get(url
+            ,null
+            ,function (result){
+                console.log(JSON.stringify(result));
+                var proWriterArr=result.data;// 存放的查找到的数据集合
+                for (var i=0;i<proWriterArr.length;i++) {
+                    var houseId = proWriterArr[i].houseId;
+                    var houseName = proWriterArr[i].houseName;
+                    var houseKind = proWriterArr[i].houseKind;
+                    var houseMainpicture = proWriterArr[i].houseMainpicture;
+                    var housePrice = proWriterArr[i].housePrice;
+                    var houseScore = proWriterArr[i].houseScore;
+                    console.log(houseId);
+                    // 将得到的数据渲染到页面中
+                    var LiEle=
+                        '<a href="${pageContext.request.contextPath}/house/'+houseId+'"><li class="home">'+
+                    '    <img src="'+houseMainpicture+'" >'+
+                    '    <div class="line1">'+
+                    '    <span class="homekind">类型:'+houseKind+'</span>'+
+                    ' <img src="img/index/pingfen.png" class="pingfenico">'+
+                    '    <span class="score">'+houseScore+'</span>'+
+                    ' </div>'+
+                    '<div class="line2"><b>'+houseName+'</b></div>'+
+                    ' <div class="line3"><b>￥</b><span class="price">'+housePrice+'</span><span class="houzhui">/晚</span></div>'+
+                    '</li></a>';
+
+                    console.log(LiEle);
+                    $(".homes").append(LiEle);
+                }
+            });
+    }
+</script>
 
 <div class="pagearea">
     <a href="" class="pagebtn"><</a>

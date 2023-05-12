@@ -21,4 +21,11 @@ public class HouseController {
         return houseService.getHotHousesByScore();
     }
 
+    //根据销量获得商品列表（热门商品 前8个）
+    @GetMapping("hotlist")
+    @ResponseBody
+    public ServerResult getHotHouselist(){
+        System.out.println("abc");
+        return houseService.getHouseByRentNum();
+    }
 }

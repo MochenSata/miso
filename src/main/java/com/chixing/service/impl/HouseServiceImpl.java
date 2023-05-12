@@ -61,4 +61,32 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
 
         return ServerResult.success(200, ResultMsg.success,houseList);
     }
+    //根据出租次数排序获得商品列表（热门商品 前8个）
+    @Override
+    public ServerResult getHouseByRentNum() {
+        List<House> houseList=null;
+        String key="hot_houselist";
+        ZSetOperations<String,House> zSetOperations=redisTemplate.opsForZSet();
+        if (redisTemplate.hasKey(key)){// Redis 缓存中存在，则直接返回
+            Set<House> houseSet=zSetOperations.range(key,0,-1);
+            houseList=houseSet.stream().collect(Collectors.toList());
+        }else {
+            // 从MySQL 查询出来
+            QueryWrapper<House>queryWrapper=new QueryWrapper<>();
+            queryWrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum");
+            queryWrapper.lt("house_status",3);
+            queryWrapper.orderByDesc("house_rentnum");
+            queryWrapper.last("limit 8");
+            houseList=houseMapper.selectList(queryWrapper);
+            System.out.println("fyj:"+houseList);
+            //保存到redis中
+            for (House house:houseList){
+                System.out.println("fyjredis:"+house);
+                zSetOperations.add(key,house,house.getHouseRentnum());
+            }
+            redisTemplate.expire(key,30, TimeUnit.MINUTES);//Redis 热门商品 30mins 过期
+        }
+        return ServerResult.success(200, ResultMsg.success,houseList);
+
+    }
 }

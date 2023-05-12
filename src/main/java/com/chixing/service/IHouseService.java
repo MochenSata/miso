@@ -20,4 +20,6 @@ public interface IHouseService extends IService<House> {
      * @return
      */
     public ServerResult getHotHousesByScore();
+
+    public ServerResult getHouseByRentNum();
 }
