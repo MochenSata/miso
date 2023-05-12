@@ -346,6 +346,17 @@
                 }
             })
     }
+    // 重置轮播，不然有可能不显示
+    ins.reload({
+        elem: '#test3'
+        , width: '100%' //设置容器宽度
+        , height: '49vw'
+        , anim: 'default'
+        , indicator: 'inside'
+        , arrow: 'none'
+        , interval: 3000
+    });
+
 </script>
 </body>
 </html>
