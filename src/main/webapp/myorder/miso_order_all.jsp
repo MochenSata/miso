@@ -13,9 +13,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人中心</title>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <link rel="stylesheet" href="../css/myorder/miso_order_all.css">
-    <script src="../js/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myorder/miso_order_all.css">
+    <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
 
 </head>
 

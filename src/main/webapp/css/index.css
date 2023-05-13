@@ -534,3 +534,9 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.foundation .custName{
+    display: inline-block;
+    font-size: 13px;
+
+}

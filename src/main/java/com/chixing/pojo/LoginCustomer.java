@@ -120,4 +120,20 @@ public class LoginCustomer {
         this.other2 = other2;
     }
 
+    @Override
+    public String toString() {
+        return "LoginCustomer{" +
+                "custId=" + custId +
+                ", custName='" + custName + '\'' +
+                ", custGender='" + custGender + '\'' +
+                ", custTelno=" + custTelno +
+                ", custEmail='" + custEmail + '\'' +
+                ", custDesc='" + custDesc + '\'' +
+                ", custHeadshort='" + custHeadshort + '\'' +
+                ", custInviteNum='" + custInviteNum + '\'' +
+                ", status=" + status +
+                ", other1='" + other1 + '\'' +
+                ", other2='" + other2 + '\'' +
+                '}';
+    }
 }
