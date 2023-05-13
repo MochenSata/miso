@@ -366,7 +366,7 @@ p{
 
 /*订单时间*/
 .td_time{
-    width: 150px;
+    width: 175px;
     height: 40px;
     /* background-color: yellow; */
 }
@@ -374,7 +374,7 @@ p{
 
 /*订单状态*/
 .td_statu{
-    width: 150px;
+    width: 130px;
     height: 40px;
     /* background-color: tomato; */
 }

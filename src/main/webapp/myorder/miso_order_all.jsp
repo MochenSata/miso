@@ -5,7 +5,8 @@
   Time: 14:01
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -16,16 +17,16 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myorder/miso_order_all.css">
     <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
-
 </head>
 
 <body>
+
 <!--导航栏nav-->
 <div class="foundation">
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
-                <img src="../img/logo.png"  class="logopic">
+                <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
@@ -43,9 +44,9 @@
                 <div class="layui-btn-container">
                     <button class="layui-btn layui-btn-primary demo1 personcenter">
                         <div href="" class="personal-btn">
-                            <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
+                            <div class="headshort"><img src="${pageContext.request.contextPath}/img/customer/headshort.svg" alt=""></div>
                             <div class="personal">
-                                <img src="../img/customer/hengxian.svg" class="hengxian">
+                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
                             </div>
                         </div>
 
@@ -69,30 +70,30 @@
             <div class="userL">
                 <ul>
                     <li class="userL_li">
-                        <a href="../myorder/miso_order_all.html"><button class="userLBtn orderDetail">
-                            <img src="../img/myorder/order.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/myorder/miso_order_all.html"><button class="userLBtn orderDetail">
+                            <img src="${pageContext.request.contextPath}/img/myorder/order.GIF" class="userL_li_pic">
                             <span class="userL_li_text">订单管理</span>
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../customer/miso_info.html"><button class="userLBtn">
-                            <img src="../img/myorder/person.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/customer/miso_info.html"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/person.GIF" class="userL_li_pic">
                             <span class="userL_li_text">个人信息</span>
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../coupon/miso_coupon.html"><button class="userLBtn">
-                            <img src="../img/myorder/coupon.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/coupon/miso_coupon.html"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/coupon.GIF" class="userL_li_pic">
                             <span class="userL_li_text">我的优惠券</span></button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../customer/miso_message.html"><button class="userLBtn">
-                            <img src="../img/myorder/message.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/customer/miso_message.html"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/message.GIF" class="userL_li_pic">
                             <span class="userL_li_text">消息提醒</span></button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../customer/miso_invitation.html"><button class="userLBtn">
-                            <img src="../img/myorder/invite.gif" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/customer/miso_invitation.html"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/invite.gif" class="userL_li_pic">
                             <span class="userL_li_text">邀请码</span></button></a>
                     </li>
                 </ul>
@@ -119,96 +120,54 @@
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <img src="../img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
-                                            </div>
-                                            <p class="house_name">船屋</p>
-                                        </td>
-                                        <td>1001</td>
-                                        <td>￥900</td>
-                                        <td>2023/4/20</td>
-                                        <td>已付款</td>
-                                        <td>
-                                            <div id="layerDemo" style="margin-bottom: 0;">
-                                                <div class="layui-btn-container completed">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                            class="layui-btn order_operate"><span>订单详情</span></button></a>
-                                                    <button data-method="offset" data-type="auto"
-                                                            class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                    <c:forEach items="${result.data}" var="data">
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <img src="../img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
-                                            </div>
-                                            <p class="house_name">海景房</p>
-                                        </td>
-                                        <td>1002</td>
-                                        <td>￥900</td>
-                                        <td>2023/4/20</td>
-                                        <td>已完成</td>
-                                        <td>
-                                            <div id="layerDemo" style="margin-bottom: 0;">
-                                                <div class="layui-btn-container">
-                                                    <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
-                                                    <a href=""><button class="layui-btn order_operate"
-                                                                       data-type="auto">订单详情</button></a>
-                                                    <button data-method="offset" data-type="auto"
-                                                            class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                                <p class="house_name">${data.myorder.houseName}</p>
+                                            </td>
+                                            <td>${data.myorder.myorderNum}</td>
+                                            <td>￥${data.payment.payAmount}</td>
+                                            <td>${data.myorder.myorderCreateTime}</td>
+                                            <c:if test="${data.myorder.myorderStatus==0}">
+                                                <td>未支付</td>
+                                            </c:if>
+                                            <c:if test="${data.myorder.myorderStatus==1}">
+                                                <td>已支付</td>
+                                            </c:if>
+                                            <c:if test="${data.myorder.myorderStatus==2}">
+                                                <td>已完成</td>
+                                            </c:if>
+                                            <c:if test="${data.myorder.myorderStatus==3}">
+                                                <td>已完成</td>
+                                            </c:if>
+                                            <c:if test="${data.myorder.myorderStatus==4}">
+                                                <td>已取消</td>
+                                            </c:if>
+                                            <td>
+                                                <div id="layerDemo" style="margin-bottom: 0;">
+                                                    <div class="layui-btn-container completed">
+                                                        <c:if test="${data.myorder.myorderStatus==0}">
+                                                            <a href=""><button class="layui-btn order_operate">去支付</button></a>
+                                                        </c:if>
+                                                        <c:if test="${data.myorder.myorderStatus==2}">
+                                                        <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">去评价</button></a>
+                                                        </c:if>
+                                                        <c:if test="${data.myorder.myorderStatus>0&&data.myorder.myorderStatus<5}">
+                                                        <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                                class="layui-btn order_operate"><span>订单详情</span></button></a>
+                                                        </c:if>
+                                                        <c:if test="${data.myorder.myorderStatus<6}">
+                                                        <button data-method="offset" data-type="auto"
+                                                                class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                                        </c:if>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <img src="../img/house/muwu/muwu1/main.jpg" class="house_pic">
-                                            </div>
-                                            <p class="house_name">木屋</p>
-                                        </td>
-                                        <td>1003</td>
-                                        <td>￥900</td>
-                                        <td>2023/4/20</td>
-                                        <td>未付款</td>
-                                        <td>
-                                            <div id="layerDemo" style="margin-bottom: 0;">
-                                                <div class="layui-btn-container">
-                                                    <a href="../myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                            class="layui-btn order_operate"><span>订单详情</span></button></a>
-                                                    <button data-method="offset" data-type="auto"
-                                                            class="layui-btn layui-btn-normal order_operate">删除订单</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <img src="../img/house/nongjia/nongjia1/main.jpg" class="house_pic">
-                                            </div>
-                                            <p class="house_name">农家</p>
-                                        </td>
-                                        <td>1004</td>
-                                        <td>￥900</td>
-                                        <td>2023/4/20</td>
-                                        <td>已取消</td>
-                                        <td>
-                                            <div id="layerDemo" style="margin-bottom: 0;">
-                                                <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                            class="layui-btn order_operate"><span>订单详情</span></button></a>
-                                                    <button data-method="offset" data-type="auto"
-                                                            class="layui-btn layui-btn-normal order_operate">删除订单</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </table>
                             </div>
                             <!-----------------------------已付款--------------------------------------->
@@ -225,7 +184,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">船屋</p>
                                         </td>
@@ -236,7 +195,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -247,7 +206,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">海景房</p>
                                         </td>
@@ -258,7 +217,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -269,7 +228,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/muwu/muwu1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/muwu/muwu1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">木屋</p>
                                         </td>
@@ -280,7 +239,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -291,7 +250,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/nongjia/nongjia1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/nongjia/nongjia1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">农家</p>
                                         </td>
@@ -302,7 +261,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -326,7 +285,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">船屋</p>
                                         </td>
@@ -337,8 +296,8 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -349,7 +308,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">海景房</p>
                                         </td>
@@ -360,8 +319,8 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -372,7 +331,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/muwu/muwu1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/muwu/muwu1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">木屋</p>
                                         </td>
@@ -383,8 +342,8 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -395,7 +354,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/nongjia/nongjia1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/nongjia/nongjia1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">农家</p>
                                         </td>
@@ -406,8 +365,8 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/mypay.html"><button class="layui-btn order_operate">支付</button></a>
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -431,7 +390,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">船屋</p>
                                         </td>
@@ -442,7 +401,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
+                                                    <a href="${pageContext.request.contextPath}/customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
                                                     <a href=""><button class="layui-btn order_operate"
                                                                        data-type="auto">订单详情</button></a>
                                                     <button data-method="offset" data-type="auto"
@@ -454,7 +413,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">海景房</p>
                                         </td>
@@ -465,7 +424,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
+                                                    <a href="${pageContext.request.contextPath}/customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
                                                     <a href=""><button class="layui-btn order_operate"
                                                                        data-type="auto">订单详情</button></a>
                                                     <button data-method="offset" data-type="auto"
@@ -477,7 +436,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/muwu/muwu1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/muwu/muwu1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">木屋</p>
                                         </td>
@@ -488,7 +447,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
+                                                    <a href="${pageContext.request.contextPath}/customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
                                                     <a href=""><button class="layui-btn order_operate"
                                                                        data-type="auto">订单详情</button></a>
                                                     <button data-method="offset" data-type="auto"
@@ -500,7 +459,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/nongjia/nongjia1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/nongjia/nongjia1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">农家</p>
                                         </td>
@@ -511,7 +470,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
+                                                    <a href="${pageContext.request.contextPath}/customer/miso_comment.html"><button class="layui-btn order_operate">评价</button></a>
                                                     <a href=""><button class="layui-btn order_operate"
                                                                        data-type="auto">订单详情</button></a>
                                                     <button data-method="offset" data-type="auto"
@@ -536,7 +495,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/chuanwu/chuanwu1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">船屋</p>
                                         </td>
@@ -547,7 +506,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -558,7 +517,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/haijingfang/haijingfang1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">海景房</p>
                                         </td>
@@ -569,9 +528,9 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
-                                                    <button data-method="offset" data-type="auto"
+                                                    <button data../-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
                                                 </div>
                                             </div>
@@ -591,7 +550,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
@@ -602,7 +561,7 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <img src="../img/house/nongjia/nongjia1/main.jpg" class="house_pic">
+                                                <img src="${pageContext.request.contextPath}/img/house/nongjia/nongjia1/main.jpg" class="house_pic">
                                             </div>
                                             <p class="house_name">农家</p>
                                         </td>
@@ -613,7 +572,7 @@
                                         <td>
                                             <div id="layerDemo" style="margin-bottom: 0;">
                                                 <div class="layui-btn-container">
-                                                    <a href="../myorder/miso_order_detail.html" class="orderdetaila"><button
+                                                    <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
                                                             class="layui-btn order_operate"><span>订单详情</span></button></a>
                                                     <button data-method="offset" data-type="auto"
                                                             class="layui-btn layui-btn-normal order_operate">删除订单</button>
