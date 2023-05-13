@@ -5,16 +5,17 @@
   Time: 13:57
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1号海景房</title>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <link rel="stylesheet" href="../css/house/house.css">
-    <script src="../js/jquery-3.6.4.min.js"></script>
-    <script src="../layui/layui.js"></script>
+    <title>${serverResult.data.houseName}</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/house/house.css">
+    <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
     <script type="text/javascript"
             src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=NGfZONqozqFRCZ4fNZpEc0hODBQQ5gkS"></script>
 </head>
@@ -50,21 +51,21 @@
 <!--图片-->
 <div class="imgcontainer">
     <div class="left">
-        <img src="../img/house/haijingfang/haijingfang1/main.jpg" alt="海景主图" class="left-img">
+        <img src="${serverResult.data.houseMainpicture}" alt="海景主图" class="left-img">
     </div>
     <div class="right">
         <div class="top-left">
             <!-- 右半部分上半部分左边内容 -->
-            <img src="../img/house/haijingfang/haijingfang1/2.jpg" alt="海景主图" class="right-img">
+            <img src="${serverResult.data.housePicOne}" alt="海景主图" class="right-img">
         </div>
         <div class="top-right">
-            <img src="../img/house/haijingfang/haijingfang1/3.jpg" alt="海景主图" class="right-img">
+            <img src="${serverResult.data.housePicTwo}" alt="海景主图" class="right-img">
         </div>
         <div class="bottom-left">
-            <img src="../img/house/haijingfang/haijingfang1/4.jpg" alt="海景主图" class="right-img">
+            <img src="${serverResult.data.housePicThree}" alt="海景主图" class="right-img">
         </div>
         <div class="bottom-right">
-            <img src="../img/house/haijingfang/haijingfang1/5.jpg" alt="海景主图" class="right-img">
+            <img src="${serverResult.data.housePicFour}" alt="海景主图" class="right-img">
         </div>
     </div>
 </div>
@@ -87,33 +88,33 @@
     <div class="scrollable">
         <!--------------------------- 可下拉查看的内容(1) 房屋主要信息 --------------------------------->
         <div class="mainhousetext">
-            <span class="minloc">苏州市-海景膳宿公寓</span>
-            <span class="maintitle">海风拂面，海浪伴着您入睡，让您度过一个放松的假期</span>
+            <span class="minloc">苏州市-${serverResult.data.houseName}</span>
+            <span class="maintitle">${serverResult.data.houseTheme}</span>
 
             <div class="houseinfor">
                 <div class="perhouseinfor">
                     <img src="../img/house/jibenxinxi/woshi.png" class="mini-img">
-                    <span class="datainfor">3</span>
+                    <span class="datainfor">${serverResult.data.houseRoomNum}</span>
                     <span class="baseinfor">卧室</span>
                 </div>
                 <div class="perhouseinfor">
                     <img src="../img/house/jibenxinxi/chuang.png" class="mini-img">
-                    <span class="datainfor">4</span>
+                    <span class="datainfor">${serverResult.data.bedCount}</span>
                     <span class="baseinfor">张床</span>
                 </div>
                 <div class="perhouseinfor">
                     <img src="../img/house/jibenxinxi/toilet.png" class="mini-img">
-                    <span class="datainfor">3</span>
+                    <span class="datainfor">${serverResult.data.houseToiletcount}</span>
                     <span class="baseinfor">个卫生间</span>
                 </div>
                 <div class="perhouseinfor">
                     <img src="../img/house/jibenxinxi/renshu.png" class="mini-img">
-                    <span class="datainfor">4</span>
+                    <span class="datainfor">${serverResult.data.houseCustCount}</span>
                     <span class="baseinfor">人数</span>
                 </div>
                 <div class="lable-min">
-                    <p class="condition-ab">评分: 5.0分</p>
-                    <p class="condition-ab">优美海景</p>
+                    <p class="condition-ab">评分: ${serverResult.data.houseScore}分</p>
+                    <p class="condition-ab">${serverResult.data.houseKind}</p>
                     <p class="condition">免费停车</p>
                     <p class="condition">可做饭</p>
                     <p class="condition">有洗衣机</p>
@@ -124,10 +125,9 @@
         <div class="promotion" id="section1">
             <span class="promotion-title">民宿详情介绍</span>
             <span class="con-promotion">
-          我们的海景房民宿坐落于一个宁静的海湾中，周围是蓝色的海洋和绿色的山丘，是一个完美的度假胜地。我们的房间宽敞明亮，配备了现代化的设施，为您提供最舒适的住宿体验。从您的私人阳台上，您可以俯瞰壮观的海景，沉醉于美妙的日出和日落中。
+                ${serverResult.data.houseIntro}
         </span>
-            <span class="con-promotion"> 该民宿包括一个客厅，一个设备齐全的厨房和洗碗机，3个卧室和3个浴室(1个带浴缸，另外2个带淋浴)，因此可容纳4人。
-          其他便利设施包括Wi-Fi、整个别墅的空调、洗衣机、烘干机和卫星电视。</span>
+            <span class="con-promotion"> ${serverResult.data.houseFacility}</span>
         </div>
 
 
@@ -191,99 +191,89 @@
 
         <div class="evaluation">
             <span class="promotion-title" id="section2">房客评价</span>
+            <div id="test1"></div>
             <div class="evaluation-star">
-                <div id="test1"></div>
-                <span class="evaluation-num">9</span>
-                <span class="evaluation-num">条评价</span>
             </div>
             <div class="evaluation-part">
-                <div class="evaluation-part-1">
-                    <div class="evaluation-user">
-                        <img src="../img/house/jibenxinxi/headshort.svg" class="user-img">
-                        <div class="user-text">
-                            <span class="user-name">刘晓辉</span><br>
-                            <span class="evaluation-time">2022年12月</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-part-text">
-              <span class="Text-content">当我住在这个房子里的时候，我感觉非常惊喜和兴奋。一进入房间，我就被大窗户外美丽的海景吸引了。阳光洒进房间，营造出一个温馨舒适的氛围。
-                每天早上，我可以在阳台上享受咖啡或早餐，一边听着海浪的声音一边欣赏着无敌的海景，这是我旅行中最愉快的时光之一。有时候我也会在房间内，打开窗户，享受海风和阳光，感觉就像是置身于大自然之中。
-              </span>
-                    </div>
-                </div>
-                <div class="evaluation-part-1">
-                    <div class="evaluation-user">
-                        <img src="../img/house/jibenxinxi/headshort.svg" class="user-img">
-                        <div class="user-text">
-                            <span class="user-name">费英杰</span><br>
-                            <span class="evaluation-time">2022年12月</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-part-text">
-              <span
-                      class="Text-content">住在海景房里也给我留下了难忘的美食体验。我住宿的海景酒店提供了许多美味的当地美食和海鲜，我可以在享受美景的同时品尝到最好的食物，这让我非常满意和感激。每天晚上，我都期待着在这里享用美味的晚餐。
-              </span>
-                    </div>
-                </div>
-                <div class="evaluation-part-1">
-                    <div class="evaluation-user">
-                        <img src="../img/house/jibenxinxi/headshort.svg" class="user-img">
-                        <div class="user-text">
-                            <span class="user-name">钱锦程</span><br>
-                            <span class="evaluation-time">2023年2月</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-part-text">
-              <span
-                      class="Text-content">当我住在海景房里的时候，我感受到的第一件事就是放松和舒适。在这样一个绝佳的位置住宿，能够欣赏到无敌的海景，这是我从未体验过的。我感觉就像是置身于一个真正的天堂，可以在这里远离城市喧嚣，静静地享受大自然的美丽。在这里，我不仅可以休息和放松，还能够探索当地景点和文化。
-              </span>
-                    </div>
-                </div>
-                <div class="evaluation-part-1">
-                    <div class="evaluation-user">
-                        <img src="../img/house/jibenxinxi/headshort.svg" class="user-img">
-                        <div class="user-text">
-                            <span class="user-name">朱佳辰</span><br>
-                            <span class="evaluation-time">2022年12月</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-part-text">
-              <span
-                      class="Text-content">住在海景房里的另一个好处是您可以随时享受水上活动和海滩体验。我喜欢在早上沿着海滩散步，感受海风和海水的清凉。我也租了一个皮划艇，划向远处的小岛，这是一个非常令人兴奋和难忘的经历。
-              </span>
-                    </div>
-                </div>
-                <div class="evaluation-part-1">
-                    <div class="evaluation-user">
-                        <img src="../img/house/jibenxinxi/headshort.svg" class="user-img">
-                        <div class="user-text">
-                            <span class="user-name">龚链錤</span><br>
-                            <span class="evaluation-time">2022年12月</span>
-                        </div>
-                    </div>
-                    <div class="evaluation-part-text">
-              <span
-                      class="Text-content">在我住在海景房里的几天里，我完全爱上了这个地方。每天早上，我被美丽的海景和阳光唤醒，这是我从未体验过的感觉。我可以在阳台上享用早餐或晚餐，一边欣赏着海浪的声音一边品尝美食，这是我旅行中最美好的时光之一。
-              </span>
-                    </div>
-                </div>
             </div>
             <div class="pagepart">
-                <c:if test="">
-                    <div class="prepage">
-                        <a href="">&lt;</a>
-                    </div>
-                </c:if>
-                <div class="prepage">
-                    <span class="pagetext">1</span>
-                </div>
-                <c:if test="">
-                    <div class="prepage">
-                        <a href="">></a>
-                    </div>
-                </c:if>
             </div>
         </div>
+
+        <script>
+            $(document).ready(function() {
+                getByPage(1, ${serverResult.data.houseId}); // 页面加载即执行查询
+            });
+
+            var currentPageNum; // 该变量的作用是为了删除成功后，继续分页查询本页的数据
+
+            function getByPage(pageNum,id) {
+                id=${serverResult.data.houseId};
+                $(".evaluation-part").html(""); // 清空UL中的数据信息
+                var pageInfo = ""; // 清空页码信息
+
+                console.log("===========================================pageNum:" + pageNum);
+                console.log("============pagenum type:" + typeof pageNum);
+
+                // 页码的处理（第1页pageNum没有传值）
+                if (typeof pageNum == "number")
+                    var url = "${pageContext.request.contextPath}/comment/house/" + pageNum + "?id=" + id; // 将ID添加到URL中
+                else {
+                    var url = "${pageContext.request.contextPath}/comment/house?id="+id;
+                    pageNum = 1;
+                }
+                currentPageNum = pageNum;
+                console.log(pageNum);
+                $.get(url, null, function(result) {
+                    // ServerReponse json: data(pageInfo)
+                    console.log(result);
+                    console.log("分页查询的数据是JSON：" + JSON.stringify(result));
+
+                    // 1. 渲染数据到 UL- LI
+                    var commentArray = result.data.records;
+                    console.log("char 数组：" + commentArray);
+
+                    for (var i = 0; i < commentArray.length; i++) {
+                        // 5 shop
+                        var liEle =
+                            '<div class="evaluation-part-1">' +
+                            '<div class="evaluation-user">' +
+                            '<img src="../img/house/jibenxinxi/headshort.svg" class="user-img">'+
+                            '<div class="user-text">' +
+                            '<span class="user-name">' +
+                            commentArray[i].custName +
+                            '</span> <br/>' +
+                            '<span class="evaluation-time">' +
+                            commentArray[i].comCreateTime +
+                            '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="evaluation-part-text">' +
+                            '<span class="Text-content">' +
+                            commentArray[i].comContent+
+                            '</span>'+
+                            '</div>'+
+                            '</div>';
+                        $(".evaluation-part").append(liEle);
+                    }
+
+                    // 2. 渲染页码信息
+                    var total = result.data.total;
+                    var pageNum = result.data.current;
+                    var pages = result.data.pages;
+                    var prePage = pageNum - 1;
+                    var nextPage = pageNum + 1;
+                    commentnum = ' 共有<span class="evaluation-num">' + total + '</span>条评价';
+                    pageInfo += '<a href="javascript:getByPage(' + prePage + ')"> <div class="prepage">&lt;</div> </a> ';
+                    pageInfo += '<div class="prepage"><span class="pagetext">' + pageNum + '</span></div>';
+                    pageInfo += '<a href="javascript:getByPage(' + nextPage + ')"> <div class="prepage">></div> </a> ';
+
+                    $(".pagepart").html(pageInfo);
+                    $(".evaluation-star").html(commentnum);
+                }, "json");
+            }
+
+        </script>
 
         <!-- /*----------------可订日期---------------------------*/ -->
 
@@ -353,13 +343,13 @@
         <div class="fixed">
             <!-- 固定的内容的内容 -->
             <div class="perhousePrice">
-                <span class="housePrice">￥259</span>
+                <span class="housePrice">￥${serverResult.data.housePrice}</span>
                 <span class="perday">/晚</span>
             </div>
             <div class="fixedscore">
                 <div id="test4"></div>
             </div>
-            <form class="order-form" action="../myorder/mypay.html">
+            <form class="order-form" action="${pageContext.request.contextPath}/myorder/num&startdate&enddate" method="post">
 
 
                 <div class="layui-form">
@@ -368,11 +358,11 @@
                             <label class="layui-form-label">日期</label>
                             <div class="layui-inline" id="test6">
                                 <div class="layui-input-inline">
-                                    <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" placeholder="入住日期">
+                                    <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" placeholder="入住日期" name="custStartDate">
                                 </div>
                                 <div class="layui-form-mid">-</div>
                                 <div class="layui-input-inline">
-                                    <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" placeholder="退房日期">
+                                    <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" placeholder="退房日期" name="custEndDate">
                                 </div>
                             </div>
                         </div>
@@ -381,14 +371,14 @@
 
                 <label class="formcounter">人数</label>
                 <div class="counterpart">
-                    <div class="form-counter" id="result">0</div>
+                    <input class="form-counter" id="result" value="0" name="custNum">
                     <div class="counterbutton">
                         <button class="counter-button" href="javascript:void(0)" id="subtract">-</button>
                         <button class="counter-button" href="javascript:void(0)" id="add">+</button>
                     </div>
 
                     <input type="submit" class="formsubBtn" value="查看可预订状态">
-
+                </div>
             </form>
 
         </div>
@@ -396,6 +386,8 @@
 
 </div>
 
+
+<script src="../js/house/house.js"></script>
 
 
 <!-- //地图 -->
@@ -415,8 +407,8 @@
 </script>
 
 
-<script>
 
+<script>
 
 
     //计算人数
@@ -427,14 +419,17 @@
 
     // 定义初始值
     let result = 0;
-
+    let num = 0;
     // 减法按钮事件处理函数
     subtractBtn.addEventListener("click", function(event) {
         event.preventDefault();
         if (result > 0) {
             result--;
         }
-        resultEl.innerText = result;
+        resultEl.val = result;
+        num = result;
+        $("#result").val(num);
+        console.log("人数是：" + num); // 在事件处理函数中输出最新的num值
     });
 
     // 加法按钮事件处理函数
@@ -444,6 +439,9 @@
             result++;
         }
         resultEl.innerText = result;
+        num = result;
+        $("#result").val(num);
+        console.log("人数是：" + num); // 在事件处理函数中输出最新的num值
     });
 
 
@@ -475,7 +473,7 @@
 
         rate.render({
             elem: '#test1'
-            , value: 3.5
+            , value: ${serverResult.data.houseScore}
             , half: true
             , readonly: true
             , theme: '#008489'
@@ -483,7 +481,7 @@
 
         rate.render({
             elem: '#test4'
-            , value: 3.5
+            , value: ${serverResult.data.houseScore}
             , half: true
             , text: true
             , readonly: true
