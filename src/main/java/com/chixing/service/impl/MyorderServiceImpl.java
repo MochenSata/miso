@@ -36,7 +36,7 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
         List<MyOrderPayVO> orderPayVOList=new ArrayList<>();
         QueryWrapper<Myorder> myorderQueryWrapper=new QueryWrapper<>();
         myorderQueryWrapper.eq("cust_id",customerId);
-        myorderQueryWrapper.lt("myorder_status",4);
+        myorderQueryWrapper.lt("myorder_status",5);
         myorderQueryWrapper.orderByDesc("myorder_create_time");
         List<Myorder> myorderList=myorderMapper.selectList(myorderQueryWrapper);
 
