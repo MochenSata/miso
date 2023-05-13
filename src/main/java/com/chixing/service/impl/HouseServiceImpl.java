@@ -1,6 +1,8 @@
 package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.chixing.pojo.Comment;
 import com.chixing.pojo.House;
 import com.chixing.mapper.HouseMapper;
 import com.chixing.service.IHouseService;
@@ -12,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -73,7 +76,7 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
         }else {
             // 从MySQL 查询出来
             QueryWrapper<House>queryWrapper=new QueryWrapper<>();
-            queryWrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum");
+            queryWrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum","house_id");
             queryWrapper.lt("house_status",3);
             queryWrapper.orderByDesc("house_rentnum");
             queryWrapper.last("limit 8");
@@ -89,4 +92,18 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
         return ServerResult.success(200, ResultMsg.success,houseList);
 
     }
+
+    @Override
+    public ServerResult getHouseByType(String type) {
+        QueryWrapper<House> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("*");
+        queryWrapper.lt("house_status",3);
+        queryWrapper.eq("house_kind",type);
+        System.out.println(queryWrapper);
+        List<House> houseList=houseMapper.selectList(queryWrapper);
+        return ServerResult.success(200,ResultMsg.success,houseList);
+
+    }
+
+
 }

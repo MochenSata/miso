@@ -1,8 +1,34 @@
 
 
+  //个人中心
 
+  
+  layui.use(['dropdown', 'util', 'layer', 'table'], function(){
+    var dropdown = layui.dropdown
+    ,util = layui.util
+    ,layer = layui.layer
+    ,table = layui.table
+    ,$ = layui.jquery;
+    
+    //初演示
+    dropdown.render({
+      elem: '.demo1'
+      ,data: [{
+        title: '个人中心'
+        ,href:"myorder/miso_order_all.html"
+      },{
+        title: '消息'
+        ,href:"customer/login.html"
+      },{
+        title: '我的订单'
+        ,href:"customer/login.html"
+      }]
+      ,click: function(obj){
+        window.location.href = obj.href;
+      }
+    });
 
-//分类按钮
+  });
   $(".classification").on("click", "button", function(event) {
     var ele = $(event.target).closest("button");
     if (ele.length) {
@@ -14,9 +40,6 @@
     }
   });
 
-
-
-//热门推荐
 setTimeout(function (){
   layui.use(['carousel', 'form'], function(){
 
@@ -38,7 +61,29 @@ setTimeout(function (){
 
 
 
-
+  var custId ;
+  getCurrentLoginCustomerInfo();
+  //获得当前登录用户信息
+  function getCurrentLoginCustomerInfo() {
+    var tokenStr = localStorage.getItem("token");
+    var token = JSON.parse(tokenStr);
+    console.log("从localStorage 中获得的token是：" + token);
+    $.ajax({
+      type: "get",
+      url: "customer/currentCustomer",
+      headers: {'token': token},
+      success: function (result) {
+        console.log(result);
+        custId = result.data.custId;
+        var custName = result.data.custName;
+        $(".hiddenable").hide();
+        $(".hiddenable1").show();
+        console.log("custId:" + custId);
+        console.log("custName:" + custName);
+        $(".custName").text(custName)
+      }
+    })
+  }
 
 
   
