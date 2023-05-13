@@ -93,5 +93,17 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
 
     }
 
+    @Override
+    public ServerResult getHouseByType(String type) {
+        QueryWrapper<House> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("*");
+        queryWrapper.lt("house_status",3);
+        queryWrapper.eq("house_kind",type);
+        System.out.println(queryWrapper);
+        List<House> houseList=houseMapper.selectList(queryWrapper);
+        return ServerResult.success(200,ResultMsg.success,houseList);
+
+    }
+
 
 }

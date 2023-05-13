@@ -138,6 +138,88 @@
         </li>
     </ul>
 </div>
+
+
+<script>
+
+    $(".classification").on("click", "button", function(event) {
+        var ele = $(event.target).closest("button");
+        if (ele.length) {
+            var oldbtn = $(".selectkindbtn");
+            oldbtn.removeClass("selectkindbtn").addClass("kindbtn");
+            ele.addClass("selectkindbtn");
+            var selectbtnValue = ele.find(".kindword").text();
+            console.log("被选中的" + selectbtnValue);
+            var url="${pageContext.request.contextPath}/house/list"
+            $.ajax({
+                url,
+                type: "get",
+                data: {type: selectbtnValue},
+                success: function (result) {
+                    var listhtml="";
+                    // if (!result.data) {
+                    //     console.log("数据为空");
+                    //     return;
+                    // }
+                    var listhtml = "";
+                    var proWriterArr = result.data;// 存放的查找到的数据集合
+
+                    for (var i=0;i<proWriterArr.length;i++){
+                        var houseId = proWriterArr[i].houseId;
+                        var houseName = proWriterArr[i].houseName;
+                        var houseKind = proWriterArr[i].houseKind;
+                        var houseMainpicture = proWriterArr[i].houseMainpicture;
+                        var houseScore = proWriterArr[i].houseScore;
+                        var housePrice = proWriterArr[i].housePrice;
+                        var houseIntro = proWriterArr[i].houseIntro;
+                        console.log(houseName)
+                        listhtml+='<a href="${pageContext.request.contextPath}/house/'+houseId+'"><li class="home">'
+                        listhtml+='    <img src="'+houseMainpicture+'" >'
+                        listhtml+='    <div class="line1">'
+                        listhtml+='    <span class="homekind">类型:'+houseKind+'</span>'
+                        listhtml+=' <img src="img/index/pingfen.png" class="pingfenico">'
+                        listhtml+='    <span class="score">'+houseScore+'</span>'
+                        listhtml+=' </div>'
+                        listhtml+='<div class="line2"><b>'+houseName+'</b></div>'
+                        listhtml+=' <div class="line3"><b>￥</b><span class="price">'+housePrice+'</span><span class="houzhui">/晚</span></div>'
+                        listhtml+='</li></a>';
+                    }
+                    $(".homelist").html(listhtml);
+                }
+            })
+        }
+    });
+        // $(".kindbtn").click(function (event){
+        //     var type=$(this).data("type");
+        //     console.log(type);
+        //
+        // })
+                    // if (result && result.code == 0 && result.data && result.data.length) {
+
+                            //将得到的数据渲染到页面中
+                <%--            var LiEle=--%>
+                <%--                '<a href="${pageContext.request.contextPath}/house/'+houseId+'"><li class="home">'+--%>
+                <%--                '    <img src="'+houseMainpicture+'" >'+--%>
+                <%--                '    <div class="line1">'+--%>
+                <%--                '    <span class="homekind">类型:'+houseKind+'</span>'+--%>
+                <%--                ' <img src="img/index/pingfen.png" class="pingfenico">'+--%>
+                <%--                '    <span class="score">'+houseScore+'</span>'+--%>
+                <%--                ' </div>'+--%>
+                <%--                '<div class="line2"><b>'+houseName+'</b></div>'+--%>
+                <%--                ' <div class="line3"><b>￥</b><span class="price">'+housePrice+'</span><span class="houzhui">/晚</span></div>'+--%>
+                <%--                '</li></a>';--%>
+                <%--            listhtml=listhtml+LiEle;--%>
+                <%--            $(".homelist").html(listhtml);--%>
+                <%--        }--%>
+                <%--    } else {--%>
+                <%--        console.error('返回的数据格式不正确');--%>
+                <%--    }--%>
+                <%--},--%>
+                <%--error: function (xhr, status, error) {--%>
+                <%--    console.error('AJAX请求失败：' + error);--%>
+                <%--//},--%>
+</script>
+
 <script>
     //进入首页加载热门推荐数据
     var hotHtml="";

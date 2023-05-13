@@ -9,8 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/house")
@@ -43,5 +46,19 @@ public class HouseController {
         mav .addObject("serverResult",ServerResult.success(200,ResultMsg.success,house));
         mav.setViewName("house/house");
         return mav;
+    }
+
+    @GetMapping("list")
+    @ResponseBody
+    public ServerResult getHouseList(@RequestParam(value = "type",defaultValue = "全部")String type){
+        if ("全部".equals(type)){
+            System.out.println("fyj111");
+
+            return houseService.getHouseByRentNum();
+
+        }else{
+            System.out.println("fyj222");
+            return houseService.getHouseByType(type);
+        }
     }
 }
