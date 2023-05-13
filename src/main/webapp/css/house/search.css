@@ -68,7 +68,7 @@
     border: none;
 }
 
-.nav .search-area input[type="button"]{
+.nav .search-area input[type="submit"]{
     margin-top: 5px;
     margin-right: 5px;
     height: 40px;
@@ -82,7 +82,7 @@
     font-size: 13px;
 
 }
-.nav .search-area input[type="button"]:hover{
+.nav .search-area input[type="submit"]:hover{
        background-color:#E00B41;
 
 }

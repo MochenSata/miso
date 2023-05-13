@@ -35,8 +35,8 @@
             </div>
             <div class="layui-col-xs7">
                 <div class="search-area">
-                    <form action="house/search.html">
-                        <input type="text" placeholder="请输入目的地">
+                    <form action="${pageContext.request.contextPath}/house/search">
+                        <input type="text" placeholder="请输入目的地" name="search">
                         <input type="submit" value="搜索">
                     </form>
                 </div>

@@ -94,6 +94,19 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
     }
 
     @Override
+    public ServerResult getHouseByMoreCondition(String search) {
+        System.out.println("search:"+search);
+        QueryWrapper<House> wrapper = new QueryWrapper<>();
+        wrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum","house_id");
+        wrapper.like("house_name","%" + search + "%").or().like("house_kind","%" + search + "%");
+        List<House> houseList = houseMapper.selectList(wrapper);
+        System.out.println(houseList);
+        if (houseList.size()>0)
+            return ServerResult.success(200, ResultMsg.success,houseList);
+        return ServerResult.fail(201,ResultMsg.fail,false);
+    }
+
+    @Override
     public ServerResult getHouseByType(String type) {
         QueryWrapper<House> queryWrapper=new QueryWrapper<>();
         queryWrapper.select("*");

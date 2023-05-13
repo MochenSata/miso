@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,9 +30,9 @@
             </div>
             <div class="layui-col-xs7">
                 <div class="search-area">
-                    <form action="">
-                        <input type="text" placeholder="请输入目的地">
-                        <input type="button" value="搜索">
+                    <form action="${pageContext.request.contextPath}/house/search">
+                        <input type="text" placeholder="请输入目的地" name="search">
+                        <input type="submit" value="搜索">
                     </form>
                 </div>
             </div>
@@ -93,121 +94,28 @@
 
 <!--民宿列表homelist-->
 <div class="homelist">
-
     <ul>
-        <a href="../house/house.html"><li class="home">
-            <img src="../img/house/chuanwu/chuanwu1/main.jpg" >
+        <c:if test="${serverResult.code == 200}">
+        <c:forEach var="house" items="${serverResult.data}">
+        <a href="${pageContext.request.contextPath}/house/${house.houseId}"><li class="home">
+            <img src="${house.houseMainpicture}" >
             <div class="line1">
-                <span class="homekind">类型:海景房</span>
+                <span class="homekind">类型:${house.houseKind}</span>
 
                 <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
+                <span class="score">${house.houseScore}</span>
 
             </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
+            <div class="line2"><b>${house.houseName}</b></div>
+            <div class="line3"><b>￥</b><span class="price">${house.housePrice}</span><span class="houzhui">/晚</span></div>
         </li></a>
-
-        <a href=""><li class="home">
-            <img src="../img/house/haijingfang/haijingfang1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="../img/house/haijingfang/haijingfang2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="../img/house/luying/luying1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="../img/house/muwu/muwu1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="../img/house/muwu/muwu2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="../img/house/rishilvguan/rishilvguan1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="../img/house/haijingfang/haijingfang2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
+        </c:forEach>
+        </c:if>
 
     </ul>
 
 </div>
 
-<div class="pagearea">
-    <a href="" class="pagebtn"><</a>
-    <span class="currentpage">1</span>
-    <a href="" class="pagebtn">></a>
-</div>
 
 
 <script src="../js/house/search.js"></script>

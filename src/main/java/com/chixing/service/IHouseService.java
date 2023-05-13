@@ -4,8 +4,6 @@ import com.chixing.pojo.House;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chixing.util.ServerResult;
 
-import java.util.List;
-
 /**
  * <p>
  *  服务类
@@ -23,8 +21,7 @@ public interface IHouseService extends IService<House> {
      */
     public ServerResult getHotHousesByScore();
     public ServerResult getHouseByRentNum();
-
-    ServerResult getHouseByType(String type);
-
+    public ServerResult getHouseByMoreCondition(String search);
+    public ServerResult getHouseByType(String type);
 
 }

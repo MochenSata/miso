@@ -61,4 +61,14 @@ public class HouseController {
             return houseService.getHouseByType(type);
         }
     }
+
+    //搜索栏搜索房源
+    @GetMapping("search")
+    public ModelAndView getHouseByMoreCondition(@RequestParam(value = "search",required = false)String search){
+       ServerResult serverResult = houseService.getHouseByMoreCondition(search);
+       ModelAndView mav = new ModelAndView();
+       mav.addObject("serverResult",serverResult);
+       mav.setViewName("house/search");
+       return mav;
+    }
 }
