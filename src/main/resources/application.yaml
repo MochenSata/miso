@@ -12,8 +12,14 @@ spring:
     password: root
   mvc:
     view:
-      suffix: /
-      prefix: .jsp
+      suffix: .jsp
+      prefix: /
+
+  redis:
+    database: 1
+    host: localhost
+    port: 6379
+    password:
 
 mybatis-plus:
   global-config:

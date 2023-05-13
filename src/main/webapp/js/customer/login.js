@@ -1,5 +1,5 @@
 document.querySelector(".usertelno").onblur=checkUsertelno;
-document.querySelector(".userpwd").onblur=checkUserpwd;
+// document.querySelector(".userpwd").onblur=checkUserpwd;
 
 function checkIpt(ele,msgTipEle,regexp,errorMsg){
     var eleValue = ele.value;
@@ -21,11 +21,11 @@ function checkUsertelno(){
     checkIpt(usertelnoEle,usertelnoTipEle,regexp,errorMsg);
 }
 
-//验证密码
+/*//验证密码
 function checkUserpwd(){
     var userpwdEle = document.querySelector(".userpwd");
     var userpwdTipEle = document.querySelector(".userpwdTip");
     var regexp = /^[a-zA-Z0-9]{8,16}$/;
     var errorMsg = "密码只能是数字。字母。下划线，应该有8-16个字符";
     checkIpt(userpwdEle,userpwdTipEle,regexp,errorMsg);
-}
+}*/

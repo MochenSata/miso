@@ -1,53 +1,4 @@
-layui.use(['carousel', 'form'], function(){
-    var carousel = layui.carousel
-    ,form = layui.form;
-    
-    //设定各种参数
-    var ins3 = carousel.render({
-      elem: '#test3'
-      ,width:'1070px'
-      ,height:'498px'
-    });
-    
-    //事件
-    carousel.on('change(test4)', function(res){
-      console.log(res)
-    });
-    
-    var $ = layui.$, active = {
-      set: function(othis){
-        var THIS = 'layui-bg-normal'
-        ,key = othis.data('key')
-        ,options = {};
-        
-        othis.css('background-color', '#5FB878').siblings().removeAttr('style'); 
-        options[key] = othis.data('value');
-        ins3.reload(options);
-      }
-    };
-    
-    //监听开关
-    form.on('switch(autoplay)', function(){
-      ins3.reload({
-        autoplay: this.checked
-      });
-    });
-    
-    $('.demoSet').on('keyup', function(){
-      var value = this.value
-      ,options = {};
-      if(!/^\d+$/.test(value)) return;
-      
-      options[this.name] = value;
-      ins3.reload(options);
-    });
-    
-    //其它示例
-    $('.demoTest .layui-btn').on('click', function(){
-      var othis = $(this), type = othis.data('type');
-      active[type] ? active[type].call(this, othis) : '';
-    });
-  });
+
 
   //个人中心
 
@@ -78,30 +29,6 @@ layui.use(['carousel', 'form'], function(){
     });
 
   });
-
-  //修改分类样式
-  // $(".classification").on("click", "button", function(event) {
-  //   var ele = event.target;
-  //   if (ele.nodeName == "BUTTON") {
-  //     var oldbtn = $(".selectkindbtn");
-  //     oldbtn.removeClass("selectkindbtn").addClass("kindbtn");
-  //     $(ele).addClass("selectkindbtn");
-  //     var selectbtnValue = $(ele).text();
-  //     console.log("被选中的" + selectbtnValue);
-  //   }
-  // });
-
-  // document.querySelector(".classification").onclick=(function(event) {
-  //   var ele = event.target;
-  //   if (ele.nodeName === "BUTTON") {
-  //     var oldbtn = document.querySelector(".selectkindbtn");
-  //     oldbtn.classList.remove("selectkindbtn");
-  //     oldbtn.classList.add("kindbtn");
-  //     ele.classList.add("selectkindbtn");
-  //     var selectbtnValue = ele.textContent;
-  //     console.log("被选中的" + selectbtnValue);
-  //   }
-  // });
   $(".classification").on("click", "button", function(event) {
     var ele = $(event.target).closest("button");
     if (ele.length) {
@@ -112,5 +39,51 @@ layui.use(['carousel', 'form'], function(){
       console.log("被选中的" + selectbtnValue);
     }
   });
+
+setTimeout(function (){
+  layui.use(['carousel', 'form'], function(){
+
+    var carousel = layui.carousel
+        ,form = layui.form;
+
+    //设定各种参数
+    var ins3 = carousel.render({
+      elem: '#test3'
+      ,width:'1070px'
+      ,height:'498px'
+
+    });
+    $("#hothouses").html(hotHtml);
+
+    ins3.reload({elem: '#test3'});//重置轮播图
+  });
+},2000);
+
+
+
+  var custId ;
+  getCurrentLoginCustomerInfo();
+  //获得当前登录用户信息
+  function getCurrentLoginCustomerInfo() {
+    var tokenStr = localStorage.getItem("token");
+    var token = JSON.parse(tokenStr);
+    console.log("从localStorage 中获得的token是：" + token);
+    $.ajax({
+      type: "get",
+      url: "customer/currentCustomer",
+      headers: {'token': token},
+      success: function (result) {
+        console.log(result);
+        custId = result.data.custId;
+        var custName = result.data.custName;
+        $(".hiddenable").hide();
+        $(".hiddenable1").show();
+        console.log("custId:" + custId);
+        console.log("custName:" + custName);
+        $(".custName").text(custName)
+      }
+    })
+  }
+
 
   

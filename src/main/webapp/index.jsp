@@ -5,7 +5,8 @@
   Time: 15:04
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,8 +18,11 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="layui/layui.js"></script>
-
-
+    <style>
+        .hiddenable1 {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <!--导航栏nav-->
@@ -37,9 +41,10 @@
                     </form>
                 </div>
             </div>
-            <div class="layui-col-xs1"><a href="customer/login.html" ><span class="login">登录</span></a></div>
-            <div class="layui-col-xs1"><a href="customer/signup.html" ><span class="signup">注册</span></a></div>
-
+            <div class="layui-col-xs1 hiddenable"><a href="customer/login.jsp" ><span class="login">登录</span></a></div>
+            <div class="layui-col-xs1 hiddenable"><a href="customer/signup.html" ><span class="signup">注册</span></a></div>
+            <div class="layui-col-xs1 hiddenable1"><span class="login">欢迎</span></div>
+            <div class="layui-col-xs1 hiddenable1"><span class="custName"></span></div>
             <div class="layui-col-xs1">
                 <div class="layui-btn-container">
                     <button type="button" class="layui-btn layui-btn-primary demo1 personcenter">
@@ -71,63 +76,13 @@
 
     <div class="layui-col-xs10 hotarea">
         <div class="layui-carousel" id="test3" lay-filter="test4">
-            <div carousel-item="" >
-                <div class="hot1">
-                    <img src="img/house/chuanwu/chuanwu1/main.jpg" class="hotpic"></img>
-                    <a href="house/house.html"><div class="hotdesc">
-                        <span class="housename">苏州湾豪华海景房</span>
-                        <span class="housekind">类型：<span>海景房</span></span>
-                        <span class="introduction">我们的自然主义Boudoir民宿坐落在大厚板的中心，拥有您振兴感官所需的一切。 非常私密的区域，适合自然主义者，设有室外热水浴缸和淋浴设施。我们欢迎所有房客体验我们可爱的自然主义者Boudoir ，并与您的特别朋友重新沟通。</span>
-                        <span class="houseprice">价格：￥<span><b>1999</b></span> 起</span>
-                        <span class="clicktodesc">点击查看详情</span>
-                    </div></a>
-                </div>
-                <div class="hot2">
-                    <img src="img/house/haijingfang/haijingfang1/main.jpg" class="hotpic"></img>
-                    <a href=""><div class="hotdesc">
-                        <span class="housename">苏州湾豪华海景房</span>
-                        <span class="housekind">类型：<span>海景房</span></span>
-                        <span class="introduction">我们的自然主义Boudoir民宿坐落在大厚板的中心，拥有您振兴感官所需的一切。 非常私密的区域，适合自然主义者，设有室外热水浴缸和淋浴设施。我们欢迎所有房客体验我们可爱的自然主义者Boudoir ，并与您的特别朋友重新沟通。</span>
-                        <span class="houseprice">价格：￥<span><b>1999</b></span>起</span>
-                        <span class="clicktodesc">点击查看详情</span>
-                    </div></a>
-                </div>
-                <div class="hot3">
-                    <img src="img/house/haijingfang/haijingfang2/main.jpg" class="hotpic"></img>
-                    <a href=""><div class="hotdesc">
-                        <span class="housename">苏州湾豪华海景房</span>
-                        <span class="housekind">类型：<span>海景房</span></span>
-                        <span class="introduction">我们的自然主义Boudoir民宿坐落在大厚板的中心，拥有您振兴感官所需的一切。 非常私密的区域，适合自然主义者，设有室外热水浴缸和淋浴设施。我们欢迎所有房客体验我们可爱的自然主义者Boudoir ，并与您的特别朋友重新沟通。</span>
-                        <span class="houseprice">价格：￥<span><b>1999</b></span>起</span>
-                        <span class="clicktodesc">点击查看详情</span>
-                    </div></a>
-                </div>
-                <div class="hot4">
-                    <img src="img/house/nongjia/nongjia1/main.jpg" class="hotpic"></img>
-                    <a href=""><div class="hotdesc">
-                        <span class="housename">苏州湾豪华海景房</span>
-                        <span class="housekind">类型：<span>海景房</span></span>
-                        <span class="introduction">我们的自然主义Boudoir民宿坐落在大厚板的中心，拥有您振兴感官所需的一切。 非常私密的区域，适合自然主义者，设有室外热水浴缸和淋浴设施。我们欢迎所有房客体验我们可爱的自然主义者Boudoir ，并与您的特别朋友重新沟通。</span>
-                        <span class="houseprice">价格：￥<span><b>1999</b></span>起</span>
-                        <span class="clicktodesc">点击查看详情</span>
-                    </div></a>
-                </div>
-                <div class="hot5">
-                    <img src="img/house/muwu/muwu1/main.jpg" class="hotpic"></img>
-                    <a href=""><div class="hotdesc">
-                        <span class="housename">苏州湾豪华海景房</span>
-                        <span class="housekind">类型：<span>海景房</span></span>
-                        <span class="introduction">我们的自然主义Boudoir民宿坐落在大厚板的中心，拥有您振兴感官所需的一切。 非常私密的区域，适合自然主义者，设有室外热水浴缸和淋浴设施。我们欢迎所有房客体验我们可爱的自然主义者Boudoir ，并与您的特别朋友重新沟通。</span>
-                        <span class="houseprice">价格：￥<span><b>1999</b></span>起</span>
-                        <span class="clicktodesc">点击查看详情</span>
-                    </div></a>
-                </div>
+            <div carousel-item="" id="hothouses">
+
             </div>
         </div>
     </div>
 
 </div>
-
 
 <!--分类-->
 <div class="classification">
@@ -182,117 +137,102 @@
         </li>
     </ul>
 </div>
+<script>
+    //进入首页加载热门推荐数据
+    var hotHtml="";
+    loadHotHouses();
+    function loadHotHouses(){
+        var url = "${pageContext.request.contextPath}/house/hot";
+        $.get(url
+            ,null
+            , function (result){
+                //console.log(JSON.stringify(result));
+                var hotList=result.data;//存放热门推荐房源的集合
 
+                for(var i=0;i<hotList.length;i++){
+                    var houseId=hotList[i].houseId;
+                    var houseName=hotList[i].houseName;
+                    var houseKind=hotList[i].houseKind;
+                    var houseMainpicture=hotList[i].houseMainpicture;
+                    var houseScore=hotList[i].houseScore;
+                    var housePrice=hotList[i].housePrice;
+                    var houseIntro=hotList[i].houseIntro;
+
+                    console.log(houseName)
+
+                    // 将得到的数据渲染到页面中
+
+                    var LiEle=
+                        '<div class="hot">'+
+                        '        <img src="'+houseMainpicture+'" class="hotpic"></img>'+
+                        '    <a href="${pageContext.request.contextPath}/house/'+houseId+'"><div class="hotdesc">'+
+                        '     <span class="housename">'+houseName+'</span>'+
+                        '    <span class="housekind">类型：<span>'+houseKind+'</span></span>'+
+                        '     <span class="introduction">'+houseIntro+'</span>'+
+                        '    <span class="houseprice">价格：￥<span><b>'+housePrice+'</b></span> 起</span>'+
+                        '    <span class="clicktodesc">点击查看详情</span>'+
+                        '    </div></a>'+
+                        '     </div>'
+                    hotHtml=hotHtml+LiEle;
+
+                    // $("#hothouses").append(LiEle);
+
+                    $("#hothouses").html(hotHtml);
+                }
+                console.log(hotHtml);
+
+            })
+    }
+</script>
 
 <!--民宿列表homelist-->
 <div class="homelist">
 
-    <ul >
-        <a href="house/house.html"><li class="home">
-            <img src="img/house/chuanwu/chuanwu1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
+    <ul  class="homes">
 
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
 
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/haijingfang/haijingfang1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/haijingfang/haijingfang2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/luying/luying1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/muwu/muwu1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/muwu/muwu2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/rishilvguan/rishilvguan1/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
-
-        <a href=""><li class="home">
-            <img src="img/house/haijingfang/haijingfang2/main.jpg" >
-            <div class="line1">
-                <span class="homekind">类型:海景房</span>
-
-                <img src="img/index/pingfen.png" class="pingfenico">
-                <span class="score">4.5</span>
-
-            </div>
-            <div class="line2"><b>苏州湾特色海景房</b></div>
-            <div class="line3"><b>￥</b><span class="price">2599</span><span class="houzhui">/晚</span></div>
-        </li></a>
     </ul>
 </div>
+<script>
+    // 项目刚开启的时候要想后端的 controller 层进行请求，访问数据
+    loadHouse();
+
+    // 加载首页需要的商品数据，产生 ajax 请求
+    function loadHouse(){
+        console.log("abc");
+        var url="${pageContext.request.contextPath}/house/hotlist";
+        $.get(url
+            ,null
+            ,function (result){
+                console.log(JSON.stringify(result));
+                var proWriterArr=result.data;// 存放的查找到的数据集合
+                for (var i=0;i<proWriterArr.length;i++) {
+                    var houseId = proWriterArr[i].houseId;
+                    var houseName = proWriterArr[i].houseName;
+                    var houseKind = proWriterArr[i].houseKind;
+                    var houseMainpicture = proWriterArr[i].houseMainpicture;
+                    var housePrice = proWriterArr[i].housePrice;
+                    var houseScore = proWriterArr[i].houseScore;
+                    console.log(houseId);
+                    // 将得到的数据渲染到页面中
+                    var LiEle=
+                        '<a href="${pageContext.request.contextPath}/house/'+houseId+'"><li class="home">'+
+                    '    <img src="'+houseMainpicture+'" >'+
+                    '    <div class="line1">'+
+                    '    <span class="homekind">类型:'+houseKind+'</span>'+
+                    ' <img src="img/index/pingfen.png" class="pingfenico">'+
+                    '    <span class="score">'+houseScore+'</span>'+
+                    ' </div>'+
+                    '<div class="line2"><b>'+houseName+'</b></div>'+
+                    ' <div class="line3"><b>￥</b><span class="price">'+housePrice+'</span><span class="houzhui">/晚</span></div>'+
+                    '</li></a>';
+
+                    console.log(LiEle);
+                    $(".homes").append(LiEle);
+                }
+            });
+    }
+</script>
 
 <div class="pagearea">
     <a href="" class="pagebtn"><</a>
@@ -303,9 +243,10 @@
 
 
 
-<script src="js/index.js" charset="utf-8"></script>
+<script defer src="js/index.js" charset="utf-8"></script>
 
 <script>
+
 
 </script>
 </body>
