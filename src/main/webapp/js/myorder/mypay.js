@@ -1,4 +1,9 @@
+var startDate = new Date($("#test-startDate-1").val());
+var endDate = new Date($("#test-endDate-1").val());
 
+var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+$(".nights").text(diffDays);
 $.fn.zongjia = function(){
 //总价
 var danjiaEle=document.querySelector(".danjia").innerText
@@ -184,3 +189,5 @@ function checkCustidcard(){
     
 
     // });
+
+

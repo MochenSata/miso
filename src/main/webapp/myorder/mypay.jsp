@@ -78,7 +78,7 @@
     <div class="left">
         <div class="kuang1">
             <h2 class="xingcheng">您的行程</h2>
-            <span class="ruzhucount">入住人数: <span class="renshu">0</span> 人</span>
+            <span class="ruzhucount">入住人数: <span class="renshunum">${orderDetail.custNum}</span> 人</span>
 
         </div>
         <div class="kuang2">
@@ -95,12 +95,12 @@
                             <div class="layui-inline" id="test6">
                                 <div class="layui-input-inline">
                                     <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input"
-                                           placeholder="开始日期">
+                                           placeholder="开始日期" value="${orderDetail.custStartDate}">
                                 </div>
                                 <div class="layui-form-mid">-</div>
                                 <div class="layui-input-inline">
                                     <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input"
-                                           placeholder="结束日期">
+                                           placeholder="结束日期" value="${orderDetail.custEndDate}">
                                 </div>
                             </div>
                         </div>
@@ -296,12 +296,10 @@
 </div>
 
 <script src="../js/myorder/mypay.js"></script>
-</body>
 <script>
 
-
-
-
 </script>
+</body>
+
 
 </html>
