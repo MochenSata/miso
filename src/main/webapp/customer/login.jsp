@@ -57,14 +57,22 @@
                 custTelno:$(".usertelno").val(),
                 custPassword:$(".userpwd").val()
             },
-            success:function (result){
+            success: function (result) {
+                // 当请求成功时执行以下代码
                 console.log("result:" + result);
                 console.log("json result:" + JSON.stringify(result));
-                //保存信息到本地，里面都 token
-                var token = JSON.stringify(result.data);
-                console.log("token:" + token);
-                localStorage.setItem("token",token);
-                 window.location.href = "../index.jsp";
+
+                if (result.code == 200) {
+                    // 登录成功
+                    var token = JSON.stringify(result.data);
+                    console.log("token:" + token);
+                    localStorage.setItem("token", token);
+                    window.location.href = "../index.jsp"; // 重定向到index.jsp页面
+                } else {
+                    // 密码输入不正确，处理相应的逻辑
+                    console.log("登录失败，请检查用户名和密码");
+                    alert("用户名或密码错误"); // 弹出提示框显示错误信息
+                }
             }
         })
     })

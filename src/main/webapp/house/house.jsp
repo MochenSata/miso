@@ -31,19 +31,27 @@
             </div>
             <div class="layui-col-xs7">
                 <div class="search-area">
-                    <form action="">
-                        <input type="text" placeholder="请输入目的地">
-                        <input type="button" value="搜索">
-                    </form>
                 </div>
             </div>
-            <div class="layui-col-xs1"><a href=""><span class="login">登录</span></a></div>
-            <div class="layui-col-xs1"><a href=""><span class="signup">注册</span></a></div>
+            <div class="layui-col-xs1 hiddenable"><a href="${pageContext.request.contextPath}/customer/login.jsp" ><span class="login">登录</span></a></div>
+            <div class="layui-col-xs1 hiddenable"><a href="${pageContext.request.contextPath}/customer/signup.html" ><span class="signup">注册</span></a></div>
+            <div class="layui-col-xs1 hiddenable1" style="display: none"><span class="login">欢迎</span></div>
+            <div class="layui-col-xs1 hiddenable1" style="display: none"><span class="custName"></span></div>
             <!-- <div class="layui-col-xs1"><div class="headshort"><img src="" alt=""></div> </div> -->
-            <div class="layui-col-xs1"><a href="" class="personal-btn">
-                <div class="headshort"><img src="" alt=""></div>
-                <span class="personal"> 个人中心</span>
-            </a></div>
+            <div class="layui-col-xs1">
+                <div class="layui-btn-container">
+                    <button type="button" class="layui-btn layui-btn-primary demo1 personcenter">
+                        <div href="" class="personal-btn">
+                            <div class="headshort"><img src="${pageContext.request.contextPath}/img/customer/headshort.svg" alt=""></div>
+                            <div class="personal">
+                                <span id="custId" style="display: none"></span>
+                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
+                            </div>
+                        </div>
+
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -496,6 +504,62 @@
             , theme: '#008489'
         })
     });
+</script>
+
+<script>
+    var custId ;
+    getCurrentLoginCustomerInfo();
+    //获得当前登录用户信息
+    function getCurrentLoginCustomerInfo() {
+        var tokenStr = localStorage.getItem("token");
+        var token = JSON.parse(tokenStr);
+        console.log("从localStorage 中获得的token是：" + token);
+        $.ajax({
+            type: "get",
+            url: "../customer/currentCustomer",
+            headers: {'token': token},
+            success: function (result) {
+                console.log(result);
+                custId = result.data.custId;
+                var custName = result.data.custName;
+                $(".hiddenable").hide();
+                $(".hiddenable1").show();
+                console.log("custId:" + custId);
+                console.log("custName:" + custName);
+                $("#custId").text(custId)
+                $(".custName").text(custName)
+
+                //个人中心
+                setTimeout(function (){
+                    layui.use(['dropdown', 'util', 'layer', 'table'], function(){
+                        var dropdown = layui.dropdown
+                            ,util = layui.util
+                            ,layer = layui.layer
+                            ,table = layui.table
+                            ,$ = layui.jquery;
+                        //右上角个人中心
+                        var id=$("#custId").text();
+                        dropdown.render({
+
+                            elem: '.demo1'
+                            ,data: [{
+                                title: '个人中心'
+                                ,href:"${pageContext.request.contextPath}/myorder/customer/"+id
+                            },{
+                                title: '退出登录'
+                                ,href:""
+                            }]
+                            ,click: function(obj){
+                                window.location.href = obj.href;
+                            }
+                        });
+
+                    });
+                },2000);
+            }
+        })
+    }
+
 </script>
 
 </body>

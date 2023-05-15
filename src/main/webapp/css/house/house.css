@@ -127,44 +127,58 @@
   background-color: #DDDDDD
 }
 
-.nav .personal-btn {
+.personcenter{
   margin-top: 20px;
-  display: block;
-  height: 40px;
-  width: 120px;
-
+  padding-left: 0px;
+  height: 42px;
+  width: 80px;
+  border: 1px solid #DDDDDD;
   border-radius: 40px;
 }
-
-.nav .personal {
-  width: 60px;
-  height: 40px;
-
+.layui-btn-primary:hover{
+  border-color:#717171;
+}
+.nav .personal-btn{
 
   display: block;
-  float: left;
-  line-height: 40px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 14px;
-
-  border-radius: 20px;
-}
-
-.nav .personal-btn:hover {
-  background-color: #DDDDDD
-}
-
-.nav .headshort {
-  float: left;
-
-  background-color: #717171;
-  width: 40px;
   height: 40px;
-  border-radius: 40px;
+  width: 80px;
+
+}
+.nav .personal{
+  width:30px;
+  height: 30px;
+  margin-top: 5px;
+  display: block;
+  float: left;
+  /* border: 1px solid black; */
+
+}
+.nav .personal .hengxian{
+  margin-left: 8px;
+  margin-top: 5px;
+  float: left;
+  height: 20px;
+  width: 20px;
+}
+
+.nav .headshort{
+  float: left;
+  margin-top: 5px;
+  margin-left: 5px;
+  /* background-color: #717171; */
+  width: 32px;
+  height:32px;
+  border-radius: 30px;
   margin-right: 0px;
 }
-
+.nav .headshort img{
+  padding-left: 2px;
+  display: block;
+  float: left;
+  width: 32px;
+  height: 32px;
+}
 /*----------------------------图片--------------------------------------------------*/
 
 
