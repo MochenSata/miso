@@ -51,8 +51,9 @@
 <!--图片-->
 <div class="imgcontainer">
     <div class="left">
-        <img src="${serverResult.data.houseMainpicture}" alt="海景主图" class="left-img">
+        <img  src="${serverResult.data.houseMainpicture}"alt="海景主图" class="left-img" >
     </div>
+
     <div class="right">
         <div class="top-left">
             <!-- 右半部分上半部分左边内容 -->
@@ -90,6 +91,7 @@
         <div class="mainhousetext">
             <span class="minloc">苏州市-${serverResult.data.houseName}</span>
             <span class="maintitle">${serverResult.data.houseTheme}</span>
+
 
             <div class="houseinfor">
                 <div class="perhouseinfor">
@@ -344,12 +346,15 @@
             <!-- 固定的内容的内容 -->
             <div class="perhousePrice">
                 <span class="housePrice">￥${serverResult.data.housePrice}</span>
+
                 <span class="perday">/晚</span>
             </div>
             <div class="fixedscore">
-                <div id="test4"></div>
+                <div id="test4">
+
+                </div>
             </div>
-            <form class="order-form" action="${pageContext.request.contextPath}/myorder/num&startdate&enddate" method="post">
+            <form class="order-form" action="${pageContext.request.contextPath}/myorder/houseDetail" method="post">
 
 
                 <div class="layui-form">
@@ -376,7 +381,10 @@
                         <button class="counter-button" href="javascript:void(0)" id="subtract">-</button>
                         <button class="counter-button" href="javascript:void(0)" id="add">+</button>
                     </div>
-
+                    <input type="hidden" value="${serverResult.data.houseMainpicture}" name="houseMainpicture">
+                    <input type="hidden" value="${serverResult.data.housePrice}" name="housePrice">
+                    <input type="hidden" value="${serverResult.data.houseScore}" name="houseScore">
+                    <input type="hidden" value="${serverResult.data.houseTheme}" name="houseTheme">
                     <input type="submit" class="formsubBtn" value="查看可预订状态">
                 </div>
             </form>

@@ -247,17 +247,17 @@
             <div class="r1">
 
                 <div class="r2">
-                    <img class="tupian" src="../img/house/chuanwu/chuanwu1/2.jpg">
+                    <img class="tupian" src="${orderDetail.houseMainpicture}">
                 </div>
 
                 <div class="r3">
-                    <span class="biaoyu">促销!令人惊叹的6卧室,带健身房、按摩室和瑜伽厅</span>
+                    <span class="biaoyu">${orderDetail.houseTheme}</span>
                 </div>
                 <div>
                     <img class="pingfen" src="../img/myorder/pingfen.png">
                 </div>
                 <div>
-                    <span class="pf">4.9</span>
+                    <span class="pf">${orderDetail.houseScore}</span>
                 </div>
             </div>
 
@@ -278,7 +278,7 @@
 
             <div class="r6">
                 <div class="r7">
-                    <span class="fangfeidanjia">￥<span class="danjia">199</span></span>
+                    <span class="fangfeidanjia">￥<span class="danjia">${orderDetail.housePrice}</span></span>
                     <span class="tianshu">x <span class="nights">0</span> 晚 </span>
                     <span class="zongji">￥<span class="subtotal">0</span></span>
                 </div>

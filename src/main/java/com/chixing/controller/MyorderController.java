@@ -40,14 +40,19 @@ public class MyorderController {
     }
 
 
-    @PostMapping("/num&startdate&enddate")
+    @PostMapping("/houseDetail")
+    @ResponseBody
     public ModelAndView numAndStartDateAndEndDate(@RequestParam("custNum") Integer custNum,
                                                   @RequestParam("custStartDate")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate custStartDate,
-                                                  @RequestParam("custEndDate")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate custEndDate){
+                                                  @RequestParam("custEndDate")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate custEndDate,
+                                                  @RequestParam("houseMainpicture")String houseMainpicture,
+                                                  @RequestParam("houseTheme")String houseTheme,
+                                                  @RequestParam("houseScore")Float houseScore,
+                                                  @RequestParam("housePrice")Float housePrice){
         System.out.println("custNum:"+custNum);
         System.out.println("custStartDate:"+custStartDate);
         System.out.println("custEndDate:"+custEndDate);
-        OrderCountAndDataVO orderDetail = new OrderCountAndDataVO(custNum,custStartDate,custEndDate);
+        OrderCountAndDataVO orderDetail = new OrderCountAndDataVO(custNum,custStartDate,custEndDate,houseMainpicture,houseTheme,houseScore,housePrice);
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("orderDetail",orderDetail);
