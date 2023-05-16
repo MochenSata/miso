@@ -453,7 +453,7 @@
     // 加法按钮事件处理函数
     addBtn.addEventListener("click", function(event) {
         event.preventDefault();
-        if (result < 4) {
+        if (result < ${serverResult.data.houseCustCount}) {
             result++;
         }
         resultEl.innerText = result;
