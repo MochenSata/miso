@@ -513,12 +513,13 @@
     function getCurrentLoginCustomerInfo() {
         var tokenStr = localStorage.getItem("token");
         var token = JSON.parse(tokenStr);
-        console.log("从localStorage 中获得的token是：" + token);
+        // console.log("从localStorage 中获得的token是：" + token);
         $.ajax({
             type: "get",
             url: "../customer/currentCustomer",
             headers: {'token': token},
             success: function (result) {
+                console.log(token);
                 console.log(result);
                 custId = result.data.custId;
                 var custName = result.data.custName;
@@ -561,7 +562,27 @@
     }
 
 </script>
+<script>
 
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.getElementsByClassName("order-form")[0];
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // 阻止表单的默认提交行为
+
+            var tokenStr = localStorage.getItem("token");
+            var token = JSON.parse(tokenStr);
+            console.log(token);
+
+            if (token) {
+                // 已登录状态，直接执行表单的提交行为
+                form.submit();
+            } else {
+                // 未登录状态，弹出提示框
+                alert("你未登录");
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
