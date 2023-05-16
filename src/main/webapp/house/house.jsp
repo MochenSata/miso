@@ -30,7 +30,7 @@
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
-                <div class="search-area">
+                <div class="search-area" style="visibility: hidden;">
                 </div>
             </div>
             <div class="layui-col-xs1 hiddenable"><a href="${pageContext.request.contextPath}/customer/login.jsp" ><span class="login">登录</span></a></div>
@@ -353,7 +353,8 @@
         <div class="fixed">
             <!-- 固定的内容的内容 -->
             <div class="perhousePrice">
-                <span class="housePrice">￥${serverResult.data.housePrice}</span>
+                <span class="housePrice">￥</span>
+                <span class="housePriceValue housePrice">${serverResult.data.housePrice}</span>
 
                 <span class="perday">/晚</span>
             </div>
@@ -389,6 +390,8 @@
                         <button class="counter-button" href="javascript:void(0)" id="subtract">-</button>
                         <button class="counter-button" href="javascript:void(0)" id="add">+</button>
                     </div>
+                    <input type="hidden" value="${serverResult.data.houseId}" name="houseId">
+                    <input type="hidden" value="${serverResult.data.houseName}" name="houseName">
                     <input type="hidden" value="${serverResult.data.houseMainpicture}" name="houseMainpicture">
                     <input type="hidden" value="${serverResult.data.housePrice}" name="housePrice">
                     <input type="hidden" value="${serverResult.data.houseScore}" name="houseScore">
@@ -406,6 +409,8 @@
 <script src="../js/house/house.js"></script>
 
 
+
+
 <!-- //地图 -->
 <script type="text/javascript">
     var map = new BMapGL.Map("map");
@@ -421,9 +426,6 @@
     var navi3DCtrl = new BMapGL.NavigationControl3D();  // 添加3D控件
     map.addControl(navi3DCtrl);
 </script>
-
-
-
 <script>
 
 
@@ -451,7 +453,7 @@
     // 加法按钮事件处理函数
     addBtn.addEventListener("click", function(event) {
         event.preventDefault();
-        if (result < 4) {
+        if (result < ${serverResult.data.houseCustCount}) {
             result++;
         }
         resultEl.innerText = result;

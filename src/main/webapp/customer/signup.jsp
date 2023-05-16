@@ -20,13 +20,16 @@
         <div class="left">
             <div class="signup-title">注册账号</div>
             <span class="msg"></span>
-            <form action="../index.html">
+            <form>
                 <input type="text" placeholder="您的手机号" class="usertelno">
                 <span class="tip usertelnoTip"></span>
+
                 <input type="text" placeholder="验证码" id="verification">
                 <button class="send-verification">发送验证码</button>
                 <span class="tip verificationTip"></span>
 
+                <input type="text" placeholder="设置密码" class="userpwd">
+                <span class="tip userpwdTip"></span>
 
                 <input type="submit" id="signup" value="注册">
             </form>
@@ -40,6 +43,70 @@
     </div>
 
     <script src="../js/customer/signup.js"></script>
+    <script src="../js/jquery-3.6.4.min.js"></script>
+    <script>
+        //注册
+        $("#signup").click(function(event) {
+            event.preventDefault(); // 阻止默认提交行为
+            var input_usertelno = $(".usertelno").val();
+            var input_userpwd = $(".userpwd").val();
+
+            // ajax提交用户名+密码到后台程序
+            $.ajax({
+                url: "${pageContext.request.contextPath}/customer/register",
+                type: "POST",
+                data: {
+                    usertelno: input_usertelno,
+                    userpwd: input_userpwd
+                },
+                success:function(rows) {
+                    console.log(rows)
+                    // 后台响应成功则跳转到登录页面
+                    if(rows.code===200) {
+                        alert("注册成功，点击确认返回到首页！");
+                        window.location.href = "${pageContext.request.contextPath}/index.jsp";
+                    }
+                    else {
+                        alert("手机号已注册，请更换手机号！");
+                    }
+                }
+            });
+        });
+
+        //发送验证码
+        var obj = $(".send-verification");
+        obj.click(function () {
+            var telno=$(".usertelno").val();
+            console.log(telno);
+
+            alert('验证码已发送，请注意查收！');
+            // 显示倒计时和重新发送按钮等相关操作
+            var countdown = 60;
+            setTime(obj);
+
+            function setTime() {
+                if (countdown === 0) {
+                    obj.prop('disabled', false).text('重新发送验证码');
+                } else {
+                    obj.prop('disabled', true).text( countdown + '秒'+'重新发送' );
+                    countdown--;
+                    setTimeout(setTime, 1000);
+                }
+            }
+            setTime();
+
+            // 发送 ajax 请求，请求成功后修改按钮状态和显示倒计时
+            $.ajax({
+                url: '/miso/send/'+telno, // 发送验证码的API接口地址
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    usertelno: telno// 填入手机号等相关参数
+                }
+
+            })
+        });
+    </script>
 </div>
 </body>
 </html>

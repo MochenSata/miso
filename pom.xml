@@ -131,6 +131,19 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <!-- <scope>provided</scope>-->
         </dependency>
+
+        <!--阿里云短信验证码sdk-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.5.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83</version>
+        </dependency>
     </dependencies>
 
     <build>

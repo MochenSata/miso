@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 sform: scale(0.5);">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 sform: scale(0.5)">
     <title>Document</title>
     <link rel="stylesheet" href="../layui/css/layui.css">
     <link rel="stylesheet" href="../css/myorder/mypay.css">
@@ -88,6 +88,7 @@
                 <button class="edit"></button>
             </div>
             <div class="riqiform">
+
                 <div class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-inline">
@@ -185,9 +186,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" data-value="0">不使用优惠券</a>
-                    <a class="dropdown-item" data-value="50">新人券_50元</a>
-                    <a class="dropdown-item" data-value="40">假日券_40元</a>
-                    <a class="dropdown-item" data-value="20">分享券_20元</a>
+
                 </div>
             </div>
         </div>
@@ -278,9 +277,10 @@
 
             <div class="r6">
                 <div class="r7">
-                    <span class="fangfeidanjia">￥<span class="danjia">${orderDetail.housePrice}</span></span>
-                    <span class="tianshu">x <span class="nights">0</span> 晚 </span>
-                    <span class="zongji">￥<span class="subtotal">0</span></span>
+                    <span class="fangfeidanjia"><span class="danjia" style="display: none">${orderDetail.housePrice}</span></span>
+                    <span class="fangfeidanjia">总计金额:<span class="danjia" ></span></span>
+<%--                    <span class="tianshu">x <span class="nights">0</span> 晚 </span>--%>
+                    <span class="zongji">￥<span class="subtotal" id="result">0</span></span>
                 </div>
                 <div class="r8">
                     <span class="qingjiefei">优惠券</span>
@@ -297,7 +297,89 @@
 
 <script src="../js/myorder/mypay.js"></script>
 <script>
+    var custId ;
+    getCurrentLoginCustomerInfo();
+    //获得当前登录用户信息
+    function getCurrentLoginCustomerInfo() {
+        var tokenStr = localStorage.getItem("token");
+        var token = JSON.parse(tokenStr);
+        // console.log("从localStorage 中获得的token是：" + token);
+        $.ajax({
+            type: "get",
+            url: "../customer/currentCustomer",
+            headers: {'token': token},
+            success: function (result) {
+                console.log(token);
+                console.log(result);
+                custId = result.data.custId;
+                var custName = result.data.custName;
+                $(".hiddenable").hide();
+                $(".hiddenable1").show();
+                console.log("custId:" + custId);
+                console.log("custName:" + custName);
+                $("#custId").text(custId)
+                $(".custName").text(custName)
+                couponById();
+                //个人中心
+                setTimeout(function (){
+                    layui.use(['dropdown', 'util', 'layer', 'table'], function(){
+                        var dropdown = layui.dropdown
+                            ,util = layui.util
+                            ,layer = layui.layer
+                            ,table = layui.table
+                            ,$ = layui.jquery;
+                        //右上角个人中心
+                        var id=$("#custId").text();
+                        dropdown.render({
 
+                            elem: '.demo1'
+                            ,data: [{
+                                title: '个人中心'
+                                ,href:"${pageContext.request.contextPath}/myorder/customer/"+custId
+                            },{
+                                title: '退出登录'
+                                ,href:""
+                            }]
+                            ,click: function(obj){
+                                window.location.href = obj.href;
+                            }
+                        });
+
+                    });
+                },2000);
+            }
+        })
+    }
+</script>
+<script>
+    function couponById() {
+
+        $.ajax({
+            type: "GET",
+            url: "${pageContext.request.contextPath}/coupon/" + custId,
+
+            success: function (coupon) {
+                //请求成功后的操作
+                var couponlist = coupon.data;
+                console.log(couponlist);
+                for (var i=0;i<couponlist.length;i++) {
+                    console.log(couponlist[i].coupon.couName);
+                    var price = couponlist[i].coupon.couPrice;
+                    var name = couponlist[i].coupon.couName;
+                    var liEle =
+                        '<a class="dropdown-item" data-value="10">'+
+                        name+
+                        '</a>';
+                    $(".dropdown-menu").append(liEle);
+                }
+            },
+            error: function () {
+                //请求失败后的操作
+                console.log("请求失败！");
+                console.log("custId:"+custId)
+            }
+        });
+    }
 </script>
 </body>
 

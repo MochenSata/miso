@@ -11,16 +11,20 @@ public class OrderCountAndDataVO {
     private LocalDate custStartDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate custEndDate;
+    private Integer houseId;
+    private String houseName;
     private String houseMainpicture;
     private String houseTheme;
     private Float houseScore;
     private Float housePrice;
     public OrderCountAndDataVO(){}
 
-    public OrderCountAndDataVO(Integer custNum, LocalDate custStartDate, LocalDate custEndDate, String houseMainpicture, String houseTheme, Float houseScore, Float housePrice) {
+    public OrderCountAndDataVO(Integer custNum, LocalDate custStartDate, LocalDate custEndDate, Integer houseId, String houseName, String houseMainpicture, String houseTheme, Float houseScore, Float housePrice) {
         this.custNum = custNum;
         this.custStartDate = custStartDate;
         this.custEndDate = custEndDate;
+        this.houseId = houseId;
+        this.houseName = houseName;
         this.houseMainpicture = houseMainpicture;
         this.houseTheme = houseTheme;
         this.houseScore = houseScore;
@@ -51,7 +55,21 @@ public class OrderCountAndDataVO {
         this.custEndDate = custEndDate;
     }
 
+    public Integer getHouseId() {
+        return houseId;
+    }
 
+    public void setHouseId(Integer houseId) {
+        this.houseId = houseId;
+    }
+
+    public String getHouseName() {
+        return houseName;
+    }
+
+    public void setHouseName(String houseName) {
+        this.houseName = houseName;
+    }
 
     public String getHouseMainpicture() {
         return houseMainpicture;
@@ -91,6 +109,8 @@ public class OrderCountAndDataVO {
                 "custNum=" + custNum +
                 ", custStartDate=" + custStartDate +
                 ", custEndDate=" + custEndDate +
+                ", houseId=" + houseId +
+                ", houseName='" + houseName + '\'' +
                 ", houseMainpicture='" + houseMainpicture + '\'' +
                 ", houseTheme='" + houseTheme + '\'' +
                 ", houseScore=" + houseScore +

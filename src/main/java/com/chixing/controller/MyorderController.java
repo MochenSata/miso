@@ -45,6 +45,8 @@ public class MyorderController {
     public ModelAndView numAndStartDateAndEndDate(@RequestParam("custNum") Integer custNum,
                                                   @RequestParam("custStartDate")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate custStartDate,
                                                   @RequestParam("custEndDate")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate custEndDate,
+                                                  @RequestParam("houseId")Integer houseId,
+                                                  @RequestParam("houseName") String houseName,
                                                   @RequestParam("houseMainpicture")String houseMainpicture,
                                                   @RequestParam("houseTheme")String houseTheme,
                                                   @RequestParam("houseScore")Float houseScore,
@@ -52,7 +54,13 @@ public class MyorderController {
         System.out.println("custNum:"+custNum);
         System.out.println("custStartDate:"+custStartDate);
         System.out.println("custEndDate:"+custEndDate);
-        OrderCountAndDataVO orderDetail = new OrderCountAndDataVO(custNum,custStartDate,custEndDate,houseMainpicture,houseTheme,houseScore,housePrice);
+        System.out.println("houseId"+houseId);
+        System.out.println("houseId"+houseName);
+        System.out.println("houseId"+houseMainpicture);
+        System.out.println("houseId"+houseTheme);
+        System.out.println("houseId"+houseScore);
+        System.out.println("houseId"+housePrice);
+        OrderCountAndDataVO orderDetail = new OrderCountAndDataVO(custNum,custStartDate,custEndDate,houseId,houseName,houseMainpicture,houseTheme,houseScore,housePrice);
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("orderDetail",orderDetail);

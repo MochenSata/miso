@@ -30,7 +30,7 @@
                 <input type="password" placeholder="您的密码" class="userpwd" name="">
                 <span class="tip userpwdTip"></span>
 
-                <a href="signup.html">去注册</a>
+                <a href="signup.jsp">去注册</a>
                 <input type="button" id="login"  value="登录">
 
             </form>
@@ -69,9 +69,13 @@
                     localStorage.setItem("token", token);
                     window.location.href = "../index.jsp"; // 重定向到index.jsp页面
                 } else {
-                    // 密码输入不正确，处理相应的逻辑
-                    console.log("登录失败，请检查用户名和密码");
-                    alert("用户名或密码错误"); // 弹出提示框显示错误信息
+                    if(result.code == 202){
+                        alert("未输入密码"); // 未输入密码
+                    }else{
+                        // 密码输入不正确，处理相应的逻辑
+                        console.log("登录失败，请检查用户名和密码");
+                        alert("用户名或密码错误"); // 弹出提示框显示错误信息
+                    }
                 }
             }
         })
