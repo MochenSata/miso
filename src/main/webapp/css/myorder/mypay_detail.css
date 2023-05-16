@@ -470,7 +470,7 @@
     color: #717171;
     font-size: 16px;
 }
-.l .ordertetailtitle{
+.ordertetailtitle{
     display: block;
     float: left;
     line-height: 60px;
@@ -479,7 +479,7 @@
     font-weight: 600;
     font-size: 18px;
 }
-.l .orderdetail{
+.orderdetail{
     display: block;
     float: left;
     width: 100%;

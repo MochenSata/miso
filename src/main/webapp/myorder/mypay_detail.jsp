@@ -75,7 +75,7 @@
                 <div class="timewords"><span>2023-05-01 12:00:00</span></div>
             </div>
         </div>
-        <div class="ordertetailtitle">预定详情</div>
+        <div class="ordertetailtitle">预定详情：<span class="house">苏州湾海景房</span></div>
         <div class="orderdetail">
             <span class="detailline">住客姓名：<span class="name">蔡徐坤</span></span>
             <span class="detailline">住客电话：<span class="telno">18018888888</span></span>
@@ -144,8 +144,10 @@
             <form action="${pageContext.request.contextPath}/pay/alipay" method="post">
                 <input type="hidden" value="1" name="custId">
                 <input type="hidden" value="5003" name="myorderId">
-                <input type="hidden" value="9849513261" name="myorderNum">
-                <input type="hidden" value="648" name="payAmount">
+                <input type="hidden" value="101" name="houseId">
+                <input type="hidden" value="苏州湾海景房" name="houseName">
+                <input type="hidden" value="687634533" name="myorderNum">
+                <input type="hidden" value="8999" name="myorderPrice">
                 <input type="submit" value="支付" class="quzhifu">
             </form>
         </div>
