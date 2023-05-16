@@ -1,6 +1,7 @@
 package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.chixing.pojo.Customer;
 import com.chixing.mapper.CustomerMapper;
@@ -86,5 +87,15 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             System.out.println("customer service impl 当前登录的用户信息是 ：" + loginCustomer);
             return loginCustomer;
         }
+    }
+
+    @Override
+    public ServerResult isregisterdeBytelno(Long usertelno) {
+        QueryWrapper<Customer> wrapper = new QueryWrapper<>();
+        wrapper.eq("cust_telno",usertelno);
+        Customer customer = customerMapper.selectOne(wrapper);
+        if (customer != null)
+            return ServerResult.fail(201, ResultMsg.fail,"该用户已注册");
+        return ServerResult.success(200, ResultMsg.success,customer);
     }
 }

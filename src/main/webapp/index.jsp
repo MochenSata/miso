@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="layui-col-xs1 hiddenable"><a href="customer/login.jsp" ><span class="login">登录</span></a></div>
-            <div class="layui-col-xs1 hiddenable"><a href="customer/signup.html" ><span class="signup">注册</span></a></div>
+            <div class="layui-col-xs1 hiddenable"><a href="customer/signup.jsp" ><span class="signup">注册</span></a></div>
             <div class="layui-col-xs1 hiddenable1"><span class="login">欢迎</span></div>
             <div class="layui-col-xs1 hiddenable1"><span class="custName"></span></div>
             <div class="layui-col-xs1">

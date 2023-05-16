@@ -30,7 +30,7 @@
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
-                <div class="search-area">
+                <div class="search-area" style="visibility: hidden;">
                 </div>
             </div>
             <div class="layui-col-xs1 hiddenable"><a href="${pageContext.request.contextPath}/customer/login.jsp" ><span class="login">登录</span></a></div>

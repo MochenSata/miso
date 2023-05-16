@@ -1,16 +1,16 @@
 package com.chixing.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.chixing.pojo.Customer;
 import com.chixing.pojo.LoginCustomer;
 import com.chixing.service.ICustomerService;
-import com.chixing.util.JWTUtils;
-import com.chixing.util.ResultMsg;
-import com.chixing.util.ServerResult;
+import com.chixing.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -45,9 +45,11 @@ public class CustomerController {
         System.out.println("custName:" + custTelno);
         System.out.println("password:" + custPassword);
         if(Objects.isNull(custTelno) || custTelno.equals(0L)|| StringUtils.isBlank(custPassword))
-            return ServerResult.fail(200, ResultMsg.fail,null);
+            return ServerResult.fail(202, ResultMsg.fail,null);
+        String encruserpwd = Md5Utils.code(custPassword);
+        System.out.println(encruserpwd);
         //1. MySQL验证 用户名、密码是否有效
-        ServerResult result = service.getCustomerByTelnoAndPwd(custTelno,custPassword);
+        ServerResult result = service.getCustomerByTelnoAndPwd(custTelno,encruserpwd);
         System.out.println("数据库中查询用户名与密码的结果 是：" + result);
 
         if(result.getCode() != 200){// 用户不存在
@@ -69,5 +71,45 @@ public class CustomerController {
         System.out.println("从客户端获得的token是：" + token);
         return  service.getCustomerByToken(token);
     }
+
+    /**
+     * 注册用户
+     * @param userpwd
+     * @param usertelno
+     * @return
+     */
+    @PostMapping("register")
+    @ResponseBody
+    public ServerResult register(@RequestParam("userpwd") String userpwd,
+                                 @RequestParam("usertelno") Long usertelno){
+
+        ServerResult result = service.isregisterdeBytelno(usertelno);
+        if(result.getCode()!=200){
+            return ServerResult.fail(201,ResultMsg.fail,"该手机号已被注册");
+        }else {
+
+            String username = "user_" + usertelno.toString();
+            String encruserpwd = Md5Utils.code(userpwd);
+            String inviteNum = InvitationCode.create(username);
+            Customer customer1 = new Customer();
+            customer1.setCustName(username);
+            customer1.setCustPwd(encruserpwd);
+            customer1.setCustTelno(usertelno);
+            customer1.setCustCreateTime(LocalDateTime.now());
+            customer1.setCustInviteNum(inviteNum);
+
+//        String encruserpwd = Md5Utils.code(userpwd);
+            boolean rows = service.save(customer1);
+            if (rows) {
+                return ServerResult.success(200, ResultMsg.success, "用户注册成功");
+            } else {
+
+                return ServerResult.fail(201, ResultMsg.fail, "用户注册失败");
+            }
+
+        }
+
+    }
+
 
 }

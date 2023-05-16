@@ -20,4 +20,7 @@ public interface ICustomerService extends IService<Customer> {
     // token解析
     public LoginCustomer checkToken(String token);
 
+    //根据手机号查询用户数是否注册
+    public ServerResult isregisterdeBytelno(Long usertelno);
+
 }
