@@ -107,6 +107,9 @@ layui.use('laydate', function () {
             // 获取选定的起始日期和结束日期数据
             var start = value.split(' - ')[0];
             var end = value.split(' - ')[1];
+            // 将起始日期和结束日期转换为Date对象
+            var startDate=new Date(start);
+            var endDate=new Date(end);
             // 获取起始日期和结束日期的星期几
             var startDayOfWeek = startDate.getDay();
             var endDayOfWeek = endDate.getDay();
