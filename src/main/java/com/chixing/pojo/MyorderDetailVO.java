@@ -9,6 +9,8 @@ public class MyorderDetailVO {
     private String couNum;
     private Float couPrice;
     private Float myorderPrice;
+    private String myorderNum;
+    private Integer myorderId;
     private OrderCountAndDataVO orderCountAndDataVO;
     public MyorderDetailVO(){}
     public MyorderDetailVO(Integer custId, String couNum, Float couPrice, Float myorderPrice, OrderCountAndDataVO orderCountAndDataVO) {
@@ -17,6 +19,22 @@ public class MyorderDetailVO {
         this.couPrice = couPrice;
         this.myorderPrice = myorderPrice;
         this.orderCountAndDataVO = orderCountAndDataVO;
+    }
+
+    public Integer getMyorderId() {
+        return myorderId;
+    }
+
+    public void setMyorderId(Integer myorderId) {
+        this.myorderId = myorderId;
+    }
+
+    public String getMyorderNum() {
+        return myorderNum;
+    }
+
+    public void setMyorderNum(String myorderNum) {
+        this.myorderNum = myorderNum;
     }
 
     public Integer getCustId() {

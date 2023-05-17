@@ -5,7 +5,7 @@
   Time: 14:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +19,20 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 <body>
+${myorderDetailVO}
+${myorderDetailVO.getOrderCountAndDataVO().getOccName()}
+${myorderDetailVO.getOrderCountAndDataVO().getOccIdentity()}
+${myorderDetailVO.getOrderCountAndDataVO().getOccTelno()}
+${myorderDetailVO.getMyorderNum()}
+${myorderDetailVO.orderCountAndDataVO.custStartDate}
+${myorderDetailVO.orderCountAndDataVO.custEndDate}
+${myorderDetailVO.orderCountAndDataVO.houseName}
+${myorderDetailVO.orderCountAndDataVO.houseTheme}
+${myorderDetailVO.orderCountAndDataVO.houseScore}
+${myorderDetailVO.myorderPrice}
+${myorderDetailVO.custId}
+${myorderDetailVO.orderCountAndDataVO.houseId}
+${myorderDetailVO.myorderId}
 <!--导航栏nav-->
 <div class="foundation">
     <div class="layui-container">
@@ -63,23 +77,23 @@
         <div class="title">确认订单</div>
         <div class="order">
             <div class="order_title">订单编号:</div>
-            <span class="ordernum">12345678</span>
+            <span class="ordernum">${myorderDetailVO.getMyorderNum()}</span>
         </div>
         <div class="time">
             <div class="timeleft">
                 <div class="timetitle">入住时间</div>
-                <div class="timewords"><span>2023-05-01 12:00:00</span></div>
+                <div class="timewords"><span>${myorderDetailVO.orderCountAndDataVO.custStartDate}</span></div>
             </div>
             <div class="timeright">
                 <div class="timetitle">退宿时间</div>
-                <div class="timewords"><span>2023-05-01 12:00:00</span></div>
+                <div class="timewords"><span>${myorderDetailVO.orderCountAndDataVO.custEndDate}</span></div>
             </div>
         </div>
-        <div class="ordertetailtitle">预定详情：<span class="house">苏州湾海景房</span></div>
+        <div class="ordertetailtitle">预定详情：<span class="house">${myorderDetailVO.orderCountAndDataVO.houseName}</span></div>
         <div class="orderdetail">
-            <span class="detailline">住客姓名：<span class="name">蔡徐坤</span></span>
-            <span class="detailline">住客电话：<span class="telno">18018888888</span></span>
-            <span class="detailline">住客身份证：<span class="shenfenzheng">320000000000000000</span></span>
+            <span class="detailline">住客姓名：<span class="name">${myorderDetailVO.getOrderCountAndDataVO().getOccName()}</span></span>
+            <span class="detailline">住客电话：<span class="telno">${myorderDetailVO.getOrderCountAndDataVO().getOccTelno()}</span></span>
+            <span class="detailline">住客身份证：<span class="shenfenzheng">${myorderDetailVO.getOrderCountAndDataVO().getOccIdentity()}</span></span>
         </div>
         <div class="tuikuantitle">退款规则</div>
         <div class="tuikuanwords">
@@ -98,13 +112,13 @@
                 </div>
 
                 <div class="r3">
-                    <span class="biaoyu">促销!令人惊叹的6卧室,带健身房、按摩室和瑜伽厅</span>
+                    <span class="biaoyu">${myorderDetailVO.orderCountAndDataVO.houseTheme}</span>
                 </div>
                 <div>
                     <img class="pingfen" src="../img/myorder/pingfen.png">
                 </div>
                 <div>
-                    <span class="pf">4.9</span>
+                    <span class="pf">${myorderDetailVO.orderCountAndDataVO.houseScore}</span>
                 </div>
             </div>
 
@@ -124,33 +138,26 @@
             </div>
 
             <div class="r6">
-                <div class="r7">
-                    <span class="fangfeidanjia">￥<span class="danjia">4201.75</span></span>
-                    <span class="tianshu">x <span class="nights">1</span> 晚 </span>
-                    <span class="zongji">￥<span class="subtotal">4201.75</span></span>
-                </div>
-                <div class="r8">
-                    <span class="qingjiefei">优惠券</span>
-                    <span class="qingjie">-￥<span class="youhui">200</span></span>
-                </div>
+
                 <div class="r9">
                     <span class="zongjia">总价</span>
-                    <span class="zongjiaqian">￥<span class="total">4001.75</span></span>
+                    <span class="zongjiaqian">￥<span class="total">${myorderDetailVO.myorderPrice}</span></span>
+                </div>
+                <div class="form">
+                    <form action="${pageContext.request.contextPath}/pay/alipay" method="post">
+                        <input type="hidden" value="${myorderDetailVO.custId}" name="custId">
+                        <input type="hidden" value="${myorderDetailVO.myorderId}" name="myorderId">
+                        <input type="hidden" value="${myorderDetailVO.orderCountAndDataVO.houseId}" name="houseId">
+                        <input type="hidden" value="${myorderDetailVO.orderCountAndDataVO.houseName}" name="houseName">
+                        <input type="hidden" value="${myorderDetailVO.getMyorderNum()}" name="myorderNum">
+                        <input type="hidden" value="${myorderDetailVO.myorderPrice}" name="myorderPrice">
+                        <input type="submit" value="支付" class="quzhifu">
+                    </form>
                 </div>
             </div>
         </div>
 
-        <div class="form">
-            <form action="${pageContext.request.contextPath}/pay/alipay" method="post">
-                <input type="hidden" value="1" name="custId">
-                <input type="hidden" value="5003" name="myorderId">
-                <input type="hidden" value="101" name="houseId">
-                <input type="hidden" value="苏州湾海景房" name="houseName">
-                <input type="hidden" value="687634533" name="myorderNum">
-                <input type="hidden" value="8999" name="myorderPrice">
-                <input type="submit" value="支付" class="quzhifu">
-            </form>
-        </div>
+
 
     </div>
 </div>

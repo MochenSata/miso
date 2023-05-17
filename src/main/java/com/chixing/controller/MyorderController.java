@@ -67,6 +67,8 @@ public class MyorderController {
         Myorder myorder = new Myorder();
         myorder.setCustId(myorderDetailVO.getCustId());
         String myorderNum= UUID.randomUUID().toString().replace("-", "");
+        myorderDetailVO.setMyorderNum(myorderNum);
+
         myorder.setMyorderNum(myorderNum);
         myorder.setHouseId(myorderDetailVO.getOrderCountAndDataVO().getHouseId());
         myorder.setHouseName(myorderDetailVO.getOrderCountAndDataVO().getHouseName());
@@ -93,12 +95,14 @@ public class MyorderController {
         wrapper.eq("myorder_num",myorderNum);
         Myorder myorder1 = myorderService.getOne(wrapper);
         Integer myorderId = myorder1.getMyorderId();
+        myorderDetailVO.setMyorderId(myorderId);
         MyorderOccupy myorderOccupy = new MyorderOccupy();
         myorderOccupy.setMyorderId(myorderId);
         myorderOccupy.setCustId(myorder.getCustId());
         myorderOccupy.setOccIdentity(myorderDetailVO.getOrderCountAndDataVO().getOccIdentity());
         myorderOccupy.setOccName(myorderDetailVO.getOrderCountAndDataVO().getOccName());
         myorderOccupy.setOccTelno(myorderDetailVO.getOrderCountAndDataVO().getOccTelno());
+
         myorderOccupyService.save(myorderOccupy);
         ModelAndView mav = new ModelAndView();
         mav.addObject("myorderDetailVO",myorderDetailVO);
