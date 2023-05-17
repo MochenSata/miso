@@ -18,6 +18,34 @@ public class OrderCountAndDataVO {
     private String houseTheme;
     private Float houseScore;
     private Float housePrice;
+    private String occName;
+    private Long occTelno;
+    private Long occIdentity;
+
+    public String getOccName() {
+        return occName;
+    }
+
+    public void setOccName(String occName) {
+        this.occName = occName;
+    }
+
+    public Long getOccTelno() {
+        return occTelno;
+    }
+
+    public void setOccTelno(Long occTelno) {
+        this.occTelno = occTelno;
+    }
+
+    public Long getOccIdentity() {
+        return occIdentity;
+    }
+
+    public void setOccIdentity(Long occIdentity) {
+        this.occIdentity = occIdentity;
+    }
+
     public OrderCountAndDataVO(){}
 
     public OrderCountAndDataVO(Integer custNum, LocalDate custStartDate, LocalDate custEndDate, Integer houseId, String houseName, String houseMainpicture, String houseTheme, Float houseScore, Float housePrice) {

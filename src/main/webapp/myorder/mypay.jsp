@@ -228,16 +228,26 @@
             <input type="hidden" value="${orderCountAndDataVO.houseTheme}" name="orderCountAndDataVO.houseTheme" >
             <input type="hidden" value="${orderCountAndDataVO.houseScore}" name="orderCountAndDataVO.houseScore" >
             <input type="hidden" value="${orderCountAndDataVO.housePrice}" name="orderCountAndDataVO.housePrice" >
-            <input class="fkBtn" type="submit" value="确认并支付">
+            <input type="hidden" value="" name="orderCountAndDataVO.occName" id="occName">
+            <input type="hidden" value="" name="orderCountAndDataVO.occIdentity" id="occIdentity">
+            <input type="hidden" value="" name="orderCountAndDataVO.occTelno" id="occTelno">
+            <input class="fkBtn" type="submit" onclick="updateHiddenField()" value="确认并支付">
         </form>
 
-
-
-
-
-
-
-
+        <script>
+            function updateHiddenField() {
+                // 获取输入框中的值
+                var occName = $(".zhukexingming").val();
+                var occIdentity = $(".shenfenzheng").val();
+                var occTelno = $(".telno").val();
+                // 将输入框的值设置到隐藏域中
+                $("#occName").val(occName);
+                $("#occIdentity").val(occIdentity);
+                $("#occTelno").val(occTelno);
+                // 提交表单
+                $("#myForm").submit();
+            }
+        </script>
 
 
 

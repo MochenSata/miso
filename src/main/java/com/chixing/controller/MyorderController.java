@@ -1,10 +1,13 @@
 package com.chixing.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chixing.mapper.MyorderMapper;
 import com.chixing.pojo.Myorder;
 import com.chixing.pojo.MyorderDetailVO;
+import com.chixing.pojo.MyorderOccupy;
 import com.chixing.pojo.OrderCountAndDataVO;
+import com.chixing.service.IMyorderOccupyService;
 import com.chixing.service.IMyorderService;
 import com.chixing.util.ServerResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +36,8 @@ import java.util.UUID;
 public class MyorderController {
     @Autowired
     private IMyorderService myorderService;
-
-
+    @Autowired
+    private IMyorderOccupyService myorderOccupyService;
     //点击个人中心跳转个人中心并查找我的所有订单
     @GetMapping("/customer/{id}")
     public ModelAndView getOrdersByIdToPersonalCenter(@PathVariable("id") Integer custId){
@@ -60,7 +63,7 @@ public class MyorderController {
     @PostMapping("save")
     @ResponseBody
     public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO){
-        System.out.println(myorderDetailVO);
+        System.out.println(myorderDetailVO.getOrderCountAndDataVO().getOccName());
         Myorder myorder = new Myorder();
         myorder.setCustId(myorderDetailVO.getCustId());
         String myorderNum= UUID.randomUUID().toString().replace("-", "");
@@ -71,11 +74,10 @@ public class MyorderController {
         myorder.setHousePrice(myorderDetailVO.getOrderCountAndDataVO().getHousePrice());
         myorder.setMyorderCreateTime(LocalDateTime.now());
 
-        if(myorderDetailVO.getCouNum() != null){
+        if(myorderDetailVO.getCouNum()!=null&&myorderDetailVO.getCouNum()!=""){
             myorder.setCouNum(myorderDetailVO.getCouNum());
             myorder.setCouPrice(myorderDetailVO.getCouPrice());
-        }
-        if (myorderDetailVO.getCouNum() == null||myorderDetailVO.getCouNum() ==""){
+        }else{
             myorder.setCouNum(null);
             myorder.setCouPrice(null);
         }
@@ -87,8 +89,19 @@ public class MyorderController {
         myorder.setMyorderOutime(myorderDetailVO.getOrderCountAndDataVO().getCustEndDate());
         System.out.println(myorder);
         myorderService.save(myorder);
+        QueryWrapper<Myorder> wrapper=new QueryWrapper<>();
+        wrapper.eq("myorder_num",myorderNum);
+        Myorder myorder1 = myorderService.getOne(wrapper);
+        Integer myorderId = myorder1.getMyorderId();
+        MyorderOccupy myorderOccupy = new MyorderOccupy();
+        myorderOccupy.setMyorderId(myorderId);
+        myorderOccupy.setCustId(myorder.getCustId());
+        myorderOccupy.setOccIdentity(myorderDetailVO.getOrderCountAndDataVO().getOccIdentity());
+        myorderOccupy.setOccName(myorderDetailVO.getOrderCountAndDataVO().getOccName());
+        myorderOccupy.setOccTelno(myorderDetailVO.getOrderCountAndDataVO().getOccTelno());
+        myorderOccupyService.save(myorderOccupy);
         ModelAndView mav = new ModelAndView();
-        mav.addObject("myorder",myorder);
+        mav.addObject("myorderDetailVO",myorderDetailVO);
         mav.setViewName("myorder/mypay_detail");
         return mav;
     }
