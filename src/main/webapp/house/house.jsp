@@ -355,8 +355,8 @@
             <div class="perhousePrice">
                 <span class="housePrice">￥</span>
                 <span class="housePriceValue housePrice">${serverResult.data.housePrice}</span>
-
-                <span class="perday">/晚</span>
+                <span class="perday">/晚</span><br>
+                <span style="font-size: 10px;color: #ff385c">温馨提示：周末和节假日价格是分别是基础价格的1.5倍和2倍!</span>
             </div>
             <div class="fixedscore">
                 <div id="test4">
