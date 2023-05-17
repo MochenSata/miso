@@ -12,12 +12,40 @@
 <head>
     <meta charset="UTF-8">
     <title>支付成功</title>
+
 </head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/myorder/paysuccess.css">
 <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <body>
-<div>
-    支付成功
-    <a href="">点击跳转</a>
+<!--导航栏nav-->
+<div class="foundation">
+    <div class="layui-container">
+        <div class="layui-row nav">
+            <div class="layui-col-xs2 logo">
+                <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
+                <span class="slogn">让旅行更有味道</span>
+            </div>
+            <div class="layui-col-xs7">
+
+            </div>
+            <div class="layui-col-xs1 hiddenable"></div>
+            <div class="layui-col-xs1 hiddenable"></div>
+
+            <div class="layui-col-xs1 hiddenable1"><span class="custName"></span></div>
+            <div class="layui-col-xs1">
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+<div class="main">
+    <span class="title">支付成功</span>
+
+    <a href="javaScript:void(0)" id="myLink">点击此处跳转</a>
 </div>
 <script>
     var custId ;
@@ -43,6 +71,10 @@
             }
         });
     }
+        document.getElementById("myLink").addEventListener("click", function() {
+        window.location.href = "${pageContext.request.contextPath}/myorder/customer/"+custId;
+    });
+
 </script>
 </body>
 </html>
