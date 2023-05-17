@@ -5,7 +5,7 @@
   Time: 14:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html lang="en">
 
 <head>
@@ -78,7 +78,7 @@
     <div class="left">
         <div class="kuang1">
             <h2 class="xingcheng">您的行程</h2>
-            <span class="ruzhucount">入住人数: <span class="renshunum">${orderDetail.custNum}</span> 人</span>
+            <span class="ruzhucount">入住人数: <span class="renshunum">${orderCountAndDataVO.custNum}</span> 人</span>
 
         </div>
         <div class="kuang2">
@@ -96,12 +96,12 @@
                             <div class="layui-inline" id="test6">
                                 <div class="layui-input-inline">
                                     <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input"
-                                           placeholder="开始日期" value="${orderDetail.custStartDate}">
+                                           placeholder="开始日期" value="${orderCountAndDataVO.custStartDate}">
                                 </div>
                                 <div class="layui-form-mid">-</div>
                                 <div class="layui-input-inline">
                                     <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input"
-                                           placeholder="结束日期" value="${orderDetail.custEndDate}">
+                                           placeholder="结束日期" value="${orderCountAndDataVO.custEndDate}">
                                 </div>
                             </div>
                         </div>
@@ -213,12 +213,23 @@
 
         </div>
 
-        <a href="../myorder/mypay_detail.html">
-            <button class="fkBtn">
-                <span class="Btnziti">确认并支付</span>
-            </button>
-        </a>
 
+        <form action="${pageContext.request.contextPath}/myorder/save" method="post">
+            <input type="hidden" value=""  name="custId" id="custIdd">
+            <input type="hidden" value="" name="couNum" id="couNum">
+            <input type="hidden" value="" name="couPrice" id="couPrice">
+            <input type="hidden" value="" name="myorderPrice" id="myorderPrice">
+            <input type="hidden" value="${orderCountAndDataVO.custNum}" name="orderCountAndDataVO.custNum" >
+            <input type="hidden" value="${orderCountAndDataVO.custStartDate}" name="orderCountAndDataVO.custStartDate" >
+            <input type="hidden" value="${orderCountAndDataVO.custEndDate}" name="orderCountAndDataVO.custEndDate" >
+            <input type="hidden" value="${orderCountAndDataVO.houseId}" name="orderCountAndDataVO.houseId" >
+            <input type="hidden" value="${orderCountAndDataVO.houseName}" name="orderCountAndDataVO.houseName" >
+            <input type="hidden" value="${orderCountAndDataVO.houseMainpicture}" name="orderCountAndDataVO.houseMainpicture" >
+            <input type="hidden" value="${orderCountAndDataVO.houseTheme}" name="orderCountAndDataVO.houseTheme" >
+            <input type="hidden" value="${orderCountAndDataVO.houseScore}" name="orderCountAndDataVO.houseScore" >
+            <input type="hidden" value="${orderCountAndDataVO.housePrice}" name="orderCountAndDataVO.housePrice" >
+            <input class="fkBtn" type="submit" value="确认并支付">
+        </form>
 
 
 
@@ -246,17 +257,17 @@
             <div class="r1">
 
                 <div class="r2">
-                    <img class="tupian" src="${orderDetail.houseMainpicture}">
+                    <img class="tupian" src="${orderCountAndDataVO.houseMainpicture}">
                 </div>
 
                 <div class="r3">
-                    <span class="biaoyu">${orderDetail.houseTheme}</span>
+                    <span class="biaoyu">${orderCountAndDataVO.houseTheme}</span>
                 </div>
                 <div>
                     <img class="pingfen" src="../img/myorder/pingfen.png">
                 </div>
                 <div>
-                    <span class="pf">${orderDetail.houseScore}</span>
+                    <span class="pf">${orderCountAndDataVO.houseScore}</span>
                 </div>
             </div>
 
@@ -277,7 +288,7 @@
 
             <div class="r6">
                 <div class="r7">
-                    <span class="fangfeidanjia"><span class="danjia" style="display: none">${orderDetail.housePrice}</span></span>
+                    <span class="fangfeidanjia"><span class="danjia" style="display: none">${orderCountAndDataVO.housePrice}</span></span>
                     <span class="fangfeidanjia">总计金额:<span class="danjia" ></span></span>
 <%--                    <span class="tianshu">x <span class="nights">0</span> 晚 </span>--%>
                     <span class="zongji">￥<span class="subtotal" id="result">0</span></span>
@@ -312,6 +323,8 @@
                 console.log(token);
                 console.log(result);
                 custId = result.data.custId;
+                $("#custIdd").val(custId);
+
                 var custName = result.data.custName;
                 $(".hiddenable").hide();
                 $(".hiddenable1").show();
@@ -366,10 +379,14 @@
                     console.log(couponlist[i].coupon.couName);
                     var price = couponlist[i].coupon.couPrice;
                     var name = couponlist[i].coupon.couName;
+                    var num = couponlist[i].couponReceive.couNum;
+                    console.log(num);
+
                     var liEle =
-                        '<a class="dropdown-item" data-value="10">'+
+                        '<a class="dropdown-item" data-value="'+price+'">'+
                         name+
-                        '</a>';
+                        '</a>'+
+                    '<input type="hidden" value="'+num+'">' ;
                     $(".dropdown-menu").append(liEle);
                 }
             },
@@ -381,6 +398,7 @@
         });
     }
 </script>
+
 </body>
 
 

@@ -6,28 +6,28 @@ var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
 $(".nights").text(diffDays);
 $.fn.zongjia = function(){
 //总价
-var danjiaEle=document.querySelector(".danjia").innerText
-console.log(danjiaEle)
+    var danjiaEle=document.querySelector(".danjia").innerText
+    console.log(danjiaEle)
 
 // var tianshuEle=document.querySelector(".nights").innerText
 // console.log(tianshuEle)
 
-var zongjiaEle=document.querySelector(".subtotal").innerText
+    var zongjiaEle=document.querySelector(".subtotal").innerText
 // zongjiaEle=danjiaEle*tianshuEle
 // console.log(zongjiaEle);
-$(".subtotal").text(zongjiaEle);
-var couponValue = $("#resultSpan").text();
-console.log("优惠券："+couponValue);
-var total = zongjiaEle - parseFloat(couponValue);
-$('.total').text(total.toFixed(2));
-
+    $(".subtotal").text(zongjiaEle);
+    var couponValue = $("#resultSpan").text();
+    console.log("优惠券："+couponValue);
+    var total = zongjiaEle - parseFloat(couponValue);
+    $('.total').text(total.toFixed(2));
+    $('#myorderPrice').val(total.toFixed(2));
 }
 
 
 
 $(document).ready(function() {
     $('#myElement').zongjia();
-  });
+});
 
 
 
@@ -39,35 +39,38 @@ setTimeout(function (){
 
 
 
-$('.dropdown-toggle').on('click', function (e) {
-    e.preventDefault();
-    $('.dropdown-menu').toggle();
-});
+    $('.dropdown-toggle').on('click', function (e) {
+        e.preventDefault();
+        $('.dropdown-menu').toggle();
+    });
 
 // 隐藏优惠券结果
-$('#resultSpan').parent().hide();
+    $('#resultSpan').parent().hide();
 
 // 当选择优惠券时，显示优惠券结果
-$('.dropdown-item').on('click', function () {
-    // 获取选中的优惠券值
-    var selectedValue = $(this).data('value');
-    // 将选中的优惠券值显示在下拉列表中
-    $('.dropdown-toggle').text($(this).text());
-    // 将选中的优惠券值显示在优惠券结果中
-    $('#resultSpan').text(selectedValue);
-    // 显示优惠券结果
-    $('#resultSpan').parent().show();
-    // 关闭下拉框
-    $('.dropdown-menu').toggle();
+    $('.dropdown-item').on('click', function () {
+        // 获取选中的优惠券值
+        var selectedValue = $(this).data('value');
+        var nextValue = $(this).next().val();
+        // 将选中的优惠券值显示在下拉列表中
+        $('.dropdown-toggle').text($(this).text());
+        // 将选中的优惠券值显示在优惠券结果中
+        $('#resultSpan').text(selectedValue);
+        $('#couNum').val(nextValue);
+        $('#couPrice').val(selectedValue);
+        // 显示优惠券结果
+        $('#resultSpan').parent().show();
+        // 关闭下拉框
+        $('.dropdown-menu').toggle();
 
-    $('#myElement').zongjia();
-    
-});
+        $('#myElement').zongjia();
+
+    });
 
 // 当取消选择优惠券时，隐藏优惠券结果
-$('.dropdown-toggle').on('click', function () {
-    $('#resultSpan').parent().hide();
-});
+    $('.dropdown-toggle').on('click', function () {
+        $('#resultSpan').parent().hide();
+    });
 
 
 
@@ -75,20 +78,20 @@ $('.dropdown-toggle').on('click', function () {
 
 
 //优惠券选择
-layui.use(function () {
-    var form = layui.form;
-    var layer = layui.layer;
-    // select 事件
-    form.on('select(demo-select-filter)', function (data) {
-        var elem = data.elem; // 获得 select 原始 DOM 对象
-        var value = data.value; // 获得被选中的值
-        var othis = data.othis; // 获得 select 元素被替换后的 jQuery 对象
+    layui.use(function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        // select 事件
+        form.on('select(demo-select-filter)', function (data) {
+            var elem = data.elem; // 获得 select 原始 DOM 对象
+            var value = data.value; // 获得被选中的值
+            var othis = data.othis; // 获得 select 元素被替换后的 jQuery 对象
 
-       
-        layer.msg(this.innerHTML + ' 的 value: ' + value); // this 为当前选中 <option> 元素对象
 
+            layer.msg(this.innerHTML + ' 的 value: ' + value); // this 为当前选中 <option> 元素对象
+
+        });
     });
-});
 },2000);
 
 
@@ -107,7 +110,6 @@ layui.use('laydate', function () {
             // 获取选定的起始日期和结束日期数据
             var start = value.split(' - ')[0];
             var end = value.split(' - ')[1];
-            // 将起始日期和结束日期转换为Date对象
             var startDate=new Date(start);
             var endDate=new Date(end);
             // 获取起始日期和结束日期的星期几
@@ -172,7 +174,7 @@ layui.use('laydate', function () {
             console.log("入住天数：" + days);
             $(".nights").text(days);
             $('#myElement').zongjia();
-            
+
 
         }, range: ['#test-startDate-1', '#test-endDate-1']
 
@@ -209,7 +211,7 @@ function checkIpt(ele,msgTipEle,regexp,errorMsg){
 function checkCustname(){
     var custnameEle = document.querySelector(".zhukexingming");
     var custnameTipEle = document.querySelector(".custnameTip");
-    var regexp = /^[\u4E00-\u9FA5]{2,4}$/;            
+    var regexp = /^[\u4E00-\u9FA5]{2,4}$/;
     var errorMsg = "姓名只能是中文,且长度在2-4个字";
     checkIpt(custnameEle,custnameTipEle,regexp,errorMsg);
 }
@@ -361,11 +363,10 @@ function checkCustidcard(){
 //           console.log("入住天数："+days);
 //           $('.nights').text(days);
 //         },range: ['#test-startDate-1', '#test-endDate-1']
-         
-        
+
+
 //     });
-    
 
-    // });
 
+// });
 

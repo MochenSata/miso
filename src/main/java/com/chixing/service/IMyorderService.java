@@ -15,4 +15,5 @@ import com.chixing.util.ServerResult;
 public interface IMyorderService extends IService<Myorder> {
     //查询我的所有订单
     public ServerResult getAllOrdersByCustId(Integer customerId);
+
 }
