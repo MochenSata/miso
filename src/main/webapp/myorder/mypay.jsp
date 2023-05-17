@@ -214,7 +214,7 @@
         </div>
 
 
-        <form action="${pageContext.request.contextPath}/myorder/save" method="post">
+        <form id="myForm" action="${pageContext.request.contextPath}/myorder/save" method="post">
             <input type="hidden" value=""  name="custId" id="custIdd">
             <input type="hidden" value="" name="couNum" id="couNum">
             <input type="hidden" value="" name="couPrice" id="couPrice">
@@ -231,19 +231,30 @@
             <input type="hidden" value="" name="orderCountAndDataVO.occName" id="occName">
             <input type="hidden" value="" name="orderCountAndDataVO.occIdentity" id="occIdentity">
             <input type="hidden" value="" name="orderCountAndDataVO.occTelno" id="occTelno">
-            <input class="fkBtn" type="submit" onclick="updateHiddenField()" value="确认并支付">
+            <input class="fkBtn" type="submit" onclick="updateHiddenField(event)" value="确认并支付">
         </form>
 
         <script>
-            function updateHiddenField() {
+            function updateHiddenField(event) {
+
+                event.preventDefault(); // 阻止表单的默认提交行为
+
                 // 获取输入框中的值
                 var occName = $(".zhukexingming").val();
                 var occIdentity = $(".shenfenzheng").val();
                 var occTelno = $(".telno").val();
+
                 // 将输入框的值设置到隐藏域中
                 $("#occName").val(occName);
                 $("#occIdentity").val(occIdentity);
                 $("#occTelno").val(occTelno);
+
+                // 检查必填项是否为空
+                if (occName.trim() === "" || occIdentity.trim() === "" || occTelno.trim() === "") {
+                    alert("请填写所有必填项");
+                    return;
+                }
+
                 // 提交表单
                 $("#myForm").submit();
             }
