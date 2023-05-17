@@ -129,7 +129,7 @@
                                                 <p class="house_name">${data.myorder.houseName}</p>
                                             </td>
                                             <td>${data.myorder.myorderNum}</td>
-                                            <td>￥${data.payment.payAmount}</td>
+                                            <td>￥${data.myorder.myorderPrice}</td>
                                             <td>${data.myorder.myorderCreateTime}</td>
                                             <c:if test="${data.myorder.myorderStatus==0}">
                                                 <td>未支付</td>
