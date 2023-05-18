@@ -1,8 +1,8 @@
 package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.chixing.pojo.Comment;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.chixing.pojo.House;
 import com.chixing.mapper.HouseMapper;
 import com.chixing.service.IHouseService;
@@ -14,8 +14,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -117,6 +118,80 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
         return ServerResult.success(200,ResultMsg.success,houseList);
 
     }
+
+    //多条件连续筛选房源（根据房屋类型，价格区间，卧室数量）
+    @Override
+    public ServerResult getSearchHouseByType(String houseKind,Float lowPrice,Float highPrice,Integer roomNum) {
+        QueryWrapper<House> wrapper = new QueryWrapper<>();
+        wrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum","house_id","bed_count");
+        wrapper.eq("house_kind",houseKind).or().eq("house_room_num",roomNum).or().between("house_price",lowPrice,highPrice);
+        List<House> houseList = houseMapper.selectList(wrapper);
+        System.out.println(houseList);
+        if (houseList.size()>0)
+            return ServerResult.success(200, ResultMsg.success,houseList);
+        return ServerResult.fail(201,ResultMsg.fail,false);
+    }
+
+//    @Override
+//    public ServerResult getSearchHouseByType(String houseKind,Float lowPrice,Float highPrice,Integer roomNum,String[] conditions) {
+//        QueryWrapper<House> wrapper = new QueryWrapper<>();
+//        wrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum","house_id","bed_count");
+//        if(conditions[0] != null){
+//            wrapper.eq("house_kind",houseKind);
+//        }
+//        if(conditions[1] != null){
+//            wrapper.between("house_price",lowPrice,highPrice);
+//        }
+//        if(conditions[2] != null){
+//            wrapper.eq("house_room_num",roomNum);
+//        }
+//        //wrapper.eq("house_kind",houseKind).or().eq("house_room_num",roomNum).or().between("house_price",lowPrice,highPrice);
+//        List<House> houseList = houseMapper.selectList(wrapper);
+//        System.out.println(houseList);
+//        if (houseList.size()>0)
+//            return ServerResult.success(200, ResultMsg.success,houseList);
+//        return ServerResult.fail(201,ResultMsg.fail,false);
+//    }
+
+
+
+    /*@Override
+    public ServerResult getSearchHouseByType(String houseKind, Float lowPrice, Float highPrice, Integer roomNum, List<Integer> lastIds) {
+        // 创建 QueryWrapper 对象，并设置查询条件
+        QueryWrapper<House> wrapper = new QueryWrapper<>();
+        wrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum","house_id","house_room_num");
+        wrapper.eq(StringUtils.isNotBlank(houseKind), "house_kind", houseKind)
+                .gt(lowPrice != null, "house_price", lowPrice)
+                .lt(highPrice != null, "house_price", highPrice)
+                .eq(roomNum != null, "house_room_num", roomNum)
+                .notIn(CollectionUtils.isNotEmpty(lastIds), "house_id", lastIds);
+
+        //wrapper.eq("house_kind",houseKind).or().eq("house_room_num",roomNum).or().between("house_price",lowPrice,highPrice);
+        // 调用 selectList 方法进行查询
+        List<House> houseList = houseMapper.selectList(wrapper);
+        System.out.println(houseList);
+
+        // 封装响应结果并返回
+        Map<String,Object> resultMap = new HashMap<>();
+        if (houseList.size()>0) {
+            resultMap.put("houseList", houseList);
+            resultMap.put("lastIds",getLsatIds(houseList,lastIds));
+            return ServerResult.success(200, ResultMsg.success,resultMap);
+        }
+
+        return ServerResult.fail(201,ResultMsg.fail,false);
+    }
+    //提取最新的房屋列表
+    private List<Integer> getLsatIds(List<House> houseList,List<Integer> lastIds){
+        if (CollectionUtils.isEmpty(houseList)){
+            return lastIds;
+        }
+        List<Integer> newLastIds = houseList.stream().map(House::getHouseId).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(lastIds)){
+            newLastIds.addAll(lastIds);
+        }
+        return newLastIds;
+    }*/
 
 
 }
