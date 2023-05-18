@@ -2,6 +2,8 @@ package com.chixing.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
  * @author smith
  * @since 2023-05-10
  */
+@Data
 public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;

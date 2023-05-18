@@ -353,9 +353,10 @@
         <div class="fixed">
             <!-- 固定的内容的内容 -->
             <div class="perhousePrice">
-                <span class="housePrice">￥${serverResult.data.housePrice}</span>
-
-                <span class="perday">/晚</span>
+                <span class="housePrice">￥</span>
+                <span class="housePriceValue housePrice">${serverResult.data.housePrice}</span>
+                <span class="perday">/晚</span><br>
+                <span style="font-size: 10px;color: #ff385c">温馨提示：周末和节假日价格是分别是基础价格的1.5倍和2倍!</span>
             </div>
             <div class="fixedscore">
                 <div id="test4">
@@ -389,6 +390,8 @@
                         <button class="counter-button" href="javascript:void(0)" id="subtract">-</button>
                         <button class="counter-button" href="javascript:void(0)" id="add">+</button>
                     </div>
+                    <input type="hidden" value="${serverResult.data.houseId}" name="houseId">
+                    <input type="hidden" value="${serverResult.data.houseName}" name="houseName">
                     <input type="hidden" value="${serverResult.data.houseMainpicture}" name="houseMainpicture">
                     <input type="hidden" value="${serverResult.data.housePrice}" name="housePrice">
                     <input type="hidden" value="${serverResult.data.houseScore}" name="houseScore">
@@ -406,6 +409,8 @@
 <script src="../js/house/house.js"></script>
 
 
+
+
 <!-- //地图 -->
 <script type="text/javascript">
     var map = new BMapGL.Map("map");
@@ -421,9 +426,6 @@
     var navi3DCtrl = new BMapGL.NavigationControl3D();  // 添加3D控件
     map.addControl(navi3DCtrl);
 </script>
-
-
-
 <script>
 
 
@@ -451,7 +453,7 @@
     // 加法按钮事件处理函数
     addBtn.addEventListener("click", function(event) {
         event.preventDefault();
-        if (result < 4) {
+        if (result < ${serverResult.data.houseCustCount}) {
             result++;
         }
         resultEl.innerText = result;
