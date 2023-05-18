@@ -10,16 +10,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.chixing.pojo.Myorder;
 import com.chixing.pojo.Payment;
+import com.chixing.service.IMyorderService;
 import com.chixing.service.IPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -31,6 +32,9 @@ import java.util.UUID;
 public class PaymentController {
     @Autowired
     private IPaymentService paymentService;
+    @Autowired
+    private IMyorderService myorderService;
+    //voxetv8296@sandbox.com
         //appid
         private final String APP_ID = "2021000122690104";
         //应用私钥
@@ -44,15 +48,15 @@ public class PaymentController {
         //签名方式
         private final String SIGN_TYPE = "RSA2";
         //支付宝异步通知路径,付款完毕后会异步调用本项目的方法,必须为公网地址
-        private final String NOTIFY_URL = " http://n8dy4w.natappfree.cc/miso/pay/notify";
+        private final String NOTIFY_URL = "http://bvmnmg.natappfree.cc/miso/pay/notify";
         //支付宝同步通知路径,也就是当付款完毕后跳转本项目的页面,可以不是公网地址
-        private final String RETURN_URL = "http://localhost:8080/miso/myorder/paysuccess.jsp";
-
+        private final String RETURN_URL = "http://localhost:8080/miso/alipayReturnNotice";
     //必须加ResponseBody注解，否则spring会寻找thymeleaf页面
     @ResponseBody
     @RequestMapping("/pay/alipay")
     public String alipay(Myorder myorder, HttpSession session) throws AlipayApiException {
         String houseName=myorder.getHouseName();
+        String orderNum=myorder.getMyorderNum();
         //生成订单
         Payment payment=new Payment();
         String payNum=UUID.randomUUID().toString().replace("-","");
@@ -69,7 +73,7 @@ public class PaymentController {
         paymentService.save(payment);
 
         //调用封装好的方法（给支付宝接口发送请求）
-        return sendRequestToAlipay(payNum,payAmount,houseName);
+        return sendRequestToAlipay(orderNum,payAmount,houseName);
     }
     /*
 参数1：订单号
@@ -98,9 +102,68 @@ public class PaymentController {
         String result = alipayClient.pageExecute(alipayRequest).getBody();
         return result;
     }
+    @GetMapping("alipayReturnNotice")
+    @Transactional
+    public ModelAndView alipayReturnNotice(HttpServletRequest request) throws UnsupportedEncodingException, AlipayApiException {
+        System.out.println("同步请求，支付成功后，支付宝的返回数据是：" + request);
+
+        //商户订单号
+        String myorderNum = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
+        //支付宝交易号
+        String tradeNo = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "UTF-8");
+        //付款金额
+        String payPrice = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"), "UTF-8");
+
+        System.out.println("return myorderNum:" + myorderNum);
+        System.out.println("return tradeNo:" + tradeNo);
+        System.out.println("return payPrice:" + payPrice);
+
+        Map<String, String> params = new HashMap<>();
+        Map<String, String[]> requestParams = request.getParameterMap();
+        for (String name : requestParams.keySet()) {
+            params.put(name, request.getParameter(name));
+            //System.out.println(name + " = " + request.getParameter(name));
+        }
+        Payment payment=new Payment();
+        Myorder myorder=new Myorder();
+        // 支付宝验签
+        boolean signVerified = AlipaySignature.rsaCheckV1(params, ALIPAY_PUBLIC_KEY, CHARSET, SIGN_TYPE); // 调用SDK验证签名
+        if (signVerified) {
+            // 验签通过
+            System.out.println("交易名称: " + params.get("subject"));
+            System.out.println("交易状态: " + params.get("trade_status"));
+            System.out.println("支付宝交易凭证号: " + params.get("trade_no"));
+            System.out.println("商户订单号: " + params.get("out_trade_no"));
+            System.out.println("交易金额: " + params.get("total_amount"));
+            System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
+            System.out.println("买家付款时间: " + params.get("gmt_payment"));
+            System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
+            //更新流水信息状态
+            QueryWrapper<Payment> wrapper=new QueryWrapper<>();
+            wrapper.eq("myorder_num",myorderNum);
+            payment=paymentService.getOne(wrapper);
+            System.out.println(payment);
+            payment.setPayStatus(1);
+            payment.setPayTime(LocalDateTime.now());
+            String orderNum=payment.getMyorderNum();
+            paymentService.updateById(payment);
+
+            QueryWrapper<Myorder> myorderQueryWrapper=new QueryWrapper<>();
+            myorderQueryWrapper.eq("myorder_num",orderNum);
+            myorder=myorderService.getOne(myorderQueryWrapper);
+            myorder.setMyorderStatus(1);
+            myorderService.updateById(myorder);
+        }
+
+        ModelAndView mav=new ModelAndView();
+        mav.addObject("payment",payment);
+        mav.addObject("myorder",myorder);
+        mav.setViewName("/myorder/paysuccess");
+        return mav;
+    }
     @PostMapping("/pay/notify")  // 注意这里必须是POST接口
     public String payNotify(HttpServletRequest request) throws Exception {
-        if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
+        /*if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
             System.out.println("=========支付宝异步回调========");
             Map<String, String> params = new HashMap<>();
             Map<String, String[]> requestParams = request.getParameterMap();
@@ -108,11 +171,11 @@ public class PaymentController {
                 params.put(name, request.getParameter(name));
                 //System.out.println(name + " = " + request.getParameter(name));
             }
-            String tradeNo = params.get("out_trade_no");
-            System.out.println("交易号："+tradeNo);
 
+            String paymentNum = params.get("out_trade_no");
             String gmtPayment = params.get("gmt_payment");
             String alipayTradeNo = params.get("trade_no");
+
             // 支付宝验签
             boolean signVerified = AlipaySignature.rsaCheckV1(params, ALIPAY_PUBLIC_KEY, CHARSET, SIGN_TYPE); // 调用SDK验证签名
             if (signVerified) {
@@ -127,16 +190,24 @@ public class PaymentController {
                 System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
                 //更新流水信息状态
                 QueryWrapper<Payment> wrapper=new QueryWrapper<>();
-                wrapper.eq("pay_num",tradeNo);
+                wrapper.eq("pay_num",paymentNum);
                 Payment payment=paymentService.getOne(wrapper);
                 System.out.println(payment);
                 payment.setPayStatus(1);
                 payment.setPayTime(LocalDateTime.now());
+                String orderNum=payment.getMyorderNum();
                 paymentService.updateById(payment);
+
+                QueryWrapper<Myorder> myorderQueryWrapper=new QueryWrapper<>();
+                myorderQueryWrapper.eq("myorder_num",orderNum);
+                Myorder myorder=myorderService.getOne(myorderQueryWrapper);
+                myorder.setMyorderStatus(1);
+                myorderService.updateById(myorder);
             }
             return "success";
         }
-        return "false";
+        return "false";*/
+        return "success";
     }
 
 }

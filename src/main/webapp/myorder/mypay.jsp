@@ -231,7 +231,7 @@
             <input type="hidden" value="" name="orderCountAndDataVO.occName" id="occName">
             <input type="hidden" value="" name="orderCountAndDataVO.occIdentity" id="occIdentity">
             <input type="hidden" value="" name="orderCountAndDataVO.occTelno" id="occTelno">
-            <input class="fkBtn" type="submit" onclick="updateHiddenField(event)" value="确认并支付">
+            <input class="fkBtn" type="submit" onclick="updateHiddenField(event)" value="确认订单">
         </form>
 
         <script>

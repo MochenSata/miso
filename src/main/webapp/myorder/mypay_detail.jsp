@@ -19,20 +19,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 <body>
-${myorderDetailVO}
-${myorderDetailVO.getOrderCountAndDataVO().getOccName()}
-${myorderDetailVO.getOrderCountAndDataVO().getOccIdentity()}
-${myorderDetailVO.getOrderCountAndDataVO().getOccTelno()}
-${myorderDetailVO.getMyorderNum()}
-${myorderDetailVO.orderCountAndDataVO.custStartDate}
-${myorderDetailVO.orderCountAndDataVO.custEndDate}
-${myorderDetailVO.orderCountAndDataVO.houseName}
-${myorderDetailVO.orderCountAndDataVO.houseTheme}
-${myorderDetailVO.orderCountAndDataVO.houseScore}
-${myorderDetailVO.myorderPrice}
-${myorderDetailVO.custId}
-${myorderDetailVO.orderCountAndDataVO.houseId}
-${myorderDetailVO.myorderId}
+
 <!--导航栏nav-->
 <div class="foundation">
     <div class="layui-container">

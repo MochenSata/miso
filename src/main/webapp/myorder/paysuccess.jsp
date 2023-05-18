@@ -42,10 +42,27 @@
         </div>
     </div>
 </div>
-<div class="main">
-    <span class="title">支付成功</span>
+<div class="rongqi">
+    <div class="title">支付成功</div>
+    <div class="main">
+        <div class="l">
+            <div class="pic"><img src="${myorder.houseMainpicture}" alt=""></div>
+            <div class="housename">${myorder.houseName}</div>
+        </div>
+        <div class="r">
 
-    <a href="javaScript:void(0)" id="myLink">点击此处跳转</a>
+            <div><span>订单编号：</span>${payment.myorderNum}</div>
+            <div><span>流水交易号：</span>${payment.payNum}</div>
+
+            <div><span>订单创建时间：</span>${myorder.myorderCreateTime}</div>
+            <div><span>流水创建时间：</span>${payment.payCreatetime}</div>
+            <div><span>支付时间：</span>${payment.payTime}</div>
+            <div><span>支付金额：</span>${payment.payAmount}</div>
+
+
+            <a href="javaScript:void(0)" class="topersonal" id="myLink">点击跳转</a>
+        </div>
+    </div>
 </div>
 <script>
     var custId ;
