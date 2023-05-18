@@ -189,6 +189,7 @@
     border-radius: 40px;
     min-width: 1120px;
 }
+/*房屋类型*/
 .condition .housekind{
     margin: 0 auto;
     height: 60px;
@@ -219,15 +220,29 @@
     text-align: center;
     border: 1px solid #EBEBEB;
     border-radius: 20px;
-
+    background: whitesmoke;
+    cursor: pointer;
 }
+
+/*类型按钮被选中*/
+.condition .housekind .kindbtn.selected{
+    border: 1px solid #ff385c;
+}
+
+/*鼠标悬浮，按钮变色*/
+.kindbtn:hover{
+    border: 1px solid #ff385c !important;
+}
+
+
+/*房屋价格区间*/
 .condition .houseprice{
     margin: 0 auto;
     height: 60px;
     width: 90%;
     /* border: 1px solid black; */
-
 }
+
 .condition .houseprice .kindtitle{
     display: block;
     float: left;
@@ -251,9 +266,23 @@
     text-align: center;
     border: 1px solid #EBEBEB;
     border-radius: 20px;
-
+    background: whitesmoke;
+    cursor: pointer;
 }
 
+/*价格按钮被选中*/
+.condition .houseprice .pricebtn.selected{
+    border: 1px solid #ff385c;
+}
+
+/*鼠标悬浮，按钮变色*/
+.pricebtn:hover{
+    border: 1px solid #ff385c !important;
+}
+
+
+
+/*房屋卧室数量*/
 .condition .housesize{
     margin: 0 auto;
     height: 60px;
@@ -285,9 +314,20 @@
     text-align: center;
     border: 1px solid #EBEBEB;
     border-radius: 20px;
-
+    background: whitesmoke;
+    cursor: pointer;
 }
 
+/*卧室按钮被选中*/
+.condition .housesize .sizebtn.selected{
+    border: 1px solid #ff385c;
+}
+
+
+/*鼠标悬浮，按钮变色*/
+.sizebtn:hover{
+    border: 1px solid #ff385c !important;
+}
 
 
 

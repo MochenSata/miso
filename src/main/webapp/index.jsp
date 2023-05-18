@@ -141,7 +141,7 @@
 
 
 <script>
-
+//根据房屋类型筛选
     $(".classification").on("click", "button", function(event) {
         var ele = $(event.target).closest("button");
         if (ele.length) {

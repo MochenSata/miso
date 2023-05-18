@@ -48,6 +48,7 @@ public class HouseController {
         return mav;
     }
 
+    //按房屋类别筛选
     @GetMapping("list")
     @ResponseBody
     public ServerResult getHouseList(@RequestParam(value = "type",defaultValue = "全部")String type){
@@ -70,5 +71,19 @@ public class HouseController {
        mav.addObject("serverResult",serverResult);
        mav.setViewName("house/search");
        return mav;
+    }
+
+    //搜索页面条件查询房源
+    @GetMapping("searchByType")
+    @ResponseBody
+    public ServerResult getSearchHouseByType(@RequestParam(value = "houseKind",required = false)String houseKind,
+                                             @RequestParam(value = "lowPrice",required = false)Float lowPrice,
+                                             @RequestParam(value = "highPrice",required = false)Float highPrice,
+                                             @RequestParam(value = "roomNum",required = false)Integer roomNum
+                                             /*@RequestParam(value = "lastIds",required = false,defaultValue = "[]")String[] lastconditions*/){
+        System.out.println("选择的类型：" + houseKind + ",选择的价格范围："+ lowPrice + "~" + highPrice + ",选择的卧室数量：" + roomNum);
+        ServerResult house = houseService.getSearchHouseByType(houseKind,lowPrice,highPrice,roomNum);
+        System.out.println("查询到的房屋：" + house);
+        return house;
     }
 }
