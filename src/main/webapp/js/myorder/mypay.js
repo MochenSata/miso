@@ -1,6 +1,7 @@
 var startDate = new Date($("#test-startDate-1").val());
 var endDate = new Date($("#test-endDate-1").val());
 
+
 var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
 var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
 $(".nights").text(diffDays);
@@ -112,6 +113,10 @@ layui.use('laydate', function () {
             var end = value.split(' - ')[1];
             var startDate=new Date(start);
             var endDate=new Date(end);
+
+            $("#custEndDate").val(end);
+            $("#custStartDate").val(start);
+
             // 获取起始日期和结束日期的星期几
             var startDayOfWeek = startDate.getDay();
             var endDayOfWeek = endDate.getDay();
@@ -167,9 +172,9 @@ layui.use('laydate', function () {
             console.log("结束日期是"+dayOfWeekText[endDayOfWeek]);
             console.log(start);
             console.log(end);
+
             var resultElement =document.getElementById("result");
             resultElement.innerHTML=totalPrice;
-
             var days = Math.ceil((new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60 * 24));
             console.log("入住天数：" + days);
             $(".nights").text(days);
