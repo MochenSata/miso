@@ -2,6 +2,7 @@ package com.chixing.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chixing.annotation.AutoIdempotent;
 import com.chixing.mapper.MyorderMapper;
 import com.chixing.pojo.Myorder;
 import com.chixing.pojo.MyorderDetailVO;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.naming.directory.SearchResult;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -60,9 +62,11 @@ public class MyorderController {
     }
 
     //下订单存到数据库中
+    @AutoIdempotent
     @PostMapping("save")
     @ResponseBody
-    public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO){
+    public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO, HttpServletRequest request){
+        System.out.println(request.getRequestURI());
         System.out.println(myorderDetailVO.getOrderCountAndDataVO().getOccName());
         Myorder myorder = new Myorder();
         myorder.setCustId(myorderDetailVO.getCustId());
