@@ -220,8 +220,8 @@
             <input type="hidden" value="" name="couPrice" id="couPrice">
             <input type="hidden" value="" name="myorderPrice" id="myorderPrice">
             <input type="hidden" value="${orderCountAndDataVO.custNum}" name="orderCountAndDataVO.custNum" >
-            <input type="hidden" value="${orderCountAndDataVO.custStartDate}" name="orderCountAndDataVO.custStartDate" >
-            <input type="hidden" value="${orderCountAndDataVO.custEndDate}" name="orderCountAndDataVO.custEndDate" >
+            <input type="hidden" value="" name="orderCountAndDataVO.custStartDate" id="custStartDate">
+            <input type="hidden" value="" name="orderCountAndDataVO.custEndDate" id="custEndDate">
             <input type="hidden" value="${orderCountAndDataVO.houseId}" name="orderCountAndDataVO.houseId" >
             <input type="hidden" value="${orderCountAndDataVO.houseName}" name="orderCountAndDataVO.houseName" >
             <input type="hidden" value="${orderCountAndDataVO.houseMainpicture}" name="orderCountAndDataVO.houseMainpicture" >
@@ -234,7 +234,6 @@
             <input type="hidden" name="token" class="repeattoken">
             <input class="fkBtn" type="submit" onclick="updateHiddenField(event)" value="确认订单">
         </form>
-
         <script>
             function updateHiddenField(event) {
 

@@ -95,7 +95,7 @@
             <div class="r1">
 
                 <div class="r2">
-                    <img class="tupian" src="../img/house/chuanwu/chuanwu1/2.jpg">
+                    <img class="tupian" src="${myorderDetailVO.orderCountAndDataVO.houseMainpicture}">
                 </div>
 
                 <div class="r3">
