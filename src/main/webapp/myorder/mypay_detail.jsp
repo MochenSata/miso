@@ -21,6 +21,7 @@
 <body>
 
 <!--导航栏nav-->
+
 <div class="foundation">
     <div class="layui-container">
         <div class="layui-row nav">
@@ -148,5 +149,86 @@
 
     </div>
 </div>
+<input type="hidden" value="${myorderDetailVO.custId}" id="clientID">
+<script>
+    createIdempodentToken();
+    function createIdempodentToken() {
+        $.ajax({
+            type: "get",
+            url: "../getIdempodentToken",
+            success: function (result) {
+                console.log("防止表单重复提交的token："+result)
+                $(".repeattoken").val(result)
+            }
+        })
+    }
+</script>
+
+<div id="toast"></div>
+
+<script>
+    $(document).ready(function() {
+        $("#showToast").click(function() {
+            var toast = $("#toast");
+            toast.css("display", "block");
+            toast.text("This is a toast notification.");
+
+            setTimeout(function() {
+                toast.css("opacity", "0");
+                setTimeout(function() {
+                    toast.css("display", "none");
+                    toast.css("opacity", "1");
+                }, 500);
+            }, 5000);
+        });
+    });
+</script>
+<!--websocket-->
+<script type="text/javascript">
+    $(function(){
+        var ws;
+        //检测浏览器是否支持webSocket
+        if("WebSocket" in window){
+            console.log("您的浏览器支持webSocket!");
+            //模拟产生clientID
+            let clientID =$("#clientID").val();
+
+            //创建 WebSocket 对象,注意请求路径！！！！
+            ws = new WebSocket("ws://localhost:8080/miso/testWebSocket/"+clientID);
+
+            //与服务端建立连接时触发
+            ws.onopen = function(){
+               console.log("<p>与服务端建立连接建立成功！您的客户端ID="+clientID+"</p>");
+
+                //模拟发送数据到服务器
+                ws.send("你好服务端！我是客户端 "+clientID);
+            }
+
+            //接收到服务端消息时触发
+            ws.onmessage = function (evt) {
+                let received_msg = evt.data;
+                var toast = $("#toast");
+                toast.css("display", "block");
+                toast.text(received_msg);
+
+                setTimeout(function() {
+                    toast.css("opacity", "0");
+                    setTimeout(function() {
+                        toast.css("display", "none");
+                        toast.css("opacity", "1");
+                    }, 500);
+                }, 5000);
+            };
+
+
+            //服务端关闭连接时触发
+            ws.onclose = function() {
+                console.error("连接已经关闭.....")
+            };
+        }else{
+            console.log("您的浏览器不支持webSocket！");
+        }
+    })
+</script>
 </body>
 </html>

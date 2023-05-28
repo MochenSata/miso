@@ -2,7 +2,6 @@ package com.chixing.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.chixing.annotation.AutoIdempotent;
 import com.chixing.mapper.MyorderMapper;
 import com.chixing.pojo.Myorder;
 import com.chixing.pojo.MyorderDetailVO;
@@ -11,6 +10,7 @@ import com.chixing.pojo.OrderCountAndDataVO;
 import com.chixing.service.IMyorderOccupyService;
 import com.chixing.service.IMyorderService;
 import com.chixing.util.ServerResult;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +19,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.naming.directory.SearchResult;
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -40,6 +41,8 @@ public class MyorderController {
     private IMyorderService myorderService;
     @Autowired
     private IMyorderOccupyService myorderOccupyService;
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
     //点击个人中心跳转个人中心并查找我的所有订单
     @GetMapping("/customer/{id}")
     public ModelAndView getOrdersByIdToPersonalCenter(@PathVariable("id") Integer custId){
@@ -62,11 +65,9 @@ public class MyorderController {
     }
 
     //下订单存到数据库中
-    @AutoIdempotent
     @PostMapping("save")
     @ResponseBody
-    public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO, HttpServletRequest request){
-        System.out.println(request.getRequestURI());
+    public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO){
         System.out.println(myorderDetailVO.getOrderCountAndDataVO().getOccName());
         Myorder myorder = new Myorder();
         myorder.setCustId(myorderDetailVO.getCustId());
@@ -111,6 +112,16 @@ public class MyorderController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("myorderDetailVO",myorderDetailVO);
         mav.setViewName("myorder/mypay_detail");
+
+        Map<String ,Object> map = new HashMap<>();
+        map.put("myorderId",myorderId);
+        map.put("custId",myorder.getCustId());
+        map.put("myorderNum",myorderNum);
+        rabbitTemplate.convertAndSend("order-delayed-exchange","order-key1",map,message ->{
+            message.getMessageProperties().setDelay(60000);
+            return  message;
+        });
+
         return mav;
     }
 }
