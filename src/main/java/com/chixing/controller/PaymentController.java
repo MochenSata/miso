@@ -54,7 +54,14 @@ public class PaymentController {
     //必须加ResponseBody注解，否则spring会寻找thymeleaf页面
     @ResponseBody
     @RequestMapping("/pay/alipay")
-    public String alipay(Myorder myorder, HttpSession session) throws AlipayApiException {
+    public String alipay(Myorder order, HttpSession session) throws AlipayApiException {
+        Integer orderId=order.getMyorderId();
+        Myorder myorder=myorderService.getById(orderId);
+        Integer orderStatus=myorder.getMyorderStatus();
+        if (orderStatus==4){
+            System.out.println("该订单已取消");
+            return "该订单已超时，请重新下订单";
+        }
         String houseName=myorder.getHouseName();
         String orderNum=myorder.getMyorderNum();
         //生成订单

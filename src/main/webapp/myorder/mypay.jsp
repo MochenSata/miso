@@ -231,6 +231,7 @@
             <input type="hidden" value="" name="orderCountAndDataVO.occName" id="occName">
             <input type="hidden" value="" name="orderCountAndDataVO.occIdentity" id="occIdentity">
             <input type="hidden" value="" name="orderCountAndDataVO.occTelno" id="occTelno">
+            <input type="hidden" name="token" class="repeattoken">
             <input class="fkBtn" type="submit" onclick="updateHiddenField(event)" value="确认订单">
         </form>
         <script>
@@ -416,6 +417,19 @@
                 console.log("custId:"+custId)
             }
         });
+    }
+
+
+    createIdempodentToken();
+    function createIdempodentToken() {
+        $.ajax({
+            type: "get",
+            url: "../getIdempodentToken",
+            success: function (result) {
+                console.log("防止表单重复提交的token："+result)
+                $(".repeattoken").val(result)
+            }
+        })
     }
 </script>
 

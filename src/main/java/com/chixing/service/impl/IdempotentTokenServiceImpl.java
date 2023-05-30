@@ -6,6 +6,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -19,13 +21,14 @@ public class IdempotentTokenServiceImpl implements IdempotentTokenService {
     public String createToken() {
 
         String token = UUID.randomUUID().toString().replace("-","");
-        redisTemplate.opsForValue().set(token,token,1, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(token,token,10, TimeUnit.MINUTES);
         return token;
     }
 
+
     //2. 验证 幂等token是否有效
     @Override
-    public boolean checkToken(HttpServletRequest request) {
+    public boolean checkToken(HttpServletRequest request, HttpServletResponse response){
         System.out.println("==========正在验证token===================");
         //(1)获得token
         String token = request.getParameter("token");
@@ -35,8 +38,14 @@ public class IdempotentTokenServiceImpl implements IdempotentTokenService {
             redisTemplate.delete(token);
             return true;
         }else{
-            //(3)若token不存在，说明是重复的请求，重定向到指定的页面（或抛异常）
-            System.out.println("该请求是重复的，token 不在Redis中");
+            // (3) 若token不存在，说明是重复的请求，重定向到指定的失败页面（或抛异常）
+            System.out.println("该请求是重复的，token不在Redis中");
+            // 使用重定向跳转到失败页面
+            try {
+                response.sendRedirect("failurePage.jsp");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return false;
         }
 

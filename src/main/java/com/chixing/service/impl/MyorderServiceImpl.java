@@ -1,6 +1,7 @@
 package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chixing.controller.WebSocketProcess;
 import com.chixing.mapper.PaymentMapper;
 import com.chixing.pojo.MyOrderPayVO;
 import com.chixing.pojo.Myorder;
@@ -10,11 +11,16 @@ import com.chixing.service.IMyorderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -30,8 +36,9 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
     private MyorderMapper myorderMapper;
     @Autowired
     private PaymentMapper paymentMapper;
+    @Autowired
+    private WebSocketProcess webSocketProcess;
 
-    //查询我的所有订单
     @Override
     public ServerResult getAllOrdersByCustId(Integer customerId) {
         List<MyOrderPayVO> orderPayVOList=new ArrayList<>();
@@ -57,25 +64,33 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
         return ServerResult.success(200,ResultMsg.success,orderPayVOList);
     }
 
-    //删除订单（更改订单状态为5）
-    public ServerResult deleteOrderByOrderId(Integer orderId){
-        Myorder myorder = myorderMapper.selectById(orderId);
-        if (myorder != null){
-            myorder.setMyorderStatus(5);
+    /**
+     * 延时队列超时自动取消订单
+     */
+    @RabbitListener(queues = "order-delayed-queue")
+    public void getMsg(Message message, Channel channel, Map map){
+        Integer myorderId=(Integer) map.get("myorderId");
+        Integer custId=(Integer) map.get("custId");
+        String myorderNum=(String)map.get("myorderNum");
+        Myorder myorder=myorderMapper.selectById(myorderId);
+        Integer status=myorder.getMyorderStatus();
+        if (status==0){//未支付，自动取消
+            System.out.println("正在进入自动取消订单>>>>");
+            myorder.setMyorderStatus(4);
             myorderMapper.updateById(myorder);
-            return ServerResult.success(200,ResultMsg.success,myorder);
+            String msg="您好，订单编号为："+myorderNum+"的订单已超时，已为您自动取消。";
+            try {
+                webSocketProcess.sendMessage(custId,msg);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return ServerResult.fail(201,ResultMsg.fail,false);
-
-    }
-
-    //查询订单详情
-    @Override
-    public ServerResult getOrderDeatilByOrderId(Integer orderId) {
-        Myorder myorder = myorderMapper.selectById(orderId);
-        if (myorder != null){
-            return ServerResult.success(200,ResultMsg.success,myorder);
+        try {
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return ServerResult.fail(201,ResultMsg.fail,false);
     }
 }
+
+
