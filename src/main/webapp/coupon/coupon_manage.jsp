@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../css/coupon/coupon_manage.css">
     <script src="../js/jquery-3.6.4.min.js"></script>
     <script src="../layui/layui.js"></script>
+    <script src="../js/moment.js"></script>
 </head>
 
 <body>
@@ -32,9 +33,8 @@
                     Miso管理员
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">Your Profile</a></dd>
-                    <dd><a href="">Settings</a></dd>
-                    <dd><a href="">Sign out</a></dd>
+                    <dd><a href="">Miso</a></dd>
+
                 </dl>
             </li>
             <!-- <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
@@ -82,7 +82,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">优惠券类别</label>
                 <div class="layui-input-block" style="width:200px">
-                    <select name="quiz" lay-search>
+                    <select name="couCategory" lay-search >
                         <option value="">请选择</option>
                         <option>满减券</option>
                         <option>新人券</option>
@@ -93,13 +93,19 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">优惠券名称</label>
                 <div class="layui-input-block">
-                    <input type="text"  placeholder="请输入名称" class="layui-input"  style="width:200px">
+                    <input type="text" name="couName" placeholder="请输入名称" class="layui-input"  style="width:200px">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">优惠券金额</label>
                 <div class="layui-input-block">
-                    <input type="text"  placeholder="请输入金额"  class="layui-input"  style="width:200px">
+                    <input type="text" name="couPrice" placeholder="请输入金额"  class="layui-input"  style="width:200px">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">优惠券数量</label>
+                <div class="layui-input-block">
+                    <input type="text" name="couCount" placeholder="请输入数量"  class="layui-input"  style="width:200px">
                 </div>
             </div>
 
@@ -108,11 +114,11 @@
                 <div class="layui-input-block">
                     <div class="layui-inline" id="test6">
                         <div class="layui-input-inline">
-                            <input type="text" autocomplete="off" id="test-startDate-1" class="layui-input" placeholder="开始日期">
+                            <input type="text" name="couValidTime" autocomplete="off" id="test-startDate-1" class="layui-input" placeholder="开始日期" >
                         </div>
                         <div class="layui-form-mid">-</div>
                         <div class="layui-input-inline">
-                            <input type="text" autocomplete="off" id="test-endDate-1" class="layui-input" placeholder="结束日期">
+                            <input type="text" name="couInvalidTime" autocomplete="off" id="test-endDate-1" class="layui-input" placeholder="结束日期" >
                         </div>
                     </div>
 
@@ -122,9 +128,10 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">优惠券介绍</label>
                 <div class="layui-input-block">
-                    <textarea lay-verify="required" name="desc" placeholder="请输入内容" class="layui-textarea" style="width:350px;height:150px;resize: none;"></textarea>
+                    <textarea lay-verify="required"  name="couIntroduction" placeholder="请输入内容" class="layui-textarea" style="width:350px;height:150px;resize: none;"></textarea>
                 </div>
             </div>
+            <input name="couStatus" type="hidden" value="0">
         </form>
 
 
@@ -247,6 +254,8 @@
                 </div>
             </div>
 
+
+
             <div class="layui-form-item">
                 <label class="layui-form-label">发布时间</label>
                 <div class="layui-input-block">
@@ -281,6 +290,24 @@
 </div>
 <script src="./layui/layui.js"></script>
 <script>
+    // Function to convert date to local datetime format
+    function toLocalDateTime(date) {
+        var year = date.getFullYear();
+        var month = addLeadingZero(date.getMonth() + 1);
+        var day = addLeadingZero(date.getDate());
+        var hours = addLeadingZero(date.getHours());
+        var minutes = addLeadingZero(date.getMinutes());
+        var seconds = addLeadingZero(date.getSeconds());
+
+        var dateString = year + '-' + month + '-' + day + ' ' + '00' + ':' + '00' + ':' + '00';
+        var localDateTime = moment(dateString, 'YYYY-MM-DD HH:mm:ss').local();
+        return dateString;
+    }
+
+    // Function to add leading zero to single-digit numbers
+    function addLeadingZero(number) {
+        return (number < 10 ? '0' : '') + number;
+    }
     //JS
     layui.use(['element', 'layer', 'util'], function () {
         var element = layui.element
@@ -313,24 +340,56 @@
         layer.open({
             type: 1,
             area: ['550px', '600px'],
-            title: '新增优惠券'
-            , content: $("#test"),
+            title: '新增优惠券',
+            content: $("#test"),
             shade: 0,
-            btn: ['提交', '重置']
-            , btn1: function (index, layero) {
-                var kk = $("#username").val();
-                alert(kk);
+            btn: ['提交', '重置'],
+            btn1: function (index, layero) {
+
+                // 获取表单数据
+                var formData = {
+                    couCategory: $("select[name='couCategory']").val(),
+                    couName: $("input[name='couName']").val(),
+                    couPrice: $("input[name='couPrice']").val(),
+                    couCount: $("input[name='couCount']").val(),
+                    couValidTime: new Date($("#test-startDate-1").val()),
+                    couInvalidTime: new Date($("#test-endDate-1").val()),
+                    couIntroduction: $("textarea[name='couIntroduction']").val(),
+                    couStatus: $("input[name='couStatus']").val()
+                };
+
+
+                formData.couValidTime = toLocalDateTime(formData.couValidTime);
+                formData.couInvalidTime = toLocalDateTime(formData.couInvalidTime);
+                // Convert formData to JSON
+                var jsonData = JSON.stringify(formData);
+                console.log(jsonData);
+                // 发送表单数据到服务器
+                $.ajax({
+                    url: "/miso/coupon/save",
+                    type: "POST",
+                    data: formData,
+                    success: function ( ) {
+                        // 处理提交成功的逻辑
+                        alert("新增优惠券成功");
+                        layer.close(index); // 关闭弹出层
+                    },
+                    error: function (xhr, status, error) {
+                        // 处理提交失败的逻辑
+                        alert("表单提交失败");
+                    }
+                });
             },
             btn2: function (index, layero) {
-                alert("2222");
+                // 重置表单逻辑
+                $("#test")[0].reset();
                 return false;
             },
             cancel: function (layero, index) {
                 layer.closeAll();
             }
-
         });
-    })
+    });
     //编辑弹出层
     $(".editbtn").click(function () {
         layer.open({
