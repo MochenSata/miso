@@ -5,7 +5,8 @@
   Time: 14:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -30,10 +31,10 @@
       </div>
       <div class="layui-col-xs7">
         <div class="search-area">
-          <form action="">
+          <!-- <form action="">
             <input type="text" placeholder="请输入目的地">
             <input type="button" value="搜索">
-          </form>
+          </form> -->
         </div>
       </div>
       <div class="layui-col-xs1"><a href=""><span class="login">登录</span></a></div>
@@ -98,7 +99,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  20230310200241562776
+                  ${detail.data.myorderNum}
                 </div>
               </td>
             </tr>
@@ -110,7 +111,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  <a href=""><span>苏州湾欧式船屋</span></a>
+                  <a href=""><span>${detail.data.houseName}</span></a>
                 </div>
               </td>
             </tr>
@@ -122,7 +123,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  <span>2023-03-10 20:02:41</span>
+                  <span>${detail.data.myorderCreateTime}</span>
                 </div>
               </td>
             </tr>
@@ -133,9 +134,31 @@
                 </div>
               </td>
               <td class="tR">
-                <div class="tR_r">
-                  已付款
-                </div>
+                <c:if test="${detail.data.myorderStatus==0}">
+                  <div class="tR_r">
+                    未付款
+                  </div>
+                </c:if>
+                <c:if test="${detail.data.myorderStatus==1}">
+                  <div class="tR_r">
+                    已付款
+                  </div>
+                </c:if>
+                <c:if test="${detail.data.myorderStatus==2}">
+                  <div class="tR_r">
+                    已完成
+                  </div>
+                </c:if>
+                <c:if test="${detail.data.myorderStatus==3}">
+                  <div class="tR_r">
+                    已完成
+                  </div>
+                </c:if>
+                <c:if test="${detail.data.myorderStatus==4}">
+                  <div class="tR_r">
+                    已取消
+                  </div>
+                </c:if>
               </td>
             </tr>
             <tr>
@@ -161,7 +184,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  2023-04-02
+                  ${detail.data.myorderIntime}
                 </div>
               </td>
             </tr>
@@ -173,31 +196,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  2023-04-03
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="tL">
-                <div class="tL-l">
-                  入住人数
-                </div>
-              </td>
-              <td class="tR">
-                <div class="tR_r">
-                  1 人
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="tL">
-                <div class="tL-l">
-                  套/间/床位数：
-                </div>
-              </td>
-              <td class="tR">
-                <div class="tR_r">
-                  1
+                  ${detail.data.myorderOutime}
                 </div>
               </td>
             </tr>
@@ -209,7 +208,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  ￥1486
+                  ￥${detail.data.housePrice}
                 </div>
               </td>
             </tr>
@@ -221,7 +220,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  ￥10
+                  ￥${detail.data.couPrice}
                 </div>
               </td>
             </tr>
@@ -233,7 +232,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  ￥1476
+                  ￥${detail.data.myorderPrice}
                 </div>
               </td>
             </tr>

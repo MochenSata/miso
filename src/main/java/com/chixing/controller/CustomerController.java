@@ -7,6 +7,7 @@ import com.chixing.service.ICustomerService;
 import com.chixing.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,32 +82,37 @@ public class CustomerController {
     @PostMapping("register")
     @ResponseBody
     public ServerResult register(@RequestParam("userpwd") String userpwd,
-                                 @RequestParam("usertelno") Long usertelno){
+                                 @RequestParam("usertelno") Long usertelno,
+                                 @RequestParam("verification") String verification){
+        ValueOperations<String,Object> operations = redisTemplate.opsForValue();
+        String telno=usertelno.toString();
+        String exverification = operations.get(telno).toString();//匹配验证码
 
         ServerResult result = service.isregisterdeBytelno(usertelno);
         if(result.getCode()!=200){
             return ServerResult.fail(201,ResultMsg.fail,"该手机号已被注册");
         }else {
-
-            String username = "user_" + usertelno.toString();
-            String encruserpwd = Md5Utils.code(userpwd);
-            String inviteNum = InvitationCode.create(username);
-            Customer customer1 = new Customer();
-            customer1.setCustName(username);
-            customer1.setCustPwd(encruserpwd);
-            customer1.setCustTelno(usertelno);
-            customer1.setCustCreateTime(LocalDateTime.now());
-            customer1.setCustInviteNum(inviteNum);
+            if (exverification.equals(verification)) {
+                String username = "user_" + usertelno.toString();
+                String encruserpwd = Md5Utils.code(userpwd);
+                String inviteNum = InvitationCode.create(username);
+                Customer customer1 = new Customer();
+                customer1.setCustName(username);
+                customer1.setCustPwd(encruserpwd);
+                customer1.setCustTelno(usertelno);
+                customer1.setCustCreateTime(LocalDateTime.now());
+                customer1.setCustInviteNum(inviteNum);
 
 //        String encruserpwd = Md5Utils.code(userpwd);
-            boolean rows = service.save(customer1);
-            if (rows) {
-                return ServerResult.success(200, ResultMsg.success, "用户注册成功");
-            } else {
+                boolean rows = service.save(customer1);
+                if (rows) {
+                    return ServerResult.success(200, ResultMsg.success, "用户注册成功");
+                } else {
 
-                return ServerResult.fail(201, ResultMsg.fail, "用户注册失败");
+                    return ServerResult.fail(201, ResultMsg.fail, "用户注册失败");
+                }
             }
-
+            return ServerResult.fail(202, ResultMsg.fail, "验证码有误");
         }
 
     }

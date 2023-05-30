@@ -31,6 +31,7 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
     @Autowired
     private PaymentMapper paymentMapper;
 
+    //查询我的所有订单
     @Override
     public ServerResult getAllOrdersByCustId(Integer customerId) {
         List<MyOrderPayVO> orderPayVOList=new ArrayList<>();
@@ -54,5 +55,27 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
         }
         System.out.println("MyorderServiceimpl:"+orderPayVOList);
         return ServerResult.success(200,ResultMsg.success,orderPayVOList);
+    }
+
+    //删除订单（更改订单状态为5）
+    public ServerResult deleteOrderByOrderId(Integer orderId){
+        Myorder myorder = myorderMapper.selectById(orderId);
+        if (myorder != null){
+            myorder.setMyorderStatus(5);
+            myorderMapper.updateById(myorder);
+            return ServerResult.success(200,ResultMsg.success,myorder);
+        }
+        return ServerResult.fail(201,ResultMsg.fail,false);
+
+    }
+
+    //查询订单详情
+    @Override
+    public ServerResult getOrderDeatilByOrderId(Integer orderId) {
+        Myorder myorder = myorderMapper.selectById(orderId);
+        if (myorder != null){
+            return ServerResult.success(200,ResultMsg.success,myorder);
+        }
+        return ServerResult.fail(201,ResultMsg.fail,false);
     }
 }

@@ -16,4 +16,10 @@ public interface IMyorderService extends IService<Myorder> {
     //查询我的所有订单
     public ServerResult getAllOrdersByCustId(Integer customerId);
 
+    //删除订单
+    public ServerResult deleteOrderByOrderId(Integer orderId);
+
+    //查询订单详情
+    public ServerResult getOrderDeatilByOrderId(Integer orderId);
+
 }

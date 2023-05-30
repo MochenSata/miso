@@ -127,6 +127,8 @@
                                                     <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                 </div>
                                                 <p class="house_name">${data.myorder.houseName}</p>
+                                                <input type="hidden" class="house_id" value="${data.myorder.houseId}">
+                                                <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                             </td>
                                             <td>${data.myorder.myorderNum}</td>
                                             <td>￥${data.myorder.myorderPrice}</td>
@@ -156,12 +158,14 @@
                                                         <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">去评价</button></a>
                                                         </c:if>
                                                         <c:if test="${data.myorder.myorderStatus>0&&data.myorder.myorderStatus<5}">
-                                                        <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                                class="layui-btn order_operate"><span>订单详情</span></button></a>
+<%--                                                        <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.jsp" class="orderdetaila"><button--%>
+<%--                                                                class="layui-btn order_operate"><span>订单详情</span></button></a>--%>
+                                                            <button
+                                                                    class="layui-btn order_operate deatil"><span>订单详情</span></button>
                                                         </c:if>
                                                         <c:if test="${data.myorder.myorderStatus<6}">
                                                         <button data-method="offset" data-type="auto"
-                                                                class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                                                class="layui-btn layui-btn-normal order_operate delete">删除订单</button>
                                                         </c:if>
                                                     </div>
                                                 </div>
@@ -191,9 +195,11 @@
                                                     <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                 </div>
                                                 <p class="house_name">${data.myorder.houseName}</p>
+                                                <input type="hidden" class="house_id" value="${data.myorder.houseId}">
+                                                <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                             </td>
                                             <td>${data.myorder.myorderNum}</td>
-                                            <td>￥${data.payment.payAmount}</td>
+                                            <td>￥${data.myorder.myorderPrice}</td>
                                             <td>${data.myorder.myorderCreateTime}</td>
                                             <td>已付款</td>
                                             <td>
@@ -206,12 +212,14 @@
                                                             <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">去评价</button></a>
                                                         </c:if>
                                                         <c:if test="${data.myorder.myorderStatus>0&&data.myorder.myorderStatus<5}">
-                                                            <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                                    class="layui-btn order_operate"><span>订单详情</span></button></a>
+<%--                                                            <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.jsp" class="orderdetaila"><button--%>
+<%--                                                                    class="layui-btn order_operate"><span>订单详情</span></button></a>--%>
+                                                            <button
+                                                                    class="layui-btn order_operate deatil"><span>订单详情</span></button>
                                                         </c:if>
                                                         <c:if test="${data.myorder.myorderStatus<6}">
                                                             <button data-method="offset" data-type="auto"
-                                                                    class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                                                    class="layui-btn layui-btn-normal order_operate delete">删除订单</button>
                                                         </c:if>
                                                     </div>
                                                 </div>
@@ -242,9 +250,11 @@
                                                         <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                     </div>
                                                     <p class="house_name">${data.myorder.houseName}</p>
+                                                    <input type="hidden" class="house_id" value="${data.myorder.houseId}">
+                                                    <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                                 </td>
                                                 <td>${data.myorder.myorderNum}</td>
-                                                <td>￥${data.payment.payAmount}</td>
+                                                <td>￥${data.myorder.myorderPrice}</td>
                                                 <td>${data.myorder.myorderCreateTime}</td>
                                                 <td>未付款</td>
                                                 <td>
@@ -257,12 +267,14 @@
                                                                 <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">去评价</button></a>
                                                             </c:if>
                                                             <c:if test="${data.myorder.myorderStatus>0&&data.myorder.myorderStatus<5}">
-                                                                <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                                        class="layui-btn order_operate"><span>订单详情</span></button></a>
+<%--                                                                <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.jsp" class="orderdetaila"><button--%>
+<%--                                                                        class="layui-btn order_operate"><span>订单详情</span></button></a>--%>
+                                                                <button
+                                                                        class="layui-btn order_operate deatil"><span>订单详情</span></button>
                                                             </c:if>
                                                             <c:if test="${data.myorder.myorderStatus<6}">
                                                                 <button data-method="offset" data-type="auto"
-                                                                        class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                                                        class="layui-btn layui-btn-normal order_operate delete">删除订单</button>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -293,9 +305,11 @@
                                                         <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                     </div>
                                                     <p class="house_name">${data.myorder.houseName}</p>
+                                                    <input type="hidden" class="house_id" value="${data.myorder.houseId}">
+                                                    <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                                 </td>
                                                 <td>${data.myorder.myorderNum}</td>
-                                                <td>￥${data.payment.payAmount}</td>
+                                                <td>￥${data.myorder.myorderPrice}</td>
                                                 <td>${data.myorder.myorderCreateTime}</td>
                                                 <td>已完成</td>
                                                 <td>
@@ -308,12 +322,14 @@
                                                                 <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">去评价</button></a>
                                                             </c:if>
                                                             <c:if test="${data.myorder.myorderStatus>0&&data.myorder.myorderStatus<5}">
-                                                                <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                                        class="layui-btn order_operate"><span>订单详情</span></button></a>
+<%--                                                                <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.jsp" class="orderdetaila"><button--%>
+<%--                                                                        class="layui-btn order_operate"><span>订单详情</span></button></a>--%>
+                                                                <button
+                                                                        class="layui-btn order_operate deatil"><span>订单详情</span></button>
                                                             </c:if>
                                                             <c:if test="${data.myorder.myorderStatus<6}">
                                                                 <button data-method="offset" data-type="auto"
-                                                                        class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                                                        class="layui-btn layui-btn-normal order_operate delete">删除订单</button>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -335,17 +351,19 @@
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
-                                    <c:forEach items="${result.data}" var="data">
+                                    <c:forEach items="${result.data}" var="data" varStatus="status">
                                         <c:if test="${data.myorder.myorderStatus==4}">
-                                            <tr>
+                                            <tr data-index="${status.index}">
                                                 <td>
                                                     <div>
                                                         <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                     </div>
                                                     <p class="house_name">${data.myorder.houseName}</p>
+                                                    <input type="hidden" class="house_id" value="${data.myorder.houseId}">
+                                                    <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                                 </td>
                                                 <td>${data.myorder.myorderNum}</td>
-                                                <td>￥${data.payment.payAmount}</td>
+                                                <td>￥${data.myorder.myorderPrice}</td>
                                                 <td>${data.myorder.myorderCreateTime}</td>
                                                 <td>已取消</td>
                                                 <td>
@@ -358,12 +376,14 @@
                                                                 <a href="../customer/miso_comment.html"><button class="layui-btn order_operate">去评价</button></a>
                                                             </c:if>
                                                             <c:if test="${data.myorder.myorderStatus>0&&data.myorder.myorderStatus<5}">
-                                                                <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.html" class="orderdetaila"><button
-                                                                        class="layui-btn order_operate"><span>订单详情</span></button></a>
+<%--                                                                <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.jsp" class="orderdetaila"><button--%>
+<%--                                                                        class="layui-btn order_operate deatil"><span>订单详情</span></button></a>--%>
+                                                                <button
+                                                                        class="layui-btn order_operate deatil"><span>订单详情</span></button>
                                                             </c:if>
-                                                            <c:if test="${data.myorder.myorderStatus<6}">
+                                                            <c:if test="${data.myorder.myorderStatus<5}">
                                                                 <button data-method="offset" data-type="auto"
-                                                                        class="layui-btn layui-btn-normal order_operate">删除订单</button>
+                                                                        class="layui-btn layui-btn-normal order_operate delete">删除订单</button>
                                                             </c:if>
                                                         </div>
                                                     </div>
@@ -383,41 +403,75 @@
 </div>
 </body>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+
+
 <script>
     //居中弹框
     layui.use('layer', function () { //独立版的layer无需执行这一句
         var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
 
-        //触发事件
-        var active = {
-            setTop: function () {
-                var that = this;
-            }
 
 
-            , offset: function (othis) {
-                var type = othis.data('type')
-                    , text = othis.text();
-
-                layer.open({
-                    type: 1
-                    , offset: type
-                    , id: 'layerDemo' + type //防止重复弹出
-                    , content: '<div style="padding: 20px 100px;">' + "您确定要删除吗" + '</div>'
-                    , btn: ['确定','取消']
-                    , btnAlign: 'c' //按钮居中
-                    , shade: 0 //不显示遮罩
-                    , yes: function () {
-                        layer.closeAll();
-                    }
+        $(document).ready(function() {
+            // 监听删除按钮的点击事件
+            $('.delete').click(function() {
+                var orderId = $(this).parents('tr').find('.order_id').val(); // 获取订单 ID
+                layer.confirm('确认删除该订单？', { // 弹出确认对话框
+                    btn: ['确认', '取消']
+                }, function() { // 点击确认按钮
+                    $.ajax({
+                        type: 'GET',
+                        url: '/miso/myorder/delete/' + orderId, // 发送 GET 请求，删除订单
+                        success: function(result) {
+                            layer.msg('删除成功！'); // 删除成功，弹出提示消息
+                            location.reload(); // 删除成功后刷新当前页面
+                        },
+                        error: function(xhr, status, error) {
+                            layer.msg('删除失败：' + error); // 删除失败，弹出错误消息
+                        }
+                    });
                 });
-            }
-        };
+            });
+                $('.deatil').click(function() {
+                    var parameter = $(this).parents('tr').find('.order_id').val(); // 获取需要传递的参数
 
-        $('#layerDemo .layui-btn').on('click', function () {
-            var othis = $(this), method = othis.data('method');
-            active[method] ? active[method].call(this, othis) : '';
+                    // 创建一个隐藏的表单，并设置属性
+                    var form = $('<form></form>');
+                    form.attr('method', 'GET'); // 使用POST请求
+                    form.attr('action', '${pageContext.request.contextPath}/myorder/detail'); // 控制器层的方法URL
+
+                    // 创建一个隐藏的输入字段，并设置值和名称
+                    var input = $('<input />');
+                    input.attr('type', 'hidden');
+                    input.attr('name', 'orderId');
+                    input.val(parameter);
+
+                    // 将输入字段添加到表单中
+                    form.append(input);
+
+                    // 将表单添加到文档中并提交
+                    $('body').append(form);
+                    form.submit();
+                });
+
+
+            // $('.deatil').click(function() {
+            //     var orderId = $(this).parents('tr').find('.order_id').val();
+            //     console.log(orderId)// 获取订单 ID
+            //     $.ajax({
+            //         type: 'GET',
+            //         url: '/miso/myorder/detail/' + orderId,   // 发送 GET 请求，查看订单详情
+            //         async: false,
+            //     })
+            // })
+
+
+
         });
+
+
+
+
     });
     //个人中心
 
