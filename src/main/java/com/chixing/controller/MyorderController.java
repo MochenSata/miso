@@ -12,6 +12,7 @@ import com.chixing.service.IMyorderService;
 import com.chixing.util.ServerResult;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +44,9 @@ public class MyorderController {
     private IMyorderOccupyService myorderOccupyService;
     @Autowired
     private AmqpTemplate rabbitTemplate;
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
+
     //点击个人中心跳转个人中心并查找我的所有订单
     @GetMapping("/customer/{id}")
     public ModelAndView getOrdersByIdToPersonalCenter(@PathVariable("id") Integer custId){
@@ -124,5 +128,30 @@ public class MyorderController {
 
         return mav;
     }
+
+    //删除订单（将订单状态修改为5：已删除）
+    @GetMapping("delete/{orderId}")
+    @ResponseBody
+    public ServerResult deleteOrder(@PathVariable("orderId") Integer orderId){
+        ServerResult result = myorderService.deleteOrderByOrderId(orderId);
+        System.out.println("要删除的订单为：" + result);
+//        ModelAndView mav=new ModelAndView("myorder/miso_order_all");
+//        mav.addObject("result",result);
+//        return mav;
+        return result;
+    }
+
+    //查询订单详情
+    @GetMapping("detail")
+    @ResponseBody
+    public ModelAndView detailOrder(@RequestParam("orderId") Integer orderId){
+        ServerResult result = myorderService.getOrderDeatilByOrderId(orderId);
+        System.out.println("要查询的订单为：" + result);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("detail",result);
+        mav.setViewName("myorder/miso_order_detail");
+        return mav;
+    }
+
 }
 
