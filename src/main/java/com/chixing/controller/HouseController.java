@@ -1,6 +1,7 @@
 package com.chixing.controller;
 
 import com.chixing.pojo.House;
+import com.chixing.pojo.SearchHouse;
 import com.chixing.service.IHouseService;
 import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/house")
@@ -64,14 +66,14 @@ public class HouseController {
     }
 
     //搜索栏搜索房源
-    @GetMapping("search")
-    public ModelAndView getHouseByMoreCondition(@RequestParam(value = "search",required = false)String search){
-       ServerResult serverResult = houseService.getHouseByMoreCondition(search);
-       ModelAndView mav = new ModelAndView();
-       mav.addObject("serverResult",serverResult);
-       mav.setViewName("house/search");
-       return mav;
-    }
+//    @GetMapping("search")
+//    public ModelAndView getHouseByMoreCondition(@RequestParam(value = "search",required = false)String search){
+//       ServerResult serverResult = houseService.getHouseByMoreCondition(search);
+//       ModelAndView mav = new ModelAndView();
+//       mav.addObject("serverResult",serverResult);
+//       mav.setViewName("house/search");
+//       return mav;
+//    }
 
     //搜索页面条件查询房源
     @GetMapping("searchByType")
@@ -85,5 +87,16 @@ public class HouseController {
         ServerResult house = houseService.getSearchHouseByType(houseKind,lowPrice,highPrice,roomNum);
         System.out.println("查询到的房屋：" + house);
         return house;
+    }
+
+    //ES查询房源
+    @GetMapping("search")
+    public ModelAndView getHouseListFromEs(@RequestParam(value = "search",required = false)String search){
+        Map<String ,Object> map =  houseService.getHouseListFromEs(search);
+        ModelAndView mav = new ModelAndView("house/search");
+        List<SearchHouse> searchHouseList = (List<SearchHouse>) map.get("searchHouseList");
+        mav.addObject("searchHouseList",searchHouseList);
+        System.out.println("搜索到的房源数据是："+searchHouseList);
+        return mav;
     }
 }

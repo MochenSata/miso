@@ -9,10 +9,12 @@ import com.chixing.pojo.MyorderOccupy;
 import com.chixing.pojo.OrderCountAndDataVO;
 import com.chixing.service.IMyorderOccupyService;
 import com.chixing.service.IMyorderService;
+import com.chixing.util.LockUtil;
 import com.chixing.util.ServerResult;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.naming.directory.SearchResult;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 /**
  * <p>
@@ -46,6 +46,8 @@ public class MyorderController {
     private AmqpTemplate rabbitTemplate;
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     //点击个人中心跳转个人中心并查找我的所有订单
     @GetMapping("/customer/{id}")
@@ -72,59 +74,100 @@ public class MyorderController {
     @PostMapping("save")
     @ResponseBody
     public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO){
-        System.out.println(myorderDetailVO.getOrderCountAndDataVO().getOccName());
-        Myorder myorder = new Myorder();
-        myorder.setCustId(myorderDetailVO.getCustId());
-        String myorderNum= UUID.randomUUID().toString().replace("-", "");
-        myorderDetailVO.setMyorderNum(myorderNum);
+        //获取线程id
+        String thread = String.valueOf(Thread.currentThread().getId());
+        //初始化
+        LockUtil lockUtil = new LockUtil(stringRedisTemplate);
+        String houseId = myorderDetailVO.getOrderCountAndDataVO().getHouseId().toString();
+        LocalDate custStartDate = myorderDetailVO.getOrderCountAndDataVO().getCustStartDate();
+        LocalDate custEndDate = myorderDetailVO.getOrderCountAndDataVO().getCustEndDate();
+        //计算两个日期相差天数
+        long betweenDay = ChronoUnit.DAYS.between(custStartDate, custEndDate);
 
-        myorder.setMyorderNum(myorderNum);
-        myorder.setHouseId(myorderDetailVO.getOrderCountAndDataVO().getHouseId());
-        myorder.setHouseName(myorderDetailVO.getOrderCountAndDataVO().getHouseName());
-        myorder.setHouseMainpicture(myorderDetailVO.getOrderCountAndDataVO().getHouseMainpicture());
-        myorder.setHousePrice(myorderDetailVO.getOrderCountAndDataVO().getHousePrice());
-        myorder.setMyorderCreateTime(LocalDateTime.now());
-
-        if(myorderDetailVO.getCouNum()!=null&&myorderDetailVO.getCouNum()!=""){
-            myorder.setCouNum(myorderDetailVO.getCouNum());
-            myorder.setCouPrice(myorderDetailVO.getCouPrice());
+        List<String> keyList = new ArrayList<>();
+        while (custStartDate.isBefore(custEndDate)) {  // 遍历起始日期到结束日期之间的所有日期
+            //title = houseId + "-date";
+            //key = date.toString();
+            Integer value = 1;
+            //放入list
+            keyList.add(houseId+"+"+custStartDate.toString());
+            custStartDate = custStartDate.plusDays(1);  // 将日期加1天
+        }
+        //批量加锁
+        boolean b = lockUtil.lockBatch(keyList, thread, betweenDay * 86400);
+        if (!b){
+            //如果加锁失败
+            System.out.println("该日期已被预定");
+            return null;
         }else{
-            myorder.setCouNum(null);
-            myorder.setCouPrice(null);
+            System.out.println("预定成功");
         }
 
-        myorder.setMyorderStatus(0);
-        myorder.setMyorderPrice(myorderDetailVO.getMyorderPrice());
-        myorder.setMyorderDay(myorderDetailVO.getOrderCountAndDataVO().getCustNum());
-        myorder.setMyorderIntime(myorderDetailVO.getOrderCountAndDataVO().getCustStartDate());
-        myorder.setMyorderOutime(myorderDetailVO.getOrderCountAndDataVO().getCustEndDate());
-        System.out.println(myorder);
-        myorderService.save(myorder);
-        QueryWrapper<Myorder> wrapper=new QueryWrapper<>();
-        wrapper.eq("myorder_num",myorderNum);
-        Myorder myorder1 = myorderService.getOne(wrapper);
-        Integer myorderId = myorder1.getMyorderId();
-        myorderDetailVO.setMyorderId(myorderId);
-        MyorderOccupy myorderOccupy = new MyorderOccupy();
-        myorderOccupy.setMyorderId(myorderId);
-        myorderOccupy.setCustId(myorder.getCustId());
-        myorderOccupy.setOccIdentity(myorderDetailVO.getOrderCountAndDataVO().getOccIdentity());
-        myorderOccupy.setOccName(myorderDetailVO.getOrderCountAndDataVO().getOccName());
-        myorderOccupy.setOccTelno(myorderDetailVO.getOrderCountAndDataVO().getOccTelno());
-
-        myorderOccupyService.save(myorderOccupy);
         ModelAndView mav = new ModelAndView();
-        mav.addObject("myorderDetailVO",myorderDetailVO);
-        mav.setViewName("myorder/mypay_detail");
+        try {
+            List<LocalDate> dates = new ArrayList<>();
+            System.out.println(myorderDetailVO.getOrderCountAndDataVO().getOccName());
+            Myorder myorder = new Myorder();
+            myorder.setCustId(myorderDetailVO.getCustId());
+            String myorderNum = UUID.randomUUID().toString().replace("-", "");
+            myorderDetailVO.setMyorderNum(myorderNum);
 
-        Map<String ,Object> map = new HashMap<>();
-        map.put("myorderId",myorderId);
-        map.put("custId",myorder.getCustId());
-        map.put("myorderNum",myorderNum);
-        rabbitTemplate.convertAndSend("order-delayed-exchange","order-key1",map,message ->{
-            message.getMessageProperties().setDelay(60000);
-            return  message;
-        });
+            myorder.setMyorderNum(myorderNum);
+            myorder.setHouseId(myorderDetailVO.getOrderCountAndDataVO().getHouseId());
+            myorder.setHouseName(myorderDetailVO.getOrderCountAndDataVO().getHouseName());
+            myorder.setHouseMainpicture(myorderDetailVO.getOrderCountAndDataVO().getHouseMainpicture());
+            myorder.setHousePrice(myorderDetailVO.getOrderCountAndDataVO().getHousePrice());
+            myorder.setMyorderCreateTime(LocalDateTime.now());
+
+            if (myorderDetailVO.getCouNum() != null && myorderDetailVO.getCouNum() != "") {
+                myorder.setCouNum(myorderDetailVO.getCouNum());
+                myorder.setCouPrice(myorderDetailVO.getCouPrice());
+            } else {
+                myorder.setCouNum(null);
+                myorder.setCouPrice(null);
+            }
+
+            myorder.setMyorderStatus(0);
+            myorder.setMyorderPrice(myorderDetailVO.getMyorderPrice());
+            myorder.setMyorderDay(myorderDetailVO.getOrderCountAndDataVO().getCustNum());
+            myorder.setMyorderIntime(myorderDetailVO.getOrderCountAndDataVO().getCustStartDate());
+            myorder.setMyorderOutime(myorderDetailVO.getOrderCountAndDataVO().getCustEndDate());
+            System.out.println(myorder);
+            myorderService.save(myorder);
+            QueryWrapper<Myorder> wrapper = new QueryWrapper<>();
+            wrapper.eq("myorder_num", myorderNum);
+            Myorder myorder1 = myorderService.getOne(wrapper);
+            Integer myorderId = myorder1.getMyorderId();
+            myorderDetailVO.setMyorderId(myorderId);
+            MyorderOccupy myorderOccupy = new MyorderOccupy();
+            myorderOccupy.setMyorderId(myorderId);
+            myorderOccupy.setCustId(myorder.getCustId());
+            myorderOccupy.setOccIdentity(myorderDetailVO.getOrderCountAndDataVO().getOccIdentity());
+            myorderOccupy.setOccName(myorderDetailVO.getOrderCountAndDataVO().getOccName());
+            myorderOccupy.setOccTelno(myorderDetailVO.getOrderCountAndDataVO().getOccTelno());
+
+            myorderOccupyService.save(myorderOccupy);
+
+            mav.addObject("myorderDetailVO", myorderDetailVO);
+            mav.setViewName("myorder/mypay_detail");
+            Map<String ,Object> map = new HashMap<>();
+            map.put("myorderId",myorderId);
+            map.put("custId",myorder.getCustId());
+            map.put("myorderNum",myorderNum);
+            map.put("keyList",keyList);
+            rabbitTemplate.convertAndSend("order-delayed-exchange","order-key1",map,message ->{
+                message.getMessageProperties().setDelay(60000);
+                return  message;
+            });
+        }catch (Exception ex){
+            ex.printStackTrace();
+            //如果发生异常则解锁
+//            lockUtil.releaseLock(houseId+"+"+ custStartDate+"+"+ custEndDate, thread);
+            boolean b1 = lockUtil.unlockBatch(keyList, thread);
+            if (b1){
+                System.out.println("解锁成功");
+            }
+        }
 
         return mav;
     }

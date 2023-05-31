@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.chixing.util.ServerResult;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -29,5 +30,6 @@ public interface IHouseService extends IService<House> {
     //多条件连续筛选房源（根据房屋类型，价格区间，卧室数量）
     public ServerResult getSearchHouseByType(String houseKind,Float lowPrice,Float highPrice,Integer roomNum);
 
-
+    // 在ES中查询房源，实现分页
+    public Map<String,Object> getHouseListFromEs(String search);
 }

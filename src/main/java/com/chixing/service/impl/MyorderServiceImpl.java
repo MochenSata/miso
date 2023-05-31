@@ -15,6 +15,7 @@ import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -38,6 +39,8 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
     private PaymentMapper paymentMapper;
     @Autowired
     private WebSocketProcess webSocketProcess;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public ServerResult getAllOrdersByCustId(Integer customerId) {
@@ -72,12 +75,15 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
         Integer myorderId = (Integer) map.get("myorderId");
         Integer custId = (Integer) map.get("custId");
         String myorderNum = (String) map.get("myorderNum");
+        List<String> keyList=(List<String>)map.get("keyList");
         Myorder myorder = myorderMapper.selectById(myorderId);
         Integer status = myorder.getMyorderStatus();
         if (status == 0) {//未支付，自动取消
             System.out.println("正在进入自动取消订单>>>>");
             myorder.setMyorderStatus(4);
             myorderMapper.updateById(myorder);
+            redisTemplate.delete(keyList);
+
             String msg = "您好，订单编号为：" + myorderNum + "的订单已超时，已为您自动取消。";
             try {
                 webSocketProcess.sendMessage(custId, msg);

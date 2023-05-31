@@ -90,27 +90,23 @@
     </div>
 
 </div>
-
 <!--民宿列表homelist-->
 <div class="homelist">
     <ul>
-        <c:if test="${serverResult.code == 200}">
-        <c:forEach var="house" items="${serverResult.data}">
-        <a href="${pageContext.request.contextPath}/house/${house.houseId}"><li class="home">
-            <img src="${house.houseMainpicture}" >
+        <c:forEach var="SearchHouse" items="${searchHouseList}">
+        <a href="${pageContext.request.contextPath}/house/${SearchHouse.houseId}"><li class="home">
+            <img src="${SearchHouse.houseMainpicture}" >
             <div class="line1">
-                <span class="homekind">类型:${house.houseKind}</span>
+                <span class="homekind">类型:${SearchHouse.houseKind}</span>
 
                 <img src="../img/index/pingfen.png" class="pingfenico">
-                <span class="score">${house.houseScore}</span>
+                <span class="score">${SearchHouse.houseScore}</span>
 
             </div>
-            <div class="line2"><b>${house.houseName}</b></div>
-            <div class="line3"><b>￥</b><span class="price">${house.housePrice}</span><span class="houzhui">/晚</span></div>
+            <div class="line2"><b>${SearchHouse.houseName}</b></div>
+            <div class="line3"><b>￥</b><span class="price">${SearchHouse.housePrice}</span><span class="houzhui">/晚</span></div>
         </li></a>
         </c:forEach>
-        </c:if>
-
     </ul>
 
 </div>

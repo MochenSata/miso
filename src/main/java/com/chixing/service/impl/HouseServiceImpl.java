@@ -5,19 +5,26 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.chixing.pojo.House;
 import com.chixing.mapper.HouseMapper;
+import com.chixing.pojo.SearchHouse;
 import com.chixing.service.IHouseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -35,7 +42,8 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
     private HouseMapper houseMapper;
     @Autowired
     private RedisTemplate redisTemplate;
-
+    @Autowired
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
 
     //根据房源评分获得热门推荐数据(前5个)
@@ -130,6 +138,40 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
         if (houseList.size()>0)
             return ServerResult.success(200, ResultMsg.success,houseList);
         return ServerResult.fail(201,ResultMsg.fail,false);
+    }
+
+    @Override
+    public Map<String, Object> getHouseListFromEs(String search) {
+        List<SearchHouse> searchHouseList = new ArrayList<>();
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+        if (search!=null){
+            boolQueryBuilder.must(QueryBuilders.queryStringQuery(search));
+        }
+        //构建高亮查询
+        NativeSearchQueryBuilder builder =  new NativeSearchQueryBuilder();
+        NativeSearchQuery query = builder.withQuery(boolQueryBuilder)
+                .withHighlightFields(new HighlightBuilder.Field("houseName"),
+                        new HighlightBuilder.Field("houseKind"))
+                .withHighlightBuilder(new HighlightBuilder()
+                        .preTags("<span style='color:red'>")
+                        .postTags("</span>"))
+                .build();
+        SearchHits<SearchHouse> searches = elasticsearchRestTemplate.search(query,SearchHouse.class);
+
+        for (SearchHit<SearchHouse> searchHit:searches){
+            Map<String, List<String>> highlightFields = searchHit.getHighlightFields();
+            String highLightName = highlightFields.get("houseName") == null ? searchHit.getContent().getHouseName() : highlightFields.get("houseName").get(0);
+            String highLightKind = highlightFields.get("houseKind") == null ? searchHit.getContent().getHouseKind() : highlightFields.get("houseKind").get(0);
+
+            SearchHouse searchHouse = searchHit.getContent();
+            searchHouse.setHouseName(highLightName);
+            searchHouse.setHouseKind(highLightKind);
+
+            searchHouseList.add(searchHouse);
+        }
+        Map<String, Object> result = new HashMap<>();
+        result.put("searchHouseList",searchHouseList);
+        return result;
     }
 
 //    @Override
