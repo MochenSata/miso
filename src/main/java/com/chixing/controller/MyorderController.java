@@ -74,6 +74,7 @@ public class MyorderController {
     @PostMapping("save")
     @ResponseBody
     public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO){
+        ModelAndView mav = new ModelAndView();
         //获取线程id
         String thread = String.valueOf(Thread.currentThread().getId());
         //初始化
@@ -98,12 +99,13 @@ public class MyorderController {
         if (!b){
             //如果加锁失败
             System.out.println("该日期已被预定");
-            return null;
+            mav.setViewName("myorder/fail");
+            return mav;
         }else{
             System.out.println("预定成功");
         }
 
-        ModelAndView mav = new ModelAndView();
+
         try {
             List<LocalDate> dates = new ArrayList<>();
             System.out.println(myorderDetailVO.getOrderCountAndDataVO().getOccName());
