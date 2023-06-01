@@ -5,7 +5,7 @@
   Time: 13:55
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html lang="en">
 
 <head>
@@ -110,44 +110,11 @@
                             <li class="user_cou">过期优惠券</li>
                         </ul>
                         <div class="layui-tab-content" style="height: 100px;">
-                            <div class="layui-tab-item layui-show">
-                                <div class="spec-coupon">
-                                    <h2>新人券_50元 </h2>
-                                    <p class="category">新人券</p>
-                                    <p class="price"><span>￥50</span></p>
-                                    <p class="validity">开始日期：<span>2023年5月1日</span></p>
-                                    <p class="validity">截止日期：<span>2023年6月1日</span></p>
-                                    <p class="validity">使用该新人优惠券可抵50元！</p>
-                                    <button class="btn">立即领取</button>
+                            <div class="layui-tab-item layui-show" id="validCouList">
+
                                 </div>
 
-                                <div class="spec-coupon">
-                                    <h2>满减券_60元 </h2>
-                                    <p class="category">满减券</p>
-                                    <p class="price"><span>￥60元</span></p>
-                                    <p class="validity">开始日期：<span>2023年5月1日</span></p>
-                                    <p class="validity">截止日期：<span>2023年6月1日</span></p>
-                                    <p class="validity">使用该满减优惠券满200元可抵60元！</p>
-                                    <button class="btn">立即领取</button>
-                                </div>
-                                <div class="spec-coupon">
-                                    <h2>假日券_40元</h2>
-                                    <p class="category">假日券</p>
-                                    <p class="price"><span>￥40</span></p>
-                                    <p class="validity">开始日期：<span>2023年5月1日</span></p>
-                                    <p class="validity">截止日期：<span>2023年6月1日</span></p>
-                                    <p class="validity">在周末及法定节假日使用该优惠券可抵40元！</p>
-                                    <button class="btn">立即领取</button>
-                                </div>
-                                <div class="spec-coupon">
-                                    <h2>分享券_20元 </h2>
-                                    <p class="category">分享券</p>
-                                    <p class="price"><span>￥20</span></p>
-                                    <p class="validity">开始日期：<span>2023年5月1日</span></p>
-                                    <p class="validity">截止日期：<span>2023年6月1日</span></p>
-                                    <p class="validity">邀请好友得到此优惠券，使用该优惠券可抵20元！</p>
-                                    <button class="btn">立即领取</button>
-                                </div>
+
 
                             </div>
                             <div class="layui-tab-item">
@@ -316,14 +283,108 @@
 </body>
 
 <script>
+    var custId ;
+    getCurrentLoginCustomerInfo();
+    //获得当前登录用户信息
+    function getCurrentLoginCustomerInfo() {
+        var tokenStr = localStorage.getItem("token");
+        var token = JSON.parse(tokenStr);
+        console.log("从localStorage 中获得的token是：" + token);
+        $.ajax({
+            type: "get",
+            url: "/miso/customer/currentCustomer",
+            headers: {'token': token},
+            success: function (result) {
+                console.log(result);
+                custId = result.data.custId;
+            }
+        })
+    }
+
+
+
+
+    setTimeout(function (){
     $(document).ready(function () {
         $(".btn").click(function () {
-            $(this).attr("disabled", true);
-            $(this).addClass("disabled");
-            $(this).text("已领取");
+            var couponId=$(this).next().val();
+            console.log("couponId:"+couponId);
+            claimCoupon(couponId,custId);
         });
     });
-    f
+    },2000);
+
+
+    function claimCoupon(couponId,custId) {
+
+        var url = "${pageContext.request.contextPath}/coupon/receive";
+        var data = {
+            couponId: couponId,
+            custId: custId
+
+        };
+        console.log("----------------------[")
+            console.log(couponId)
+        console.log(custId)
+        $.post(url, data, function(result) {
+            console.log(result);
+
+            // Check the result and perform any necessary actions
+            if (result.code===200) {
+                // Coupon claimed successfully
+                alert("领取优惠券成功");
+            } else {
+                // Failed to claim the coupon
+                alert(result.msg);
+            }
+
+    });
+    }
+
+    //进入页面自动加载优惠券
+    var couHtml="";
+    loadCoupons();
+    function loadCoupons(){
+        var url = "${pageContext.request.contextPath}/coupon/all";
+        $.get(url
+            ,null
+            , function (result){
+            console.log(result);
+                console.log(JSON.stringify(result));
+                 var couList=result.data;//存放优惠券的集合
+
+                 for(var i=0;i<couList.length;i++){
+                    var couId=couList[i].couId;
+                    var couName=couList[i].couName;
+                    var couCategory=couList[i].couCategory;
+                    var couPrice=couList[i].couPrice;
+                    var couValidTime=couList[i].couValidTime;
+                    var couInvalidTime=couList[i].couInvalidTime;
+                    var couStatus=couList[i].couStatus;
+                    var couIntroduction=couList[i].couIntroduction;
+
+
+
+                    // 将得到的数据渲染到页面中
+                     var Ele='<div class="spec-coupon">'+
+                         ' <h2>'+couName+' </h2>'+
+                     ' <p class="category">'+couCategory+'</p>'+
+                     ' <p class="price"><span>￥'+couPrice+'元</span></p>'+
+                     ' <p class="validity">开始日期：<span>'+couValidTime+'</span></p>'+
+                     ' <p class="validity">截止日期：<span>'+couInvalidTime+'</span></p>'+
+                     '  <p class="validity">'+couIntroduction+'</p>'+
+                     ' <button class="btn">立即领取</button>'+
+                     '<input type="hidden" class="couId" value="'+couId+'"/>'+
+                     '</div>';
+
+                     couHtml=couHtml+Ele;
+
+                }
+                //console.log(hotHtml);
+
+                $("#validCouList").html(couHtml);
+            })
+    }
 </script>
 <script src="../layui/layui.js"></script>
 
