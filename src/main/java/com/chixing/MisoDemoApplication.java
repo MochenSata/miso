@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @MapperScan("com.chixing.mapper")
-@EnableScheduling
+@EnableScheduling //定时器
 public class MisoDemoApplication {
 
     public static void main(String[] args) {

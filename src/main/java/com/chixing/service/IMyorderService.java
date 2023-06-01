@@ -24,7 +24,7 @@ public interface IMyorderService extends IService<Myorder> {
     //查询订单详情
     public ServerResult getOrderDeatilByOrderId(Integer orderId);
 
-    //根据退房日期，修改订单状态
+    //根据退房日期，修改订单状态为2：已完成
     public List<Myorder> updateOrderStatusByDate();
 
 }

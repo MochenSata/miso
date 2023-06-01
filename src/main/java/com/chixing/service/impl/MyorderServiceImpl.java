@@ -127,7 +127,7 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
         QueryWrapper<Myorder> myorderQueryWrapper = new QueryWrapper<>();
         myorderQueryWrapper.eq("myorder_status",1);//找到已支付且未完成的订单
         List<Myorder> myorderList = myorderMapper.selectList(myorderQueryWrapper);
-        System.out.println("未完成的订单有" + myorderList);
+        System.out.println("未完成的订单有：" + myorderList);
         return myorderList;
 
     }
