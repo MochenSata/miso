@@ -391,28 +391,50 @@
         });
     });
     //编辑弹出层
-    $(".editbtn").click(function () {
-        layer.open({
-            type: 1,
-            area: ['550px', '600px'],
-            title: '编辑优惠券'
-            , content: $("#test2"),
-            shade: 0,
-            btn: ['提交', '重置']
-            , btn1: function (index, layero) {
-                var kk = $("#username").val();
-                alert(kk);
-            },
-            btn2: function (index, layero) {
-                alert("2222");
-                return false;
-            },
-            cancel: function (layero, index) {
-                layer.closeAll();
-            }
+    setTimeout(function (){
+        $(".editbtn").click(function () {
+            layer.open({
+                type: 1,
+                area: ['550px', '600px'],
+                title: '编辑优惠券'
+                , content: $("#test2"),
+                shade: 0,
+                btn: ['提交', '重置']
+                , btn1: function (index, layero) {
+                    var kk = $("#username").val();
+                    alert(kk);
+                },
+                btn2: function (index, layero) {
+                    alert("2222");
+                    return false;
+                },
+                cancel: function (layero, index) {
+                    layer.closeAll();
+                }
 
-        });
-    })
+            });
+        })
+    },2000);
+
+    //删除弹出层
+    setTimeout(function (){
+        $('.coulist').on('click','.deletebtn',function (){
+            var couId = $(this).parents('tr').find('.couId').text();//获取 优惠券Id
+            console.log(couId);
+            $.ajax({
+                type:'GET',
+                url:'delete/' + couId,     // 发送 GET 请求，删除订单
+                success:function (result){
+                    layer.msg('删除成功！');   //删除成功，弹出提示框
+                    location.reload();       //删除成功后刷新页面
+                },
+                error: function(xhr, status, error) {
+                    layer.msg('删除失败：' + error); // 删除失败，弹出错误消息
+                }
+            })
+        })
+
+    },2000);
 
     //日期范围
     layui.use('laydate', function () {
@@ -424,6 +446,52 @@
             , range: ['#test-startDate-1', '#test-endDate-1']
         });
     })
+
+    //进入页面、添加删除后渲染优惠券数据
+    function showCouponList() {
+        $(document).ready(function () {
+            $.ajax({
+                url: 'list',
+                type: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    var data = result.data;
+                    $('.coulist').find('tbody').html(
+                        '<tr>'+
+                        '<th class="list-th">优惠券id</th>'+
+                        '<th class="list-th">优惠券类别</th>'+
+                        '<th class="list-th">优惠券名称</th>'+
+                        '<th class="list-th">优惠券金额</th>'+
+                        ' <th class="list-th">发布时间</th>'+
+                        '<th class="list-th">失效时间</th>'+
+                        '<th class="list-th">操作</th>'+
+                        '</tr>'
+                    );
+                    var tr="";
+                    $.each(data, function (index, coupon) { // 遍历每个优惠券数据
+                        console.log(data)
+
+                        tr = '<tr>' +
+                            '<td class="couId">' + coupon.couId + '</td>' +
+                            '<td>' + coupon.couCategory + '</td>' +
+                            '<td>' + coupon.couName + '</td>' +
+                            '<td>' + coupon.couPrice + '</td>' +
+                            '<td>' + coupon.couValidTime + '</td>' +
+                            '<td>' + coupon.couInvalidTime + '</td>' +
+                            '<td>' +
+                            '<button type="button" class="layui-btn layui-btn-sm editbtn">编辑</button>' +
+                            '<button type="button" class="layui-btn layui-btn-sm deletebtn">删除</button>' +
+                            '</td>' +
+                            '</tr>';
+                        $('.coulist').find('tbody').append(tr); // 将每个优惠券数据添加到表格中
+                    });
+                }
+            })
+        });
+    }
+
+
 </script>
 </body>
 </body>

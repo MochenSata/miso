@@ -93,6 +93,26 @@ public class CouponController {
 
     }
 
+    //优惠券平台优惠券列表渲染
+    @GetMapping("/coupon/list")
+    @ResponseBody
+    public ServerResult getAllCouponsByCouId(){
+        ServerResult result = couponService.getAllCoupons();
+        System.out.println("优惠券结果是：" + result);
+        return result;
+    }
+
+    //优惠券平台编辑优惠券（根据优惠券Id更新信息）
+
+    //优惠券平台删除优惠券(修改优惠券状态为 2 ：已删除)
+    @GetMapping("/coupon/delete/{couId}")
+    @ResponseBody
+    public ServerResult deleteCoupon(@PathVariable("couId") Integer couId){
+        ServerResult result = couponService.deleteCouponByCouId(couId);
+        System.out.println("要删除的优惠券为：" + result);
+        return result;
+    }
+
 
 
 
