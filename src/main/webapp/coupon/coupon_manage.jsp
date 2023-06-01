@@ -146,78 +146,7 @@
                 <th class="list-th">失效时间</th>
                 <th class="list-th">操作</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>满减券</td>
-                <td>满减券_10元</td>
-                <td>10元</td>
-                <td>2023-01-01 12:00:00</td>
-                <td>2023-12-31 12:00:00</td>
-                <td>
-                    <button type="button" class="layui-btn layui-btn-sm editbtn">编辑</button>
-                    <button type="button" class="layui-btn layui-btn-sm">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>满减券</td>
-                <td>满减券_10元</td>
-                <td>10元</td>
-                <td>2023-01-01 12:00:00</td>
-                <td>2023-12-31 12:00:00</td>
-                <td>
-                    <button type="button" class="layui-btn layui-btn-sm">编辑</button>
-                    <button type="button" class="layui-btn layui-btn-sm">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>满减券</td>
-                <td>满减券_10元</td>
-                <td>10元</td>
-                <td>2023-01-01 12:00:00</td>
-                <td>2023-12-31 12:00:00</td>
-                <td>
-                    <button type="button" class="layui-btn layui-btn-sm">编辑</button>
-                    <button type="button" class="layui-btn layui-btn-sm">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>满减券</td>
-                <td>满减券_10元</td>
-                <td>10元</td>
-                <td>2023-01-01 12:00:00</td>
-                <td>2023-12-31 12:00:00</td>
-                <td>
-                    <button type="button" class="layui-btn layui-btn-sm">编辑</button>
-                    <button type="button" class="layui-btn layui-btn-sm">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>满减券</td>
-                <td>满减券_10元</td>
-                <td>10元</td>
-                <td>2023-01-01 12:00:00</td>
-                <td>2023-12-31 12:00:00</td>
-                <td>
-                    <button type="button" class="layui-btn layui-btn-sm">编辑</button>
-                    <button type="button" class="layui-btn layui-btn-sm">删除</button>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>满减券</td>
-                <td>满减券_10元</td>
-                <td>10元</td>
-                <td>2023-01-01 12:00:00</td>
-                <td>2023-12-31 12:00:00</td>
-                <td>
-                    <button type="button" class="layui-btn layui-btn-sm">编辑</button>
-                    <button type="button" class="layui-btn layui-btn-sm">删除</button>
-                </td>
-            </tr>
+
 
         </table>
 
@@ -288,7 +217,7 @@
 
     </div>
 </div>
-<script src="./layui/layui.js"></script>
+<script src="../layui/layui.js"></script>
 <script>
     // Function to convert date to local datetime format
     function toLocalDateTime(date) {
@@ -373,6 +302,7 @@
                         // 处理提交成功的逻辑
                         alert("新增优惠券成功");
                         layer.close(index); // 关闭弹出层
+                        showCouponList();
                     },
                     error: function (xhr, status, error) {
                         // 处理提交失败的逻辑
@@ -447,6 +377,7 @@
         });
     })
 
+    showCouponList();
     //进入页面、添加删除后渲染优惠券数据
     function showCouponList() {
         $(document).ready(function () {
