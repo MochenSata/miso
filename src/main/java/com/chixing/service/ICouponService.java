@@ -22,5 +22,5 @@ public interface ICouponService extends IService<Coupon> {
     //编辑优惠券
     public ServerResult updateCouponByCouId(Integer couId);
 
-
+    public ServerResult getAllValidCoupon();
 }

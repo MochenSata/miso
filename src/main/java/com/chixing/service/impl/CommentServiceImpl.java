@@ -2,8 +2,10 @@ package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.chixing.mapper.CouponMapper;
 import com.chixing.pojo.Comment;
 import com.chixing.mapper.CommentMapper;
+import com.chixing.pojo.Coupon;
 import com.chixing.service.ICommentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chixing.util.ResultMsg;
@@ -11,6 +13,7 @@ import com.chixing.util.ServerResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private CouponMapper couponMapper;
 
     @Override
     public ServerResult getByPage(Integer pageNum,Integer houseId) {
@@ -52,4 +57,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             return ServerResult.fail(201, ResultMsg.no_data, null);
         }
     }
+
+
 }

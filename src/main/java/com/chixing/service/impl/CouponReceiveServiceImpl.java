@@ -168,5 +168,33 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
         }
     }
 
+    @Override
+    public ServerResult receiveCoupon(Integer custId,Integer couId) {
+        QueryWrapper<CouponReceive> receiveQueryWrapper= new QueryWrapper<>();
+        receiveQueryWrapper.eq("cust_id",custId);
+        receiveQueryWrapper.eq("cou_id",couId);
+        CouponReceive couponReceive=new CouponReceive();
+        couponReceive=couponReceiveMapper.selectOne(receiveQueryWrapper);
+        System.out.println(couponReceive);
+        if (couponReceive==null){
+            Coupon coupon=couponMapper.selectById(couId);
+            CouponReceive couponReceive1=new CouponReceive();
+            couponReceive1.setCouId(couId);
+            couponReceive1.setCouNum(UUID.randomUUID().toString().replace("-",""));
+            couponReceive1.setCustId(custId);
+            couponReceive1.setCouPrice(coupon.getCouPrice());
+            couponReceive1.setCouReceiveTime(LocalDateTime.now());
+            couponReceive1.setCouId(couId);
+            couponReceive1.setCouEndTime(coupon.getCouInvalidTime());
+            couponReceive1.setCouUsageStatus(0);
+            couponReceive1.setCouIntroduction(coupon.getCouIntroduction());
+            int rows=couponReceiveMapper.insert(couponReceive1);
+            if (rows>0)
+                return ServerResult.success(200,"领取优惠券成功",true);
+            return ServerResult.fail(201,"领取优惠券失败",false);
+        }
+        return ServerResult.fail(201,"您已领取过该优惠券",false);
 
+
+    }
 }
