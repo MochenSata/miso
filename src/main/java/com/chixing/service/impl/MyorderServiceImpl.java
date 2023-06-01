@@ -120,6 +120,17 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
         }
         return ServerResult.fail(201, ResultMsg.fail, false);
     }
+
+    //根据退房日期，修改订单状态
+    @Override
+    public List<Myorder> updateOrderStatusByDate() {
+        QueryWrapper<Myorder> myorderQueryWrapper = new QueryWrapper<>();
+        myorderQueryWrapper.eq("myorder_status",1);//找到已支付且未完成的订单
+        List<Myorder> myorderList = myorderMapper.selectList(myorderQueryWrapper);
+        System.out.println("未完成的订单有" + myorderList);
+        return myorderList;
+
+    }
 }
 
 
