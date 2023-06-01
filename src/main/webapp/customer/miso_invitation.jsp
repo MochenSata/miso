@@ -72,7 +72,7 @@
       <div class="userL">
         <ul>
           <li class="userL_li">
-            <a href="../myorder/miso_order_all.html"><button class="userLBtn">
+            <a href="${pageContext.request.contextPath}/myorder/customer/${result.data.custId}"><button class="userLBtn">
               <img src="${pageContext.request.contextPath}/img/myorder/order.GIF" class="userL_li_pic">
               <span class="userL_li_text">订单管理</span>
             </button></a>
