@@ -13,9 +13,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人信息</title>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <link rel="stylesheet" href="../css/customer/miso_info.css">
-    <script src="../js/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/miso_info.css">
+    <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
 
 </head>
 
@@ -25,7 +25,7 @@
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
-                <img src="../img/logo.png"  class="logopic">
+                <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
@@ -47,9 +47,9 @@
                 <div class="layui-btn-container">
                     <button class="layui-btn layui-btn-primary demo1 personcenter">
                         <div href="" class="personal-btn">
-                            <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
+                            <div class="headshort"><img src="${pageContext.request.contextPath}/img/customer/headshort.svg" alt=""></div>
                             <div class="personal">
-                                <img src="../img/customer/hengxian.svg" class="hengxian">
+                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
                             </div>
                         </div>
 
@@ -72,30 +72,30 @@
             <div class="userL">
                 <ul>
                     <li class="userL_li">
-                        <a href="../myorder/miso_order_all.html"><button class="userLBtn">
-                            <img src="../img/myorder/order.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/myorder/customer/${result.data.custId}"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/order.GIF" class="userL_li_pic">
                             <span class="userL_li_text">订单管理</span>
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../customer/miso_message.html"><button class="userLBtn userInfo">
-                            <img src="../img/myorder/person.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/customer/custInfo/${result.data.custId}"><button class="userLBtn userInfo">
+                            <img src="${pageContext.request.contextPath}/img/myorder/person.GIF" class="userL_li_pic">
                             <span class="userL_li_text">个人信息</span>
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../coupon/miso_coupon.html"><button class="userLBtn">
-                            <img src="../img/myorder/coupon.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/coupon/miso_coupon.html"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/coupon.GIF" class="userL_li_pic">
                             <span class="userL_li_text">我的优惠券</span></button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../customer/miso_message.html"><button class="userLBtn">
-                            <img src="../img/myorder/message.GIF" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/customer/miso_message.html"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/message.GIF" class="userL_li_pic">
                             <span class="userL_li_text">消息提醒</span></button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../customer/miso_invitation.html"><button class="userLBtn">
-                            <img src="../img/myorder/invite.gif" class="userL_li_pic">
+                        <a href="${pageContext.request.contextPath}/myInvitation/${result.data.custId}"><button class="userLBtn">
+                            <img src="${pageContext.request.contextPath}/img/myorder/invite.gif" class="userL_li_pic">
                             <span class="userL_li_text">邀请码</span></button></a>
                     </li>
                 </ul>
@@ -115,7 +115,7 @@
                             </td>
                             <td class="tR">
                                 <div class="tR_r">
-                                    <input type="text" class="form_info username">
+                                    <input type="text" class="form_info username" value="${result.data.custName}">
                                     <span class="msgTip usernameTip"></span>
                                 </div>
                             </td>
@@ -128,7 +128,7 @@
                             </td>
                             <td class="tR">
                                 <div class="tR_r">
-                                    <span>13511676978</span>
+                                    <span>${result.data.custTelno}</span>
                                 </div>
                             </td>
                         </tr>
@@ -154,7 +154,7 @@
                             </td>
                             <td class="tR">
                                 <div class="tR_r">
-                                    <input type="text" class="form_info useremail">
+                                    <input type="text" class="form_info useremail" value="${result.data.custEmail}">
                                     <span class="msgTip useremailTip"></span>
                                 </div>
                             </td>
@@ -186,8 +186,8 @@
     </div>
 </div>
 </body>
-<script src="../js/customer/miso_info.js"></script>
-<script src="../layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/js/customer/miso_info.js"></script>
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     //居中弹框
     layui.use('layer', function () { //独立版的layer无需执行这一句

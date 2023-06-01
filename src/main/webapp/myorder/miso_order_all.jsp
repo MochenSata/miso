@@ -76,7 +76,7 @@
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/customer/miso_info.html"><button class="userLBtn">
+                        <a href="${pageContext.request.contextPath}/customer/custInfo/${result.data[0].myorder.custId}"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/person.GIF" class="userL_li_pic">
                             <span class="userL_li_text">个人信息</span>
                         </button></a>

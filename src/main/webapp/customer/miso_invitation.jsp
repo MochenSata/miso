@@ -78,7 +78,7 @@
             </button></a>
           </li>
           <li class="userL_li">
-            <a href="../customer/miso_info.html"><button class="userLBtn">
+            <a href="${pageContext.request.contextPath}/customer/custInfo/${result.data.custId}"><button class="userLBtn">
               <img src="../img/myorder/person.GIF" class="userL_li_pic">
               <span class="userL_li_text">个人信息</span>
             </button></a>
@@ -94,7 +94,7 @@
               <span class="userL_li_text">消息提醒</span></button></a>
           </li>
           <li class="userL_li">
-            <a href="../customer/miso_invitation.html"><button class="userLBtn invitation">
+            <a href="${pageContext.request.contextPath}/myInvitation/${result.data.custId}"><button class="userLBtn invitation">
               <img src="../img/myorder/invite.gif" class="userL_li_pic">
               <span class="userL_li_text">邀请码</span></button></a>
           </li>

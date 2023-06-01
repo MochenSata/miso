@@ -98,4 +98,15 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
             return ServerResult.fail(201, ResultMsg.fail,"该用户已注册");
         return ServerResult.success(200, ResultMsg.success,customer);
     }
+
+    //查看个人信息
+    @Override
+    public ServerResult getCustInfo(Integer custId) {
+        QueryWrapper<Customer> wrapper = new QueryWrapper<>();
+        wrapper.select("cust_id","cust_name","cust_gender","cust_email","cust_desc");
+        Customer customer = customerMapper.selectById(custId);
+        if (customer == null)
+            return ServerResult.fail(201, ResultMsg.fail,false);
+        return ServerResult.success(200, ResultMsg.success,customer);
+    }
 }

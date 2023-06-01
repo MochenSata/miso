@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -30,7 +31,6 @@ public class CustomerController {
     private ICustomerService service;
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
-
     /**
      * 用户登录
      1. 验证用户名与密码是否合格
@@ -117,5 +117,14 @@ public class CustomerController {
 
     }
 
-
+    //查看个人信息
+    @GetMapping("custInfo/{id}")
+    public ModelAndView getCustInfo(@PathVariable("id") Integer custId){
+        ServerResult result = service.getCustInfo(custId);
+        System.out.println(result);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("result",result);
+        mav.setViewName("customer/miso_info");
+        return mav;
+    }
 }
