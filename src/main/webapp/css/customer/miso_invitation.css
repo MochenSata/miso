@@ -399,3 +399,20 @@ h4 {
 }
 
 
+#invitationMsg{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 10px;
+    height: 80px;
+    width: 200px;
+    border: 1px solid #ff385c;
+    border-radius: 8px;
+    display: none;
+    opacity: 1;
+    transition: opacity 0.5s;
+    color: rgb(72, 72, 72);
+    font-size: 12px;
+    font-weight: 500;
+}

@@ -1,23 +1,27 @@
 package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chixing.controller.WebSocketProcess;
 import com.chixing.mapper.CouponMapper;
 import com.chixing.mapper.CustomerMapper;
-import com.chixing.pojo.Coupon;
-import com.chixing.pojo.CouponReceive;
+import com.chixing.pojo.*;
 import com.chixing.mapper.CouponReceiveMapper;
-import com.chixing.pojo.CouponReceiveVo;
-import com.chixing.pojo.Customer;
 import com.chixing.service.ICouponReceiveService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
+import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -36,6 +40,8 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
     private CouponMapper couponMapper;
     @Autowired
     private CustomerMapper customerMapper;
+    @Autowired
+    private WebSocketProcess webSocketProcess;
 
     @Override
     public ServerResult getCouponByCustId(Integer custId) {
@@ -101,7 +107,7 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 
     //给兑换邀请码双方发送分享券
     @Override
-    public ServerResult saveShareCouponByInvitation(CouponReceive couponReceive,Integer custId1,Integer custId2) {
+    public CouponReceive saveShareCouponByInvitation(CouponReceive couponReceive,Integer custId1,Integer custId2) {
         List<CouponReceive> couponReceiveList = new ArrayList<>();
 
         // 给第一个用户存储
@@ -136,7 +142,30 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
             }
         }
 
-        return ServerResult.success(200,ResultMsg.success,couponReceiveList);
+        return couponReceive1;
+    }
+
+    //邀请码消息队列
+    @RabbitHandler
+    @RabbitListener(queues = "invitationWsQueue")
+    public void sendMsgByInvitation(Map map, Channel channel, Message message){
+        //1. 接收Queue中的消息
+        String couNum = (String) map.get("couNum");
+        String couIntroduction = (String) map.get("couIntroduction");
+        Integer custId = (Integer) map.get("custId");
+            System.out.println("发送信息");
+            String msg = "您好，恭喜您成功领取到编号为：" + couNum + "的分享券，"+couIntroduction;
+            try {
+                webSocketProcess.sendMessage(custId, msg);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        try {
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

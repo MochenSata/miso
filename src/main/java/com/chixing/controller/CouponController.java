@@ -2,18 +2,24 @@ package com.chixing.controller;
 
 import com.chixing.pojo.Coupon;
 import com.chixing.pojo.CouponReceive;
+import com.chixing.pojo.Customer;
 import com.chixing.service.ICouponReceiveService;
 import com.chixing.service.ICouponService;
 import com.chixing.service.ICustomerService;
 import com.chixing.util.DateUtil;
 import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CouponController {
@@ -23,6 +29,8 @@ public class CouponController {
     private ICouponService couponService;
     @Autowired
     private ICustomerService iCustomerService;
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
 
     @GetMapping("/coupon/{id}")
     @ResponseBody
@@ -87,9 +95,21 @@ public class CouponController {
     public ServerResult saveShareCouponByInvitation(CouponReceive couponReceive,
                                                     @RequestParam("custId")Integer custId1,
                                                     @RequestParam("custId2")Integer custId2){
-        ServerResult saveCouponResult = iCouponReceiveService.saveShareCouponByInvitation(couponReceive,custId1,custId2);
-        System.out.println(saveCouponResult);
-        return saveCouponResult;
+        CouponReceive couponReceive1= iCouponReceiveService.saveShareCouponByInvitation(couponReceive,custId1,custId2);
+        System.out.println(couponReceive1);
+
+        String couNum = couponReceive1.getCouNum();
+
+        String couIntroduction = couponReceive1.getCouIntroduction();
+        Map<String ,Object> map = new HashMap<>();
+        map.put("couNum",couNum);
+        map.put("couIntroduction",couIntroduction);
+        map.put("custId",custId1);
+        rabbitTemplate.convertAndSend("invitationWsExchange","invitation-key1",map,message ->{
+            return  message;
+        });
+        System.out.println(map);
+        return ServerResult.success(200,ResultMsg.success,true);
 
     }
 

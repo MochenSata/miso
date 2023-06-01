@@ -72,7 +72,7 @@
       <div class="userL">
         <ul>
           <li class="userL_li">
-            <a href="../myorder/miso_order_all.html"><button class="userLBtn">
+            <a href="${pageContext.request.contextPath}/myorder/customer/${result.data.custId}"><button class="userLBtn">
               <img src="${pageContext.request.contextPath}/img/myorder/order.GIF" class="userL_li_pic">
               <span class="userL_li_text">订单管理</span>
             </button></a>
@@ -129,7 +129,7 @@
     </div>
   </div>
 </div>
-
+<div id="invitationMsg"></div>
 </body>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script src="${pageContext.request.contextPath}/js/customer/miso_invitation.js"></script>
@@ -152,13 +152,63 @@
             custId:custId,
             custId2:couponResult.data.custId
           },
-          success:function (saveCouponResult){
+          success:function (couponReceive1){
             console.log("成功添加分享券")
+          },
+          error: function() {
+            alert("该邀请码不可用");
           }
         })
+      },
+      error: function() {
+        alert("该邀请码不可用");
       }
     })
   })
 </script>
+<script type="text/javascript">
+  $(function(){
+    var ws;
+    //检测浏览器是否支持webSocket
+    if("WebSocket" in window){
+      console.log("您的浏览器支持webSocket!");
+      //模拟产生clientID
+      let clientID =$(".id").val();
+console.log(clientID)
+      //创建 WebSocket 对象,注意请求路径！！！！
+      ws = new WebSocket("ws://localhost:8080/miso/testWebSocket/"+clientID);
 
+      //与服务端建立连接时触发
+      ws.onopen = function(){
+       console.log("<p>与服务端建立连接建立成功！您的客户端ID="+clientID+"</p>");
+
+        //模拟发送数据到服务器
+        ws.send("你好服务端！我是客户端 "+clientID);
+      }
+
+      //接收到服务端消息时触发
+      ws.onmessage = function (evt) {
+        let received_msg = evt.data;
+        var invitationMsg = $("#invitationMsg");
+        invitationMsg.css("display", "block");
+        invitationMsg.text(received_msg);
+
+        setTimeout(function() {
+          invitationMsg.css("opacity", "0");
+          setTimeout(function() {
+            invitationMsg.css("display", "none");
+            invitationMsg.css("opacity", "1");
+          }, 500);
+        }, 5000);
+      };
+
+      //服务端关闭连接时触发
+      ws.onclose = function() {
+        console.error("连接已经关闭.....")
+      };
+    }else{
+      $("#invitationMsg").html("您的浏览器不支持webSocket！");
+    }
+  })
+</script>
 </html>
