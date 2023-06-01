@@ -32,6 +32,25 @@ public class CouponController {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
+    @GetMapping("/coupon/all")
+    @ResponseBody
+    public ServerResult getAllValidCoupon(){
+            return couponService.getAllValidCoupon();
+    }
+
+    @PostMapping("/coupon/receive")
+    @ResponseBody
+    public ServerResult receiveCoupon(@RequestParam("couponId") Integer couId,
+                                      @RequestParam("custId") Integer custId){
+        System.out.println("couId:"+couId);
+        System.out.println("custId:"+custId);
+        return iCouponReceiveService.receiveCoupon(custId,couId);
+
+    }
+
+
+
+
     @GetMapping("/coupon/{id}")
     @ResponseBody
     public ServerResult getCustomerCoupon(@PathVariable("id") Integer custId){

@@ -10,6 +10,7 @@ import com.chixing.util.ServerResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -55,5 +56,18 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
     public ServerResult updateCouponByCouId(Integer couId) {
 
         return null;
+    }
+    @Override
+    public ServerResult getAllValidCoupon() {
+        QueryWrapper<Coupon> wrapper = new QueryWrapper<>();
+        wrapper.eq("cou_status","0");
+        wrapper.eq("cou_category","满减券");
+        wrapper.lt("cou_valid_time", LocalDateTime.now());
+        wrapper.gt("cou_invalid_time",LocalDateTime.now());
+        List<Coupon> couponList=couponMapper.selectList(wrapper);
+        System.out.println("couponimpl:"+couponList);
+        if (couponList.size()>0)
+            return ServerResult.success(200,"优惠券查询成功",couponList);
+        return ServerResult.fail(201,"暂无数据",null);
     }
 }

@@ -17,4 +17,5 @@ public interface ICouponReceiveService extends IService<CouponReceive> {
     public ServerResult getCouponByInvitation(String invitation,Integer custId);
     public ServerResult getCustInvitation(Integer custId);
     public CouponReceive saveShareCouponByInvitation(CouponReceive couponReceive,Integer custId1,Integer custId2);
+    public ServerResult receiveCoupon(Integer custId,Integer couId);
 }

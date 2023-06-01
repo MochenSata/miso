@@ -15,4 +15,5 @@ import com.chixing.util.ServerResult;
  */
 public interface ICommentService extends IService<Comment> {
     public ServerResult getByPage(Integer pageNum,Integer houseId);
+
 }
