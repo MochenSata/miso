@@ -13,9 +13,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>邀请码</title>
-  <link rel="stylesheet" href="../layui/css/layui.css">
-  <link rel="stylesheet" href="../css/customer/miso_invitation.css">
-  <script src="../js/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/miso_invitation.css">
+  <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
 
 </head>
 
@@ -25,7 +25,7 @@
   <div class="layui-container">
     <div class="layui-row nav">
       <div class="layui-col-xs2 logo">
-        <img src="../img/logo.png"  class="logopic">
+        <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
         <span class="slogn">让旅行更有味道</span>
       </div>
       <div class="layui-col-xs7">
@@ -49,7 +49,7 @@
             <div href="" class="personal-btn">
               <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
               <div class="personal">
-                <img src="../img/customer/hengxian.svg" class="hengxian">
+                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
               </div>
             </div>
 
@@ -73,7 +73,7 @@
         <ul>
           <li class="userL_li">
             <a href="../myorder/miso_order_all.html"><button class="userLBtn">
-              <img src="../img/myorder/order.GIF" class="userL_li_pic">
+              <img src="${pageContext.request.contextPath}/img/myorder/order.GIF" class="userL_li_pic">
               <span class="userL_li_text">订单管理</span>
             </button></a>
           </li>
@@ -104,11 +104,13 @@
         <div class="uinfoT">
           <h4>邀请码</h4>
         </div>
-        <form action="">
+        <form>
           <div class="user_invitation">
             <div class="myinv">
               <span class="myinvitation">我的邀请码:</span>
-              <span class="invitation_num">qjcdjj</span>
+              <input type="hidden" name="custId" value="${result.data.custId}" class="id">
+              <input type="hidden" name="custId2" value="${couponResult.data.custId}" class="id2">
+              <span class="invitation_num">${result.data.custInviteNum}</span>
             </div>
             <div class="inv">
               <span class="myinvitation">好友邀请码:</span>
@@ -119,7 +121,7 @@
               <span class="illustrate_word">兑换成功优惠券，双方均可获得分享券</span>
             </div>
             <div class="save">
-              <input type="submit" class="save-submit" value="确认兑换">
+              <input type="button" class="save-submit" value="确认兑换">
             </div>
           </div>
         </form>
@@ -127,9 +129,36 @@
     </div>
   </div>
 </div>
-</body>
-<script src="../layui/layui.js"></script>
-<script src="../js/customer/miso_invitation.js"></script>
 
+</body>
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/js/customer/miso_invitation.js"></script>
+<script>
+  $(".save-submit").click(function (){
+    var invitationNum = $(".i").val(); // 获取邀请码输入框的值
+    var custId = $(".id").val();
+    $.ajax({
+      type:"get",
+      url:"http://localhost:8080/miso/invitation",
+      data:{
+        invitationNum:invitationNum,
+        custId:custId
+      },
+      success:function (couponResult){
+        $.ajax({
+          type: "post",
+          url: "http://localhost:8080/miso/saveCoupon",
+          data: {
+            custId:custId,
+            custId2:couponResult.data.custId
+          },
+          success:function (saveCouponResult){
+            console.log("成功添加分享券")
+          }
+        })
+      }
+    })
+  })
+</script>
 
 </html>

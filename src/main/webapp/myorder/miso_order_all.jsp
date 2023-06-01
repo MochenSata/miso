@@ -92,7 +92,7 @@
                             <span class="userL_li_text">消息提醒</span></button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/customer/miso_invitation.html"><button class="userLBtn">
+                        <a href="${pageContext.request.contextPath}/myInvitation/${result.data[0].myorder.custId}"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/invite.gif" class="userL_li_pic">
                             <span class="userL_li_text">邀请码</span></button></a>
                     </li>

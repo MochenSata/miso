@@ -4,12 +4,14 @@ import com.chixing.pojo.Coupon;
 import com.chixing.pojo.CouponReceive;
 import com.chixing.service.ICouponReceiveService;
 import com.chixing.service.ICouponService;
+import com.chixing.service.ICustomerService;
 import com.chixing.util.DateUtil;
 import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +21,8 @@ public class CouponController {
     private ICouponReceiveService iCouponReceiveService;
     @Autowired
     private ICouponService couponService;
+    @Autowired
+    private ICustomerService iCustomerService;
 
     @GetMapping("/coupon/{id}")
     @ResponseBody
@@ -55,4 +59,41 @@ public class CouponController {
             return ServerResult.success(200,"新增优惠券成功",true);
         return ServerResult.fail(201,"新增优惠券失败",false);
     }
+
+    //邀请码页面
+    @GetMapping("myInvitation/{id}")
+    public ModelAndView getCustInvitation(@PathVariable("id")Integer custId){
+        ServerResult result = iCouponReceiveService.getCustInvitation(custId);
+        System.out.println(result);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("result",result);
+        mav.setViewName("customer/miso_invitation");
+        return mav;
+    }
+
+    //填写好友邀请码
+    @GetMapping("/invitation")
+    @ResponseBody
+    public ServerResult getCouponByInvitation(@RequestParam("invitationNum") String invitationNum,
+                                              @RequestParam("custId")Integer custId){
+        ServerResult couponResult = iCouponReceiveService.getCouponByInvitation(invitationNum,custId);
+        System.out.println(couponResult);
+        return couponResult;
+    }
+
+    //双方获得分享券
+    @PostMapping("saveCoupon")
+    @ResponseBody
+    public ServerResult saveShareCouponByInvitation(CouponReceive couponReceive,
+                                                    @RequestParam("custId")Integer custId1,
+                                                    @RequestParam("custId2")Integer custId2){
+        ServerResult saveCouponResult = iCouponReceiveService.saveShareCouponByInvitation(couponReceive,custId1,custId2);
+        System.out.println(saveCouponResult);
+        return saveCouponResult;
+
+    }
+
+
+
+
 }
