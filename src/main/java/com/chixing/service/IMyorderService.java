@@ -2,6 +2,7 @@ package com.chixing.service;
 
 import com.chixing.pojo.Myorder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chixing.pojo.MyorderDetailVO;
 import com.chixing.util.ServerResult;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface IMyorderService extends IService<Myorder> {
     //根据退房日期，修改订单状态为2：已完成
     public List<Myorder> updateOrderStatusByDate();
 
+    //下订单存到数据库中
+    public ServerResult saveOrder(MyorderDetailVO myorderDetailVO);
 }
