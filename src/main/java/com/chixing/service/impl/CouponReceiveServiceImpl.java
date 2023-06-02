@@ -48,9 +48,10 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
         List<CouponReceiveVo> couponReceiveVoList = new ArrayList<>();
         QueryWrapper<CouponReceive> wrapper = new QueryWrapper<>();
         wrapper.eq("cust_id",custId);
+        wrapper.eq("cou_usage_status",0);
         List<CouponReceive> couponReceiveList = couponReceiveMapper.selectList(wrapper);
         if(couponReceiveList.size()==0) {
-            return ServerResult.fail(201, ResultMsg.no_data, "没有优惠券");
+            return ServerResult.fail(201, ResultMsg.no_data, "没有可用优惠券");
         }
         for (CouponReceive couponReceive:couponReceiveList){
             QueryWrapper<Coupon> couponQueryWrapper = new QueryWrapper<>();

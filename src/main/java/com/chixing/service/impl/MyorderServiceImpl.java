@@ -2,6 +2,7 @@ package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chixing.controller.WebSocketProcess;
+import com.chixing.mapper.CouponReceiveMapper;
 import com.chixing.mapper.MyorderOccupyMapper;
 import com.chixing.mapper.PaymentMapper;
 import com.chixing.pojo.*;
@@ -50,6 +51,8 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private AmqpTemplate rabbitTemplate;
+    @Autowired
+    private CouponReceiveMapper couponReceiveMapper;
 
     @Override
     public ServerResult getAllOrdersByCustId(Integer customerId) {
@@ -185,9 +188,15 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
             myorder.setHouseMainpicture(myorderDetailVO.getOrderCountAndDataVO().getHouseMainpicture());
             myorder.setHousePrice(myorderDetailVO.getOrderCountAndDataVO().getHousePrice());
             myorder.setMyorderCreateTime(LocalDateTime.now());
-            if (myorderDetailVO.getCouNum() != null && myorderDetailVO.getCouNum() != "") {
+            if (myorderDetailVO.getCouNum() != null && myorderDetailVO.getCouNum() !="") {
                 myorder.setCouNum(myorderDetailVO.getCouNum());
                 myorder.setCouPrice(myorderDetailVO.getCouPrice());
+                QueryWrapper<CouponReceive> wrapper = new QueryWrapper<>();
+                wrapper.eq("cou_num",myorderDetailVO.getCouNum());
+                CouponReceive couponReceive = new CouponReceive();
+                couponReceive.setCouUsageStatus(1);
+                couponReceiveMapper.update(couponReceive,wrapper);
+                System.out.println("优惠券状态："+couponReceive.getCouUsageStatus());
             } else {
                 myorder.setCouNum(null);
                 myorder.setCouPrice(null);
