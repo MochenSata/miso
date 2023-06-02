@@ -116,7 +116,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -181,7 +181,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -237,7 +237,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -292,7 +292,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -347,7 +347,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>

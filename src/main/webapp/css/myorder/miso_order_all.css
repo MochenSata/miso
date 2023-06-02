@@ -445,3 +445,7 @@ p{
     margin-top: 0.5px;
     border-bottom: 2px solid #ff385c;
 }
+
+.layui-btn-container .layui-btn+.layui-btn {
+     margin-left: 10px;
+}
