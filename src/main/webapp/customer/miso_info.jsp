@@ -104,7 +104,7 @@
                 <div class="uinfoT">
                     <h4>完善个人信息</h4>
                 </div>
-                <form action="">
+                <form action="${pageContext.request.contextPath}/customer/updateCustInfo" method="post">
                     <table>
                         <tr>
                             <td class="tL">
@@ -115,7 +115,7 @@
                             </td>
                             <td class="tR">
                                 <div class="tR_r">
-                                    <input type="text" class="form_info username" value="${result.data.custName}">
+                                    <input type="text" class="form_info username" value="${result.data.custName}" name="custName">
                                     <span class="msgTip usernameTip"></span>
                                 </div>
                             </td>
@@ -141,8 +141,8 @@
                             </td>
                             <td class="tR">
                                 <div class="tR_r">
-                                    <input type="radio" value="M" name="sex" checked>男
-                                    <input type="radio" value="F" name="sex">女
+                                    <input type="radio"  name="custGender" value="M" ${result.data.custGender == 'M' ? 'checked' : '' }>男
+                                    <input type="radio"  name="custGender" value="F" ${result.data.custGender == 'F' ? 'checked' : '' }>女
                                 </div>
                             </td>
                         </tr>
@@ -154,7 +154,7 @@
                             </td>
                             <td class="tR">
                                 <div class="tR_r">
-                                    <input type="text" class="form_info useremail" value="${result.data.custEmail}">
+                                    <input type="text" class="form_info useremail" value="${result.data.custEmail}" name="custEmail">
                                     <span class="msgTip useremailTip"></span>
                                 </div>
                             </td>
@@ -167,20 +167,19 @@
                             </td>
                             <td class="tR">
                                 <div class="tR_r">
-                                    <textarea></textarea>
+                                    <textarea class="textarea">${result.data.custDesc}</textarea>
                                 </div>
                             </td>
                         </tr>
                     </table>
-                </form>
+
                 <div class="save">
-                    <div id="layerDemo" style="margin-bottom: 0;">
-                        <div class="layui-btn-container">
-                            <button data-method="offset" data-type="auto"
-                                    class="layui-btn layui-btn-normal info-save">保存信息</button>
-                        </div>
-                    </div>
+                    <input type="hidden" name="custId" value="${result.data.custId}">
+                    <input type="hidden" name="custDesc" value="" class="custDescc">
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="submit" class="info-save" value="保存信息">
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -226,6 +225,11 @@
     });
 
 </script>
-
+<script>
+    $('form').submit(function() {
+        var text = $(".textarea").val();
+        $(".custDescc").val(text);
+    });
+</script>
 
 </html>

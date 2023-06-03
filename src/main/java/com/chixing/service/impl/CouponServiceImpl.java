@@ -31,22 +31,22 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
     @Override
     public ServerResult getAllCoupons() {
         QueryWrapper<Coupon> couponQueryWrapper = new QueryWrapper<>();
-        couponQueryWrapper.lt("cou_status",2);
+        couponQueryWrapper.lt("cou_status", 2);
         List<Coupon> couponList = couponMapper.selectList(couponQueryWrapper);
         System.out.println("优惠券列表是：" + couponList);
         if (couponList.size() > 0)
-            return ServerResult.success(200, ResultMsg.success,couponList);
-        return ServerResult.fail(201, ResultMsg.no_data,null);
+            return ServerResult.success(200, ResultMsg.success, couponList);
+        return ServerResult.fail(201, ResultMsg.no_data, null);
     }
 
     //删除优惠券（更改优惠券状态为2）
     @Override
     public ServerResult deleteCouponByCouId(Integer couId) {
         Coupon coupon = couponMapper.selectById(couId);
-        if(coupon != null){
+        if (coupon != null) {
             coupon.setCouStatus(2);
             couponMapper.updateById(coupon);
-            return ServerResult.success(200,ResultMsg.success,coupon);
+            return ServerResult.success(200, ResultMsg.success, coupon);
         }
         return ServerResult.fail(201, ResultMsg.fail, false);
     }
@@ -57,17 +57,28 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
 
         return null;
     }
+
     @Override
     public ServerResult getAllValidCoupon() {
         QueryWrapper<Coupon> wrapper = new QueryWrapper<>();
-        wrapper.eq("cou_status","0");
-        wrapper.eq("cou_category","满减券");
+        wrapper.eq("cou_status", "0");
+        wrapper.eq("cou_category", "满减券");
         wrapper.lt("cou_valid_time", LocalDateTime.now());
-        wrapper.gt("cou_invalid_time",LocalDateTime.now());
-        List<Coupon> couponList=couponMapper.selectList(wrapper);
-        System.out.println("couponimpl:"+couponList);
-        if (couponList.size()>0)
-            return ServerResult.success(200,"优惠券查询成功",couponList);
-        return ServerResult.fail(201,"暂无数据",null);
+        wrapper.gt("cou_invalid_time", LocalDateTime.now());
+        List<Coupon> couponList = couponMapper.selectList(wrapper);
+        System.out.println("couponimpl:" + couponList);
+        if (couponList.size() > 0)
+            return ServerResult.success(200, "优惠券查询成功", couponList);
+        return ServerResult.fail(201, "暂无数据", null);
+    }
+
+    //优惠券自动过期,修改优惠券状态为1：已失效
+    @Override
+    public List<Coupon> updateCouponStatusByDate() {
+        QueryWrapper<Coupon> couponQueryWrapper = new QueryWrapper<>();
+        couponQueryWrapper.eq("cou_status", 0);//找到生效中的优惠券
+        List<Coupon> couponList = couponMapper.selectList(couponQueryWrapper);
+        System.out.println("生效中的优惠券有：" + couponList);
+        return couponList;
     }
 }

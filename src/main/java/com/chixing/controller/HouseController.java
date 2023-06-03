@@ -99,4 +99,12 @@ public class HouseController {
         System.out.println("搜索到的房源数据是："+searchHouseList);
         return mav;
     }
+
+     //获取房间号对应不能预约日期集合
+    @GetMapping( "date/{id}")
+    @ResponseBody
+    public ServerResult getHouseDate(@PathVariable("id") Integer id) {
+
+        return houseService.getHouseDate(id);
+    }
 }

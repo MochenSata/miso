@@ -2,26 +2,30 @@ package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chixing.controller.WebSocketProcess;
+import com.chixing.mapper.CouponReceiveMapper;
+import com.chixing.mapper.MyorderOccupyMapper;
 import com.chixing.mapper.PaymentMapper;
-import com.chixing.pojo.MyOrderPayVO;
-import com.chixing.pojo.Myorder;
+import com.chixing.pojo.*;
 import com.chixing.mapper.MyorderMapper;
-import com.chixing.pojo.Payment;
 import com.chixing.service.IMyorderService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.chixing.util.LockUtil;
 import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
 import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 /**
  * <p>
@@ -41,6 +45,14 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
     private WebSocketProcess webSocketProcess;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private MyorderOccupyMapper myorderOccupyMapper;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
+    @Autowired
+    private CouponReceiveMapper couponReceiveMapper;
 
     @Override
     public ServerResult getAllOrdersByCustId(Integer customerId) {
@@ -131,6 +143,109 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
         return myorderList;
 
     }
+
+
+    //下订单存到数据库中
+    @Override
+    public ServerResult saveOrder(MyorderDetailVO myorderDetailVO) {
+        int rows = 0;
+        int rows2 = 0;
+        OrderResult orderResult = new OrderResult();
+//        获取线程id
+        String thread = String.valueOf(Thread.currentThread().getId());
+        //初始化
+        LockUtil lockUtil = new LockUtil(stringRedisTemplate);
+        String houseId = myorderDetailVO.getOrderCountAndDataVO().getHouseId().toString();
+        LocalDate custStartDate = myorderDetailVO.getOrderCountAndDataVO().getCustStartDate();
+        LocalDate custEndDate = myorderDetailVO.getOrderCountAndDataVO().getCustEndDate();
+        //计算两个日期相差天数
+        long betweenDay = ChronoUnit.DAYS.between(custStartDate, custEndDate);
+
+        List<String> keyList = new ArrayList<>();
+        while (custStartDate.isBefore(custEndDate)) {
+            // 遍历起始日期到结束日期之间的所有日期放入list
+            keyList.add(houseId+"+"+custStartDate);
+            custStartDate = custStartDate.plusDays(1);  // 将日期加1天
+        }
+        //批量加锁
+        boolean b = lockUtil.lockBatch(keyList, thread, betweenDay * 86400);
+        if (!b){
+            //如果加锁失败
+            System.out.println("该日期已被预定");
+            return ServerResult.fail(201,"该日期已被预定",false);
+        }else{
+            System.out.println("预定成功");
+        }
+        try {
+            //存储到订单表
+            Myorder myorder = new Myorder();
+            myorder.setCustId(myorderDetailVO.getCustId());
+            String myorderNum = UUID.randomUUID().toString().replace("-", "");
+            myorderDetailVO.setMyorderNum(myorderNum);
+            myorder.setMyorderNum(myorderNum);
+            myorder.setHouseId(myorderDetailVO.getOrderCountAndDataVO().getHouseId());
+            myorder.setHouseName(myorderDetailVO.getOrderCountAndDataVO().getHouseName());
+            myorder.setHouseMainpicture(myorderDetailVO.getOrderCountAndDataVO().getHouseMainpicture());
+            myorder.setHousePrice(myorderDetailVO.getOrderCountAndDataVO().getHousePrice());
+            myorder.setMyorderCreateTime(LocalDateTime.now());
+            if (myorderDetailVO.getCouNum() != null && myorderDetailVO.getCouNum() !="") {
+                myorder.setCouNum(myorderDetailVO.getCouNum());
+                myorder.setCouPrice(myorderDetailVO.getCouPrice());
+                QueryWrapper<CouponReceive> wrapper = new QueryWrapper<>();
+                wrapper.eq("cou_num",myorderDetailVO.getCouNum());
+                CouponReceive couponReceive = new CouponReceive();
+                couponReceive.setCouUsageStatus(1);
+                couponReceiveMapper.update(couponReceive,wrapper);
+                System.out.println("优惠券状态："+couponReceive.getCouUsageStatus());
+            } else {
+                myorder.setCouNum(null);
+                myorder.setCouPrice(null);
+            }
+            myorder.setMyorderStatus(0);
+            myorder.setMyorderPrice(myorderDetailVO.getMyorderPrice());
+            myorder.setMyorderDay(myorderDetailVO.getOrderCountAndDataVO().getCustNum());
+            myorder.setMyorderIntime(myorderDetailVO.getOrderCountAndDataVO().getCustStartDate());
+            myorder.setMyorderOutime(myorderDetailVO.getOrderCountAndDataVO().getCustEndDate());
+            System.out.println(myorder);
+            rows = myorderMapper.insert(myorder);
+            //存储到入住人表
+            QueryWrapper<Myorder> wrapper = new QueryWrapper<>();
+            wrapper.eq("myorder_num", myorderNum);
+            Myorder myorder1 = myorderMapper.selectOne(wrapper);
+            Integer myorderId = myorder1.getMyorderId();
+            myorderDetailVO.setMyorderId(myorderId);
+            MyorderOccupy myorderOccupy = new MyorderOccupy();
+            myorderOccupy.setMyorderId(myorderId);
+            myorderOccupy.setCustId(myorder.getCustId());
+            myorderOccupy.setOccIdentity(myorderDetailVO.getOrderCountAndDataVO().getOccIdentity());
+            myorderOccupy.setOccName(myorderDetailVO.getOrderCountAndDataVO().getOccName());
+            myorderOccupy.setOccTelno(myorderDetailVO.getOrderCountAndDataVO().getOccTelno());
+            rows2 = myorderOccupyMapper.insert(myorderOccupy);
+            orderResult = new OrderResult(myorder, myorderOccupy);
+            Map<String ,Object> map = new HashMap<>();
+            map.put("myorderId",myorderId);
+            map.put("custId",myorder.getCustId());
+            map.put("myorderNum",myorderNum);
+            map.put("keyList",keyList);
+            rabbitTemplate.convertAndSend("order-delayed-exchange","order-key1",map,message ->{
+                message.getMessageProperties().setDelay(60000);
+                return  message;
+            });
+        }catch (Exception ex){
+            ex.printStackTrace();
+            //如果发生异常则解锁
+            boolean b1 = lockUtil.unlockBatch(keyList, thread);
+            if (b1){
+                System.out.println("解锁成功");
+            }
+        }
+        if (rows > 0 && rows2 > 0)
+            return ServerResult.success(200, ResultMsg.success, orderResult);
+        return ServerResult.fail(201, ResultMsg.fail, false);
+    }
+
+
+
 }
 
 

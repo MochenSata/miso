@@ -4,6 +4,8 @@ import com.chixing.pojo.Coupon;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chixing.util.ServerResult;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -23,4 +25,7 @@ public interface ICouponService extends IService<Coupon> {
     public ServerResult updateCouponByCouId(Integer couId);
 
     public ServerResult getAllValidCoupon();
+
+    //优惠券自动过期,修改优惠券状态为1：已失效
+    public List<Coupon> updateCouponStatusByDate();
 }

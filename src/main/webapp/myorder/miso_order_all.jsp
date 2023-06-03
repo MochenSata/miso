@@ -82,12 +82,12 @@
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/coupon/miso_coupon.html"><button class="userLBtn">
+                        <a href="${pageContext.request.contextPath}/coupon/miso_coupon.jsp"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/coupon.GIF" class="userL_li_pic">
                             <span class="userL_li_text">我的优惠券</span></button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/customer/miso_message.html"><button class="userLBtn">
+                        <a href="${pageContext.request.contextPath}/customer/miso_message.jsp"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/message.GIF" class="userL_li_pic">
                             <span class="userL_li_text">消息提醒</span></button></a>
                     </li>
@@ -116,7 +116,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -181,7 +181,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -237,7 +237,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -292,7 +292,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>
@@ -347,7 +347,7 @@
                                         <td class="td_img_name">房间</td>
                                         <td class="td_num">订单编号</td>
                                         <td class="td_price">房款</td>
-                                        <td class="td_time">时间</td>
+                                        <td class="td_time">下单时间</td>
                                         <td class="td_statu">状态</td>
                                         <td class="td_operate">操作</td>
                                     </tr>

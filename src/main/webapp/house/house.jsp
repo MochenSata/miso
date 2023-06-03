@@ -213,10 +213,74 @@
         <script>
             $(document).ready(function() {
                 getByPage(1, ${serverResult.data.houseId}); // 页面加载即执行查询
+                getHouseDate(${serverResult.data.houseId});
             });
-
+            var notcheckdate = []
             var currentPageNum; // 该变量的作用是为了删除成功后，继续分页查询本页的数据
 
+            function getHouseDate(id){
+                var url = "${pageContext.request.contextPath}/house/date/"+ id; // 将ID添加到URL
+
+                $.get(url, null, function(result) {
+                    // ServerReponse json: data(pageInfo)
+                    console.log(result);
+                    notcheckdate = result.data;
+
+                //     // 预定日期
+                    layui.use('laydate', function () {
+
+                        var laydate = layui.laydate;
+                        const rangeDate = laydate.render({
+                            elem: '#test6'
+                            , range: ['#test-startDate-1', '#test-endDate-1'],
+                            ready: function(){
+
+                                setdate1("laydate-main-list-0");
+                                setdate1("laydate-main-list-1");
+                            },change:function (){
+                                setdate1("laydate-main-list-0");
+                                setdate1("laydate-main-list-1");
+                            },
+                        });
+                        //直接嵌套显示
+                        const normalDate = laydate.render({
+                            elem: '#test-n1'
+                            , position: 'static'
+                            , range: ['#test-startDate-1', '#test-endDate-1'],
+                            ready: function(){
+
+                                setdate1("laydate-main-list-1");
+                            },change:function (){
+                                setdate1("laydate-main-list-1");
+                            },
+                        });
+                    });
+
+
+
+                }, "json");
+
+            }
+            function setdate1(id){
+
+                var elem = $("."+id).find(".layui-laydate-content");//获取table对象
+                layui.each(elem.find('tr'), function (trIndex, trElem) {//遍历tr
+                    layui.each($(trElem).find('td'), function (tdIndex, tdElem) {
+                        //遍历td
+                        var tdTemp = $(tdElem);
+                        if (tdTemp.hasClass('laydate-day-next') || tdTemp.hasClass('laydate-day-prev')) {
+                            return;
+                        }
+                        var da=tdTemp.attr("lay-ymd");
+                        var das = da.split("-")
+                        var layymd = das[0]+"-"+(das[1].length==1?("0"+das[1]):das[1])+"-"+(das[2].length==1?("0"+das[2]):das[2]);
+                        console.log(layymd);
+                        if(notcheckdate.indexOf(layymd)>-1){//指定数组中的日期不可选
+                            tdTemp.addClass('laydate-disabled');
+                        }
+                    });
+                });
+            }
             function getByPage(pageNum,id) {
                 id=${serverResult.data.houseId};
                 $(".evaluation-part").html(""); // 清空UL中的数据信息
@@ -406,7 +470,7 @@
 </div>
 
 
-<script src="../js/house/house.js"></script>
+<script src="../js/house/"></script>
 
 
 
@@ -466,24 +530,6 @@
 
 
 
-
-
-
-
-    // 预定日期
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-        const rangeDate = laydate.render({
-            elem: '#test6'
-            , range: ['#test-startDate-1', '#test-endDate-1']
-        });
-        //直接嵌套显示
-        const normalDate = laydate.render({
-            elem: '#test-n1'
-            , position: 'static'
-            , range: ['#test-startDate-1', '#test-endDate-1']
-        });
-    });
 
     // 评分系统
     layui.use(['rate'], function () {

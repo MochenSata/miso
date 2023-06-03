@@ -127,4 +127,18 @@ public class CustomerController {
         mav.setViewName("customer/miso_info");
         return mav;
     }
+
+    //修改个人信息
+    @PutMapping("updateCustInfo")
+    public ModelAndView updateCustInfo(Customer customer){
+        ServerResult serverResult = service.updateCustInfo(customer);
+        System.out.println(serverResult);
+        ModelAndView mav = new ModelAndView();
+        if (serverResult.getCode() == 200){
+            mav.setViewName("redirect:/customer/custInfo/" + customer.getCustId());
+        }else {
+            mav.setViewName("myorder/fail");
+        }
+        return mav;
+    }
 }
