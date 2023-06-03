@@ -82,12 +82,12 @@
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/coupon/miso_coupon.html"><button class="userLBtn">
+                        <a href="${pageContext.request.contextPath}/coupon/miso_coupon.jsp"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/coupon.GIF" class="userL_li_pic">
                             <span class="userL_li_text">我的优惠券</span></button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/customer/miso_message.html"><button class="userLBtn">
+                        <a href="${pageContext.request.contextPath}/customer/miso_message.jsp"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/message.GIF" class="userL_li_pic">
                             <span class="userL_li_text">消息提醒</span></button></a>
                     </li>
