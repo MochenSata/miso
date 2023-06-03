@@ -195,6 +195,7 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
                 wrapper.eq("cou_num",myorderDetailVO.getCouNum());
                 CouponReceive couponReceive = new CouponReceive();
                 couponReceive.setCouUsageStatus(1);
+                couponReceive.setCouUseTime(LocalDateTime.now());
                 couponReceiveMapper.update(couponReceive,wrapper);
                 System.out.println("优惠券状态："+couponReceive.getCouUsageStatus());
             } else {
