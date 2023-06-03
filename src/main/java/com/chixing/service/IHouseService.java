@@ -32,4 +32,7 @@ public interface IHouseService extends IService<House> {
 
     // 在ES中查询房源，实现分页
     public Map<String,Object> getHouseListFromEs(String search);
+
+    //// 获取房间号对应不能预约日期集合
+    public ServerResult getHouseDate(Integer id);
 }

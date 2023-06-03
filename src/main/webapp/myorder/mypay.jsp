@@ -329,6 +329,141 @@
 
 <script src="../js/myorder/mypay.js"></script>
 <script>
+
+
+    var notcheckdate = []
+    var id='${orderCountAndDataVO.houseId}';
+    getHouseDate(id);
+    function getHouseDate(id){
+        var url = "${pageContext.request.contextPath}/house/date/"+ id; // 将ID添加到URL
+
+        $.get(url, null, function(result) {
+            // ServerReponse json: data(pageInfo)
+            console.log(result);
+            notcheckdate = result.data;
+
+            layui.use('laydate', function () {
+                    var laydate = layui.laydate;
+                    laydate.render({
+                        elem: '#test6'
+                        //设置开始日期、日期日期的 input 选择器
+                        //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
+                        , range: true,
+                        done: function (value, date) {
+                            console.log(date); // 输出date对象
+                            console.log(typeof date); // 输出date对象的类型
+                            // 获取选定的起始日期和结束日期数据
+                            var start = value.split(' - ')[0];
+                            var end = value.split(' - ')[1];
+                            var startDate=new Date(start);
+                            var endDate=new Date(end);
+
+                            $("#custEndDate").val(end);
+                            $("#custStartDate").val(start);
+
+                            // 获取起始日期和结束日期的星期几
+                            var startDayOfWeek = startDate.getDay();
+                            var endDayOfWeek = endDate.getDay();
+                            var totalPrice = 0;
+                            var dayOfWeekText = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                            var holidayList = ['2023-01-01','2023-01-02', '2023-01-03', '2023-04-04','2023-04-05','2023-04-06',
+                                '2023-05-01',
+                                '2023-05-02',
+                                '2023-05-03',
+                                '2023-04-29',
+                                '2023-04-30',
+                                '2023-09-29',
+                                '2023-09-30',
+                                '2023-10-01',
+                                '2023-10-02',
+                                '2023-10-03',
+                                '2023-10-04',
+                                '2023-10-05',
+                                '2023-10-06',]; // 假期列表
+                            for (var d=startDate;d<endDate;d.setDate(d.getDate()+1)){
+                                var dayOfWeek=d.getDay();
+                                var isWeekend = (dayOfWeek === 6 || dayOfWeek === 0);
+                                var isHoliday =(holidayList.indexOf(d.toISOString().substr(0, 10)) !== -1) ;
+                                var originalPrice=document.querySelector(".danjia")
+                                var priceText =originalPrice.textContent.trim();
+                                if (/^\d+(\.\d+)?$/.test(priceText)){
+                                    var price = parseFloat(priceText);
+                                    var priceMultiplier = 1;
+                                    if (isWeekend) {
+                                        if (dayOfWeek === 6) {
+                                            priceMultiplier = 1.5;
+                                        } else if (dayOfWeek === 0) {
+                                            priceMultiplier = 1.5;
+                                        }
+                                    }
+                                    if (isHoliday) {
+                                        priceMultiplier = 2;
+                                    }
+                                    var dynamicPrice = price * priceMultiplier;
+                                    console.log(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + dayOfWeekText[dayOfWeek] + ' 价格：' + dynamicPrice);
+                                    console.log('星期' + dayOfWeek);
+                                    totalPrice += dynamicPrice;
+                                } else {
+                                    console.error('房价格式不正确：' + priceText);
+                                }
+                            }
+                            console.log('总价格：' + totalPrice);
+                            console.log(dynamicPrice);
+                            console.log(price);
+                            console.log('是否为周末：' + isWeekend);
+                            console.log('是否为假期：' + isHoliday);
+                            console.log("起始日期是"+dayOfWeekText[startDayOfWeek]);
+                            console.log("结束日期是"+dayOfWeekText[endDayOfWeek]);
+                            console.log(start);
+                            console.log(end);
+
+                            var resultElement =document.getElementById("result");
+                            resultElement.innerHTML=totalPrice;
+                            var days = Math.ceil((new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60 * 60 * 24));
+                            console.log("入住天数：" + days);
+                            $(".nights").text(days);
+                            $('#myElement').zongjia();
+
+
+                        }, range: ['#test-startDate-1', '#test-endDate-1'],
+                        ready: function(){
+                            setdate1("laydate-main-list-0");
+                            setdate1("laydate-main-list-1");
+                        },change:function (){
+                            setdate1("laydate-main-list-0");
+                            setdate1("laydate-main-list-1");
+                        },
+
+                    });
+
+                });
+
+        }, "json");
+
+    }
+
+    function setdate1(id){
+
+        var elem = $("."+id).find(".layui-laydate-content");//获取table对象
+        layui.each(elem.find('tr'), function (trIndex, trElem) {//遍历tr
+            layui.each($(trElem).find('td'), function (tdIndex, tdElem) {
+                //遍历td
+                var tdTemp = $(tdElem);
+                if (tdTemp.hasClass('laydate-day-next') || tdTemp.hasClass('laydate-day-prev')) {
+                    return;
+                }
+                var da=tdTemp.attr("lay-ymd");
+                var das = da.split("-")
+                var layymd = das[0]+"-"+(das[1].length==1?("0"+das[1]):das[1])+"-"+(das[2].length==1?("0"+das[2]):das[2]);
+                console.log(layymd);
+                if(notcheckdate.indexOf(layymd)>-1){//指定数组中的日期不可选
+                    tdTemp.addClass('laydate-disabled');
+                }
+            });
+        });
+    }
+
+
     var custId ;
     getCurrentLoginCustomerInfo();
     //获得当前登录用户信息

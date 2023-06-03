@@ -44,6 +44,8 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
     private RedisTemplate redisTemplate;
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate2;
 
 
     //根据房源评分获得热门推荐数据(前5个)
@@ -174,66 +176,23 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
         return result;
     }
 
-//    @Override
-//    public ServerResult getSearchHouseByType(String houseKind,Float lowPrice,Float highPrice,Integer roomNum,String[] conditions) {
-//        QueryWrapper<House> wrapper = new QueryWrapper<>();
-//        wrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum","house_id","bed_count");
-//        if(conditions[0] != null){
-//            wrapper.eq("house_kind",houseKind);
-//        }
-//        if(conditions[1] != null){
-//            wrapper.between("house_price",lowPrice,highPrice);
-//        }
-//        if(conditions[2] != null){
-//            wrapper.eq("house_room_num",roomNum);
-//        }
-//        //wrapper.eq("house_kind",houseKind).or().eq("house_room_num",roomNum).or().between("house_price",lowPrice,highPrice);
-//        List<House> houseList = houseMapper.selectList(wrapper);
-//        System.out.println(houseList);
-//        if (houseList.size()>0)
-//            return ServerResult.success(200, ResultMsg.success,houseList);
-//        return ServerResult.fail(201,ResultMsg.fail,false);
-//    }
+    // 获取房间号对应不能预约日期集合
+    @Override
+    public ServerResult getHouseDate(Integer id) {
+        //根据房间号查询 所有日期预定的key
+        Set<String> keys  = redisTemplate2.keys(id+"*");
+        List<String> dates = new ArrayList<>();
+        for (String date : keys) {
+            String datesStr[] = date.split(id+"\\+");
+            try {
+                dates.add(datesStr[1]);
+            }catch (Exception e){
+                continue;
+            }
 
-
-
-    /*@Override
-    public ServerResult getSearchHouseByType(String houseKind, Float lowPrice, Float highPrice, Integer roomNum, List<Integer> lastIds) {
-        // 创建 QueryWrapper 对象，并设置查询条件
-        QueryWrapper<House> wrapper = new QueryWrapper<>();
-        wrapper.select("house_name","house_kind","house_mainpicture","house_score","house_price","house_rentnum","house_id","house_room_num");
-        wrapper.eq(StringUtils.isNotBlank(houseKind), "house_kind", houseKind)
-                .gt(lowPrice != null, "house_price", lowPrice)
-                .lt(highPrice != null, "house_price", highPrice)
-                .eq(roomNum != null, "house_room_num", roomNum)
-                .notIn(CollectionUtils.isNotEmpty(lastIds), "house_id", lastIds);
-
-        //wrapper.eq("house_kind",houseKind).or().eq("house_room_num",roomNum).or().between("house_price",lowPrice,highPrice);
-        // 调用 selectList 方法进行查询
-        List<House> houseList = houseMapper.selectList(wrapper);
-        System.out.println(houseList);
-
-        // 封装响应结果并返回
-        Map<String,Object> resultMap = new HashMap<>();
-        if (houseList.size()>0) {
-            resultMap.put("houseList", houseList);
-            resultMap.put("lastIds",getLsatIds(houseList,lastIds));
-            return ServerResult.success(200, ResultMsg.success,resultMap);
         }
-
-        return ServerResult.fail(201,ResultMsg.fail,false);
+        return ServerResult.success(200, ResultMsg.success, dates);
     }
-    //提取最新的房屋列表
-    private List<Integer> getLsatIds(List<House> houseList,List<Integer> lastIds){
-        if (CollectionUtils.isEmpty(houseList)){
-            return lastIds;
-        }
-        List<Integer> newLastIds = houseList.stream().map(House::getHouseId).collect(Collectors.toList());
-        if (CollectionUtils.isNotEmpty(lastIds)){
-            newLastIds.addAll(lastIds);
-        }
-        return newLastIds;
-    }*/
 
 
 }
