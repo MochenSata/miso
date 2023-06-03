@@ -463,3 +463,7 @@ p{
     font-size: 12px;
     font-weight: 500;
 }
+
+.layui-btn-container .layui-btn+.layui-btn {
+    margin-left: 10px;
+}
