@@ -2,6 +2,7 @@ package com.chixing.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.chixing.pojo.Customer;
 import com.chixing.mapper.CustomerMapper;
@@ -108,5 +109,22 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         if (customer == null)
             return ServerResult.fail(201, ResultMsg.fail,false);
         return ServerResult.success(200, ResultMsg.success,customer);
+    }
+
+    //修改个人信息
+    @Override
+    public ServerResult updateCustInfo(Customer customer) {
+        // 表示只更新指定字段
+        UpdateWrapper<Customer> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("cust_id",customer.getCustId());
+        updateWrapper.set("cust_name", customer.getCustName())
+                .set("cust_desc", customer.getCustDesc())
+                .set("cust_email", customer.getCustEmail())
+                .set("cust_gender", customer.getCustGender());
+        int rows = customerMapper.update(customer,updateWrapper);
+        System.out.println(rows);
+        if (rows>0)
+            return ServerResult.success(200, ResultMsg.success,customer);
+        return ServerResult.fail(201, ResultMsg.fail,false);
     }
 }

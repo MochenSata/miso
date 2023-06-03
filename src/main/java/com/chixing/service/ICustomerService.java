@@ -25,4 +25,7 @@ public interface ICustomerService extends IService<Customer> {
 
     //查看个人信息
     public ServerResult getCustInfo(Integer custId);
+
+    //修改个人信息
+    public ServerResult updateCustInfo(Customer customer);
 }
