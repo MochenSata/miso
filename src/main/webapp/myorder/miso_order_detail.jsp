@@ -114,7 +114,7 @@
               </td>
               <td class="tR">
                 <div class="tR_r">
-                  <a href=""><span>${detail.data.houseName}</span></a>
+                  <a href="${pageContext.request.contextPath}/house/${detail.data.houseId}"><span>${detail.data.houseName}</span></a>
                 </div>
               </td>
             </tr>

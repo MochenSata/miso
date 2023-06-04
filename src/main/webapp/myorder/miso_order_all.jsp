@@ -126,11 +126,12 @@
                                     </tr>
                                     <c:forEach items="${result.data}" var="data">
                                         <tr>
-                                            <td>
+                                            <td><a href="${pageContext.request.contextPath}/house/${data.myorder.houseId}">
                                                 <div>
                                                     <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                 </div>
                                                 <p class="house_name">${data.myorder.houseName}</p>
+                                            </a>
                                                 <input type="hidden" class="house_id" value="${data.myorder.houseId}">
                                                 <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                             </td>
@@ -194,11 +195,12 @@
                                     <c:forEach items="${result.data}" var="data">
                                         <c:if test="${data.myorder.myorderStatus==1}">
                                         <tr>
-                                            <td>
+                                            <td><a href="${pageContext.request.contextPath}/house/${data.myorder.houseId}">
                                                 <div>
                                                     <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                 </div>
                                                 <p class="house_name">${data.myorder.houseName}</p>
+                                                </a>
                                                 <input type="hidden" class="house_id" value="${data.myorder.houseId}">
                                                 <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                             </td>
@@ -249,10 +251,11 @@
                                         <c:forEach items="${result.data}" var="data">
                                             <c:if test="${data.myorder.myorderStatus==0}">
                                             <tr>
-                                                <td>
+                                                <td><a href="${pageContext.request.contextPath}/house/${data.myorder.houseId}">
                                                     <div>
                                                         <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                     </div>
+                                                    </a>
                                                     <p class="house_name">${data.myorder.houseName}</p>
                                                     <input type="hidden" class="house_id" value="${data.myorder.houseId}">
                                                     <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
@@ -304,11 +307,12 @@
                                         <c:forEach items="${result.data}" var="data">
                                             <c:if test="${data.myorder.myorderStatus==2 || data.myorder.myorderStatus==3}">
                                             <tr>
-                                                <td>
+                                                <td><a href="${pageContext.request.contextPath}/house/${data.myorder.houseId}">
                                                     <div>
                                                         <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                     </div>
                                                     <p class="house_name">${data.myorder.houseName}</p>
+                                                    </a>
                                                     <input type="hidden" class="house_id" value="${data.myorder.houseId}">
                                                     <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                                 </td>
@@ -358,11 +362,12 @@
                                     <c:forEach items="${result.data}" var="data" varStatus="status">
                                         <c:if test="${data.myorder.myorderStatus==4}">
                                             <tr data-index="${status.index}">
-                                                <td>
+                                                <td><a href="${pageContext.request.contextPath}/house/${data.myorder.houseId}">
                                                     <div>
                                                         <img src="${data.myorder.houseMainpicture}" class="house_pic">
                                                     </div>
                                                     <p class="house_name">${data.myorder.houseName}</p>
+                                                    </a>
                                                     <input type="hidden" class="house_id" value="${data.myorder.houseId}">
                                                     <input type="hidden" class="order_id" value="${data.myorder.myorderId}">
                                                 </td>
