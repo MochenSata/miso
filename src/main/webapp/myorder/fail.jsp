@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>日期已被预定</title>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 该日期已被预定，请选择别的日期

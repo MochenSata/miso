@@ -15,6 +15,7 @@
     <title>个人中心</title>
     <link rel="stylesheet" href="../layui/css/layui.css">
     <link rel="stylesheet" href="../css/customer/miso_message.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
     <script src="../js/jquery-3.6.4.min.js"></script>
 
 </head>

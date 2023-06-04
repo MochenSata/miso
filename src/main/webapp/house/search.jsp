@@ -13,11 +13,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>搜索</title>
-    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <link rel="stylesheet" href="../css/house/search.css">
-    <script src="../js/jquery-3.6.4.min.js"></script>
-    <script src="../layui/layui.js"></script>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/house/search.css">
+    <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 <body>
 <!--导航栏nav-->
@@ -25,7 +25,7 @@
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
-                <img src="../img/logo.png"  class="logopic">
+                <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
@@ -36,8 +36,8 @@
                     </form>
                 </div>
             </div>
-            <div class="layui-col-xs1"><a href="../customer/login.jsp" ><span class="login">登录</span></a></div>
-            <div class="layui-col-xs1"><a href="../customer/signup.jsp" ><span class="signup">注册</span></a></div>
+            <div class="layui-col-xs1"><a href="${pageContext.request.contextPath}/customer/login.jsp" ><span class="login">登录</span></a></div>
+            <div class="layui-col-xs1"><a href="${pageContext.request.contextPath}/customer/signup.jsp" ><span class="signup">注册</span></a></div>
 
             <div class="layui-col-xs1">
                 <div class="layui-btn-container">
@@ -45,7 +45,7 @@
                         <div href="" class="personal-btn">
                             <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
                             <div class="personal">
-                                <img src="../img/customer/hengxian.svg" class="hengxian">
+                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
                             </div>
                         </div>
 
@@ -99,7 +99,7 @@
             <div class="line1">
                 <span class="homekind">类型:${SearchHouse.houseKind}</span>
 
-                <img src="../img/index/pingfen.png" class="pingfenico">
+                <img src="${pageContext.request.contextPath}/img/index/pingfen.png" class="pingfenico">
                 <span class="score">${SearchHouse.houseScore}</span>
 
             </div>
@@ -113,8 +113,8 @@
 
 
 
-<script src="../js/house/search.js"></script>
-<script src="../js/jquery-3.6.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/house/search.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
 <script>
 /*    $(".condition").on("click", "button", function(event) {
         // 存放各个条件选择的值

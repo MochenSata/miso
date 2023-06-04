@@ -12,7 +12,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注册</title>
-    <link rel="stylesheet" href="../css/customer/signup.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/signup.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 <div class="web">
@@ -42,8 +43,8 @@
         </div>
     </div>
 
-    <script src="../js/customer/signup.js"></script>
-    <script src="../js/jquery-3.6.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/customer/signup.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
     <script>
         //注册
         $("#signup").click(function(event) {

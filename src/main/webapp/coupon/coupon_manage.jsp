@@ -13,8 +13,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Miso后台管理</title>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <link rel="stylesheet" href="../css/coupon/coupon_manage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/coupon/coupon_manage.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
     <script src="../js/jquery-3.6.4.min.js"></script>
     <script src="../layui/layui.js"></script>
     <script src="../js/moment.js"></script>
@@ -217,7 +218,7 @@
 
     </div>
 </div>
-<script src="../layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     // Function to convert date to local datetime format
     function toLocalDateTime(date) {

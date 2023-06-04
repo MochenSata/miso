@@ -14,6 +14,7 @@
     <title>${serverResult.data.houseName}</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/house/house.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
     <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
     <script type="text/javascript"

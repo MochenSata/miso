@@ -12,11 +12,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 sform: scale(0.5)">
-    <title>Document</title>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <link rel="stylesheet" href="../css/myorder/mypay.css">
-    <script src="../js/jquery-3.6.4.min.js"></script>
-    <script src="../layui/layui.js"></script>
+    <title>确认订单</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myorder/mypay.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
+    <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 
 <body>
@@ -25,7 +26,7 @@
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
-                <img src="../img/logo.png" class="logopic">
+                <img src="${pageContext.request.contextPath}/img/logo.png" class="logopic">
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
@@ -47,9 +48,9 @@
                 <div class="layui-btn-container">
                     <button class="layui-btn layui-btn-primary demo1 personcenter">
                         <div href="" class="personal-btn">
-                            <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
+                            <div class="headshort"><img src="${pageContext.request.contextPath}/img/customer/headshort.svg" alt=""></div>
                             <div class="personal">
-                                <img src="../img/customer/hengxian.svg" class="hengxian">
+                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
                             </div>
                         </div>
 
@@ -67,7 +68,7 @@
     <div class="biaoti">
         <div class="return">
             <a href="">
-                <img class="returnImg" src="../img/myorder/fanhui.png">
+                <img class="returnImg" src="${pageContext.request.contextPath}/img/myorder/fanhui.png">
             </a>
         </div>
         <div class="wenzi">
@@ -162,11 +163,11 @@
                       </div> -->
             <div class="tubiao">
 
-                <img class="t3" src="../img/myorder/zfb.png">
+                <img class="t3" src="${pageContext.request.contextPath}/img/myorder/zfb.png">
             </div>
             <input type="radio" value="zfb" name="zfb" class="zf" checked>
 
-            <img class="zhifubao" src="../img/myorder/zfb.png" />
+            <img class="zhifubao" src="${pageContext.request.contextPath}/img/myorder/zfb.png" />
 
 
 

@@ -12,9 +12,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Miso评价</title>
-  <link rel="stylesheet" href="../layui/css/layui.css">
-  <link rel="stylesheet" href="../css/customer/miso_comment.css">
-  <script src="../js/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customer/miso_comment.css">
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
+  <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 <!--导航栏nav-->
@@ -22,7 +23,7 @@
   <div class="layui-container">
     <div class="layui-row nav">
       <div class="layui-col-xs2 logo">
-        <img src="../img/logo.png"  class="logopic">
+        <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
         <span class="slogn">让旅行更有味道</span>
       </div>
       <div class="layui-col-xs7">
@@ -42,9 +43,9 @@
         <div class="layui-btn-container">
           <button class="layui-btn layui-btn-primary demo1 personcenter">
             <div href="" class="personal-btn">
-              <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
+              <div class="headshort"><img src="${pageContext.request.contextPath}/img/customer/headshort.svg" alt=""></div>
               <div class="personal">
-                <img src="../img/customer/hengxian.svg" class="hengxian">
+                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
               </div>
             </div>
           </button>
