@@ -227,4 +227,14 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
         return ServerResult.success(200,ResultMsg.success,couponReceiveVoList);
     }
 
+    //用户领取的优惠券自动过期，修改状态为状态2：已失效
+    @Override
+    public List<CouponReceive> updateReceivedCouponStatusByDate() {
+        QueryWrapper<CouponReceive> couponReceiveQueryWrapper = new QueryWrapper<>();
+        couponReceiveQueryWrapper.eq("cou_status", 0);//找到未使用的优惠券
+        List<CouponReceive> couponReceiveList = couponReceiveMapper.selectList(couponReceiveQueryWrapper);
+        System.out.println("未使用的优惠券有：" + couponReceiveList);
+        return couponReceiveList;
+    }
+
 }
