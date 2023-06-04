@@ -40,21 +40,21 @@
                     </form> -->
                 </div>
             </div>
-            <div class="layui-col-xs1"><a href="../customer/login.html" ><span class="login"></span></a></div>
-            <div class="layui-col-xs1"><a href="../customer/signup.html" ><span class="signup"></span></a></div>
+<%--            <div class="layui-col-xs1"><a href="../customer/login.html" ><span class="login"></span></a></div>--%>
+<%--            <div class="layui-col-xs1"><a href="../customer/signup.html" ><span class="signup"></span></a></div>--%>
 
             <div class="layui-col-xs1">
-                <div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-primary demo1 personcenter">
-                        <div href="" class="personal-btn">
-                            <div class="headshort"><img src="${pageContext.request.contextPath}/img/customer/headshort.svg" alt=""></div>
-                            <div class="personal">
-                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
-                            </div>
-                        </div>
+<%--                <div class="layui-btn-container">--%>
+<%--                    <button class="layui-btn layui-btn-primary demo1 personcenter">--%>
+<%--                        <div href="" class="personal-btn">--%>
+<%--                            <div class="headshort"><img src="${pageContext.request.contextPath}/img/customer/headshort.svg" alt=""></div>--%>
+<%--                            <div class="personal">--%>
+<%--                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                    </button>
-                </div>
+<%--                    </button>--%>
+<%--                </div>--%>
             </div>
 
 
