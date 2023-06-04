@@ -289,7 +289,7 @@
 
                                 </table>
                             </div>
-                            <!---------------------------------已完成----------------------------------------------------->
+                            <!---------------------------------已完成（未评价，已评价）----------------------------------------------------->
                             <div class="layui-tab-item">
                                 <table>
                                     <tr>
@@ -302,7 +302,7 @@
                                     </tr>
 
                                         <c:forEach items="${result.data}" var="data">
-                                            <c:if test="${data.myorder.myorderStatus==2}">
+                                            <c:if test="${data.myorder.myorderStatus==2 || data.myorder.myorderStatus==3}">
                                             <tr>
                                                 <td>
                                                     <div>
