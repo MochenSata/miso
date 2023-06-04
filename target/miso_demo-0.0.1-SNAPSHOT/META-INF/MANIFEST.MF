@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: 17894
-Build-Jdk: version 1.8.0_251
-Implementation-Title: miso_demo
-Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: com.chixing
-Main-Class: ${start-class}
-
