@@ -111,8 +111,9 @@
                             <li class="order_li"><span class="order_status">已完成</span></li>
                             <li class="order_li"><span class="order_status">已取消</span></li>
                         </ul>
-                        <!----------------------------------全部订单------------------------------------->
+
                         <div class="layui-tab-content" style="height: 100px;">
+                            <!----------------------------------全部订单------------------------------------->
                             <div class="layui-tab-item layui-show">
                                 <table>
                                     <tr>
@@ -158,7 +159,7 @@
                                                             <a href=""><button class="layui-btn order_operate">去支付</button></a>
                                                         </c:if>
                                                         <c:if test="${data.myorder.myorderStatus==2}">
-                                                        <a href="../customer/miso_comment.jsp"><button class="layui-btn order_operate">去评价</button></a>
+                                                            <a href="${pageContext.request.contextPath}/discuss/${data.myorder.houseId}?custId=${data.myorder.custId}&myorderId=${data.myorder.myorderId}"><button class="layui-btn order_operate">去评价</button></a>
                                                         </c:if>
                                                         <c:if test="${data.myorder.myorderStatus>0&&data.myorder.myorderStatus<5}">
 <%--                                                        <a href="${pageContext.request.contextPath}/myorder/miso_order_detail.jsp" class="orderdetaila"><button--%>
