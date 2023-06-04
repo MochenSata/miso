@@ -13,9 +13,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的优惠券</title>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <link rel="stylesheet" href="../css/coupon/miso_coupon.css">
-    <script src="../js/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/coupon/miso_coupon.css">
+    <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
 
 </head>
 
@@ -25,7 +25,9 @@
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
-                <img src="../img/logo.png"  class="logopic">
+                <a href="${pageContext.request.contextPath}">
+                    <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
+                </a>
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
@@ -49,7 +51,7 @@
                         <div href="" class="personal-btn">
                             <div class="headshort"><img src="../img/customer/headshort.svg" alt=""></div>
                             <div class="personal">
-                                <img src="../img/customer/hengxian.svg" class="hengxian">
+                                <img src="${pageContext.request.contextPath}/img/customer/hengxian.svg" class="hengxian">
                             </div>
                         </div>
 
@@ -66,35 +68,35 @@
     <div class="miso_body">
         <div class="miso_main">
             <div class="userT">
-                <a href="" class="aGray">首页</a>
+                <a href="${pageContext.request.contextPath}" class="aGray">首页</a>
                 > 用户中心
             </div>
             <div class="userL">
                 <ul>
                     <li class="userL_li">
-                        <a href="../myorder/miso_order_all.html"><button class="userLBtn">
+                        <a href="" id="myorderall"><button class="userLBtn">
                             <img src="../img/myorder/order.GIF" class="userL_li_pic">
                             <span class="userL_li_text">订单管理</span>
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="../customer/miso_info.html"><button class="userLBtn">
+                        <a href="" id="info"><button class="userLBtn">
                             <img src="../img/myorder/person.GIF" class="userL_li_pic">
                             <span class="userL_li_text">个人信息</span>
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href=""><button class="userLBtn coupon">
+                        <a href="${pageContext.request.contextPath}/coupon/miso_coupon.jsp"><button class="userLBtn coupon">
                             <img src="../img/myorder/coupon.GIF" class="userL_li_pic">
                             <span class="userL_li_text">我的优惠券</span></button></a>
                     </li>
+<%--                    <li class="userL_li">--%>
+<%--                        <a href="../customer/miso_message.html"><button class="userLBtn">--%>
+<%--                            <img src="../img/myorder/message.GIF" class="userL_li_pic">--%>
+<%--                            <span class="userL_li_text">消息提醒</span></button></a>--%>
+<%--                    </li>--%>
                     <li class="userL_li">
-                        <a href="../customer/miso_message.html"><button class="userLBtn">
-                            <img src="../img/myorder/message.GIF" class="userL_li_pic">
-                            <span class="userL_li_text">消息提醒</span></button></a>
-                    </li>
-                    <li class="userL_li">
-                        <a href="../customer/miso_invitation.html"><button class="userLBtn">
+                        <a href="" id="invite-link"><button class="userLBtn">
                             <img src="../img/myorder/invite.gif" class="userL_li_pic">
                             <span class="userL_li_text">邀请码</span></button></a>
                     </li>
@@ -112,11 +114,11 @@
                         <div class="layui-tab-content" style="height: 100px;">
                             <div class="layui-tab-item layui-show" id="validCouList">
 
-                                </div>
-
-
-
                             </div>
+
+
+
+
                             <div class="layui-tab-item">
                                 <table>
                                     <tr>
@@ -284,6 +286,8 @@
 
 <script>
     var custId ;
+    // DOM渲染完成之后执行
+
     getCurrentLoginCustomerInfo();
     //获得当前登录用户信息
     function getCurrentLoginCustomerInfo() {
@@ -297,9 +301,16 @@
             success: function (result) {
                 console.log(result);
                 custId = result.data.custId;
+                // 更新邀请码超链接的URL
+                $('#invite-link').attr('href', "${pageContext.request.contextPath}/myInvitation/" + custId);
+                // 更新个人信息超链接的URL
+                $('#info').attr('href', "${pageContext.request.contextPath}/customer/custInfo/" + custId);
+                // 更新全部订单超链接的URL
+                $('#myorderall').attr('href', "${pageContext.request.contextPath}/myorder/customer/" + custId);
             }
         })
     }
+
 
 
 
@@ -386,7 +397,7 @@
             })
     }
 </script>
-<script src="../layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 
 
 </html>

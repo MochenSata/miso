@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人中心</title>
+    <title>订单管理</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/myorder/miso_order_all.css">
     <script src="${pageContext.request.contextPath}/js/jquery-3.6.4.min.js"></script>
@@ -26,7 +26,9 @@
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
+                <a href="${pageContext.request.contextPath}">
                 <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
+                </a>
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
@@ -64,13 +66,13 @@
     <div class="miso_body">
         <div class="miso_main">
             <div class="userT">
-                <a href="" class="aGray">首页</a>
+                <a href="${pageContext.request.contextPath}" class="aGray">首页</a>
                 > 用户中心
             </div>
             <div class="userL">
                 <ul>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/myorder/miso_order_all.html"><button class="userLBtn orderDetail">
+                        <a href="${pageContext.request.contextPath}/myorder/customer/${result.data[0].myorder.custId}"><button class="userLBtn orderDetail">
                             <img src="${pageContext.request.contextPath}/img/myorder/order.GIF" class="userL_li_pic">
                             <span class="userL_li_text">订单管理</span>
                         </button></a>
@@ -86,11 +88,11 @@
                             <img src="${pageContext.request.contextPath}/img/myorder/coupon.GIF" class="userL_li_pic">
                             <span class="userL_li_text">我的优惠券</span></button></a>
                     </li>
-                    <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/customer/miso_message.jsp"><button class="userLBtn">
-                            <img src="${pageContext.request.contextPath}/img/myorder/message.GIF" class="userL_li_pic">
-                            <span class="userL_li_text">消息提醒</span></button></a>
-                    </li>
+<%--                    <li class="userL_li">--%>
+<%--                        <a href="${pageContext.request.contextPath}/customer/miso_message.jsp"><button class="userLBtn">--%>
+<%--                            <img src="${pageContext.request.contextPath}/img/myorder/message.GIF" class="userL_li_pic">--%>
+<%--                            <span class="userL_li_text">消息提醒</span></button></a>--%>
+<%--                    </li>--%>
                     <li class="userL_li">
                         <a href="${pageContext.request.contextPath}/myInvitation/${result.data[0].myorder.custId}"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/invite.gif" class="userL_li_pic">

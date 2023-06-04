@@ -25,7 +25,9 @@
   <div class="layui-container">
     <div class="layui-row nav">
       <div class="layui-col-xs2 logo">
-        <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
+        <a href="${pageContext.request.contextPath}">
+          <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
+        </a>
         <span class="slogn">让旅行更有味道</span>
       </div>
       <div class="layui-col-xs7">
@@ -66,7 +68,7 @@
   <div class="miso_body">
     <div class="miso_main">
       <div class="userT">
-        <a href="" class="aGray">首页</a>
+        <a href="${pageContext.request.contextPath}" class="aGray">首页</a>
         > 用户中心
       </div>
       <div class="userL">
@@ -84,15 +86,15 @@
             </button></a>
           </li>
           <li class="userL_li">
-            <a href="../coupon/miso_coupon.html"><button class="userLBtn">
+            <a href="../coupon/miso_coupon.jsp"><button class="userLBtn">
               <img src="../img/myorder/coupon.GIF" class="userL_li_pic">
               <span class="userL_li_text">我的优惠券</span></button></a>
           </li>
-          <li class="userL_li">
-            <a href="../customer/miso_message.html"><button class="userLBtn">
-              <img src="../img/myorder/message.GIF" class="userL_li_pic">
-              <span class="userL_li_text">消息提醒</span></button></a>
-          </li>
+<%--          <li class="userL_li">--%>
+<%--            <a href="../customer/miso_message.html"><button class="userLBtn">--%>
+<%--              <img src="../img/myorder/message.GIF" class="userL_li_pic">--%>
+<%--              <span class="userL_li_text">消息提醒</span></button></a>--%>
+<%--          </li>--%>
           <li class="userL_li">
             <a href="${pageContext.request.contextPath}/myInvitation/${result.data.custId}"><button class="userLBtn invitation">
               <img src="../img/myorder/invite.gif" class="userL_li_pic">
