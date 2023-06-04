@@ -120,7 +120,8 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         updateWrapper.set("cust_name", customer.getCustName())
                 .set("cust_desc", customer.getCustDesc())
                 .set("cust_email", customer.getCustEmail())
-                .set("cust_gender", customer.getCustGender());
+                .set("cust_gender", customer.getCustGender())
+                .set("cust_update_time",LocalDateTime.now());
         int rows = customerMapper.update(customer,updateWrapper);
         System.out.println(rows);
         if (rows>0)
