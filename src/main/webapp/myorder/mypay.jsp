@@ -329,8 +329,77 @@
 
 <script src="../js/myorder/mypay.js"></script>
 <script>
+    //进入界面自动选择日期
+    var startdateEle =$("#test-startDate-1").val();
+    var enddateEle =$("#test-endDate-1").val();
+    var startDate1=new Date(startdateEle);
+    var endDate1=new Date(enddateEle);
+    $("#custEndDate").val(enddateEle);
+    $("#custStartDate").val(startdateEle);
+    autoSelectData();
+    function autoSelectData(){
+        var startDayOfWeek = startDate1.getDay();
+        var endDayOfWeek = endDate1.getDay();
+        var totalPrice = 0;
+        var dayOfWeekText = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+        var holidayList = ['2023-01-01','2023-01-02', '2023-01-03', '2023-04-04','2023-04-05','2023-04-06',
+            '2023-05-01',
+            '2023-05-02',
+            '2023-05-03',
+            '2023-04-29',
+            '2023-04-30',
+            '2023-09-29',
+            '2023-09-30',
+            '2023-10-01',
+            '2023-10-02',
+            '2023-10-03',
+            '2023-10-04',
+            '2023-10-05',
+            '2023-10-06',]; // 假期列表
+        for (var d=startDate1;d<endDate1;d.setDate(d.getDate()+1)){
+            var dayOfWeek=d.getDay();
+            var isWeekend = (dayOfWeek === 6 || dayOfWeek === 0);
+            var isHoliday =(holidayList.indexOf(d.toISOString().substr(0, 10)) !== -1) ;
+            var originalPrice=document.querySelector(".danjia")
+            var priceText =originalPrice.textContent.trim();
+            if (/^\d+(\.\d+)?$/.test(priceText)){
+                var price = parseFloat(priceText);
+                var priceMultiplier = 1;
+                if (isWeekend) {
+                    if (dayOfWeek === 6) {
+                        priceMultiplier = 1.5;
+                    } else if (dayOfWeek === 0) {
+                        priceMultiplier = 1.5;
+                    }
+                }
+                if (isHoliday) {
+                    priceMultiplier = 2;
+                }
+                var dynamicPrice = price * priceMultiplier;
+                console.log(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + dayOfWeekText[dayOfWeek] + ' 价格：' + dynamicPrice);
+                console.log('星期' + dayOfWeek);
+                totalPrice += dynamicPrice;
+            } else {
+                console.error('房价格式不正确：' + priceText);
+            }
+        }
+        console.log('总价格：' + totalPrice);
+        console.log(dynamicPrice);
+        console.log(price);
+        console.log('是否为周末：' + isWeekend);
+        console.log('是否为假期：' + isHoliday);
+        console.log("起始日期是"+dayOfWeekText[startDayOfWeek]);
+        console.log("结束日期是"+dayOfWeekText[endDayOfWeek]);
 
 
+        var resultElement =document.getElementById("result");
+        resultElement.innerHTML=totalPrice;
+        $('#myElement').zongjia();
+    }
+
+
+
+    //
     var notcheckdate = []
     var id='${orderCountAndDataVO.houseId}';
     getHouseDate(id);
