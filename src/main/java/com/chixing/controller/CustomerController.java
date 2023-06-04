@@ -102,6 +102,7 @@ public class CustomerController {
                 customer1.setCustTelno(usertelno);
                 customer1.setCustCreateTime(LocalDateTime.now());
                 customer1.setCustInviteNum(inviteNum);
+                customer1.setStatus(1);//设置邀请码状态为1：未使用
 
 //        String encruserpwd = Md5Utils.code(userpwd);
                 boolean rows = service.save(customer1);
