@@ -4,6 +4,8 @@ import com.chixing.pojo.CouponReceive;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chixing.util.ServerResult;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -30,4 +32,7 @@ public interface ICouponReceiveService extends IService<CouponReceive> {
 
     //查询用户拥有的所有优惠券（所有状态：0：未使用，1：已使用，2：已过期）
     public ServerResult getAllCouponByCustId(Integer custId);
+
+    //用户领取的优惠券自动过期，修改状态为状态2：已过期
+    public List<CouponReceive> updateReceivedCouponStatusByDate();
 }
