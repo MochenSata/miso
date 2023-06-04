@@ -73,13 +73,13 @@
             <div class="userL">
                 <ul>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/myorder/customer/${result.data[0].myorder.custId}"><button class="userLBtn orderDetail">
+                        <a href="" id="myorderall"><button class="userLBtn orderDetail">
                             <img src="${pageContext.request.contextPath}/img/myorder/order.GIF" class="userL_li_pic">
                             <span class="userL_li_text">订单管理</span>
                         </button></a>
                     </li>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/customer/custInfo/${result.data[0].myorder.custId}"><button class="userLBtn">
+                        <a href="" id="info"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/person.GIF" class="userL_li_pic">
                             <span class="userL_li_text">个人信息</span>
                         </button></a>
@@ -95,7 +95,7 @@
 <%--                            <span class="userL_li_text">消息提醒</span></button></a>--%>
 <%--                    </li>--%>
                     <li class="userL_li">
-                        <a href="${pageContext.request.contextPath}/myInvitation/${result.data[0].myorder.custId}"><button class="userLBtn">
+                        <a href="" id="invite-link"><button class="userLBtn">
                             <img src="${pageContext.request.contextPath}/img/myorder/invite.gif" class="userL_li_pic">
                             <span class="userL_li_text">邀请码</span></button></a>
                     </li>
@@ -408,7 +408,34 @@
 <div id="invitationMsg"></div>
 </body>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+<script>
+    var custId ;
 
+    getCurrentLoginCustomerInfo();
+    //获得当前登录用户信息
+    function getCurrentLoginCustomerInfo() {
+        var tokenStr = localStorage.getItem("token");
+        var token = JSON.parse(tokenStr);
+        console.log("从localStorage 中获得的token是：" + token);
+        $.ajax({
+            type: "get",
+            url: "/miso/customer/currentCustomer",
+            headers: {'token': token},
+            success: function (result) {
+                console.log(result);
+                custId = result.data.custId;
+                getCustId(custId);
+                // 更新邀请码超链接的URL
+                $('#invite-link').attr('href', "${pageContext.request.contextPath}/myInvitation/" + custId);
+                // 更新个人信息超链接的URL
+                $('#info').attr('href', "${pageContext.request.contextPath}/customer/custInfo/" + custId);
+                // 更新全部订单超链接的URL
+                $('#myorderall').attr('href', "${pageContext.request.contextPath}/myorder/customer/" + custId);
+            }
+        })
+    }
+
+</script>
 
 <script>
     //居中弹框
@@ -510,13 +537,15 @@
 
 </script>
 <script type="text/javascript">
+    function getCustId(custId) {
+
     $(function(){
         var ws;
         //检测浏览器是否支持webSocket
         if("WebSocket" in window){
             console.log("您的浏览器支持webSocket!");
             //模拟产生clientID
-            let clientID =${result.data[0].myorder.custId};
+            let clientID =custId;
             console.log(clientID)
             //创建 WebSocket 对象,注意请求路径！！！！
             ws = new WebSocket("ws://localhost:8080/miso/testWebSocket/"+clientID);
@@ -553,5 +582,6 @@
             $("#invitationMsg").html("您的浏览器不支持webSocket！");
         }
     })
+    }
 </script>
 </html>

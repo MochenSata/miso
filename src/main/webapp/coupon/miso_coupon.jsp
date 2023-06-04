@@ -167,10 +167,9 @@
     </div>
 </div>
 </body>
-
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     var custId ;
-    // DOM渲染完成之后执行
 
     getCurrentLoginCustomerInfo();
     //获得当前登录用户信息
@@ -361,7 +360,7 @@
     }
 
 </script>
-<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+
 
 
 </html>
