@@ -681,11 +681,13 @@
 .left .fkBtn{
     width: 150px;
     height: 55px;
-    background-color: #E00B41; 
+    background-color: #E00B41;
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     margin-top: 10px;
+    font-size: 16px;
 }
 .left .Btnziti{
     font-size: 16px;
