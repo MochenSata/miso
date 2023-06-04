@@ -26,7 +26,9 @@
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
-                <img src="${pageContext.request.contextPath}/img/logo.png" class="logopic">
+                <a href="${pageContext.request.contextPath}">
+                    <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
+                </a>
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
@@ -67,7 +69,7 @@
 <div class="main">
     <div class="biaoti">
         <div class="return">
-            <a href="">
+            <a href="${pageContext.request.contextPath}/house/${orderCountAndDataVO.houseId}">
                 <img class="returnImg" src="${pageContext.request.contextPath}/img/myorder/fanhui.png">
             </a>
         </div>

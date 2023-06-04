@@ -30,7 +30,9 @@
     <div class="layui-container">
         <div class="layui-row nav">
             <div class="layui-col-xs2 logo">
-                <img src="img/logo.png"  class="logopic">
+                <a href="${pageContext.request.contextPath}">
+                    <img src="${pageContext.request.contextPath}/img/logo.png"  class="logopic">
+                </a>
                 <span class="slogn">让旅行更有味道</span>
             </div>
             <div class="layui-col-xs7">
