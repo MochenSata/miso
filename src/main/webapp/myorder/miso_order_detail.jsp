@@ -32,21 +32,21 @@
         </a>
         <span class="slogn">让旅行更有味道</span>
       </div>
-      <div class="layui-col-xs7">
-        <div class="search-area">
-          <!-- <form action="">
-            <input type="text" placeholder="请输入目的地">
-            <input type="button" value="搜索">
-          </form> -->
-        </div>
-      </div>
-      <div class="layui-col-xs1"><a href=""><span class="login">登录</span></a></div>
-      <div class="layui-col-xs1"><a href=""><span class="signup">注册</span></a></div>
-      <!-- <div class="layui-col-xs1"><div class="headshort"><img src="" alt=""></div> </div> -->
-      <div class="layui-col-xs1"><a href="" class="personal-btn">
-        <div class="headshort"><img src="" alt=""></div>
-        <span class="personal"> 个人中心</span>
-      </a></div>
+<%--      <div class="layui-col-xs7">--%>
+<%--        <div class="search-area">--%>
+<%--          <!-- <form action="">--%>
+<%--            <input type="text" placeholder="请输入目的地">--%>
+<%--            <input type="button" value="搜索">--%>
+<%--          </form> -->--%>
+<%--        </div>--%>
+<%--      </div>--%>
+<%--      <div class="layui-col-xs1"><a href=""><span class="login">登录</span></a></div>--%>
+<%--      <div class="layui-col-xs1"><a href=""><span class="signup">注册</span></a></div>--%>
+<%--      <!-- <div class="layui-col-xs1"><div class="headshort"><img src="" alt=""></div> </div> -->--%>
+<%--      <div class="layui-col-xs1"><a href="" class="personal-btn">--%>
+<%--        <div class="headshort"><img src="" alt=""></div>--%>
+<%--        <span class="personal"> 个人中心</span>--%>
+<%--      </a></div>--%>
     </div>
   </div>
 </div>
