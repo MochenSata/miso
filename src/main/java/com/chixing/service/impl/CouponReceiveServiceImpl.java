@@ -43,6 +43,7 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
     @Autowired
     private WebSocketProcess webSocketProcess;
 
+    //查询用户已领取，可用的优惠券（状态为：0）
     @Override
     public ServerResult getCouponByCustId(Integer custId) {
         List<CouponReceiveVo> couponReceiveVoList = new ArrayList<>();
@@ -169,6 +170,7 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
         }
     }
 
+    //用户领取优惠券
     @Override
     public ServerResult receiveCoupon(Integer custId,Integer couId) {
         QueryWrapper<CouponReceive> receiveQueryWrapper= new QueryWrapper<>();
@@ -198,4 +200,31 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
 
 
     }
+
+    //查询用户拥有的所有优惠券（所有状态：0：未使用，1：已使用，2：已过期）
+    @Override
+    public ServerResult getAllCouponByCustId(Integer custId) {
+        List<CouponReceiveVo> couponReceiveVoList = new ArrayList<>();
+        QueryWrapper<CouponReceive> wrapper = new QueryWrapper<>();
+        wrapper.eq("cust_id",custId);//根据用户Id查询其所有的优惠券
+        List<CouponReceive> couponReceiveList = couponReceiveMapper.selectList(wrapper);
+        if(couponReceiveList.size()==0) {
+            return ServerResult.fail(201, ResultMsg.no_data, "没有可用优惠券");
+        }
+        for (CouponReceive couponReceive:couponReceiveList){
+            QueryWrapper<Coupon> couponQueryWrapper = new QueryWrapper<>();
+            couponQueryWrapper.eq("cou_id",couponReceive.getCouId());
+            System.out.println("couId:"+couponReceive.getCouId());
+            Coupon coupon = couponMapper.selectOne(couponQueryWrapper);
+            System.out.println("coupon:"+coupon);
+            CouponReceiveVo couponReceiveVo = new CouponReceiveVo();
+            couponReceiveVo.setCoupon(coupon);
+            couponReceiveVo.setCouponReceive(couponReceive);
+            couponReceiveVoList.add(couponReceiveVo);
+
+        }
+        System.out.println("couponReceiveVoList:"+couponReceiveVoList);
+        return ServerResult.success(200,ResultMsg.success,couponReceiveVoList);
+    }
+
 }

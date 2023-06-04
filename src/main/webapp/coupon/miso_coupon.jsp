@@ -113,15 +113,13 @@
                             <li class="user_cou">过期优惠券</li>
                         </ul>
                         <div class="layui-tab-content" style="height: 100px;">
+                            <!----------------------------------领取优惠券------------------------------------->
                             <div class="layui-tab-item layui-show" id="validCouList">
 
                             </div>
-
-
-
-
+                            <!----------------------------------可用优惠券------------------------------------->
                             <div class="layui-tab-item">
-                                <table>
+                                <table class="usable">
                                     <tr>
                                         <td class="cou_id">序号</td>
                                         <td class="cou_name">优惠券名称</td>
@@ -130,50 +128,12 @@
                                         <td class="cou_get">领取时间</td>
                                         <td class="cou_over">截至日期</td>
                                     </tr>
-                                    <tr>
-                                        <td>4001</td>
-                                        <td>新人券_10元</td>
-                                        <td>新人券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4002</td>
-                                        <td>满减券_10元</td>
-                                        <td>满减券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4003</td>
-                                        <td>假日券_10元</td>
-                                        <td>假日券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4004</td>
-                                        <td>分享券_10元</td>
-                                        <td>分享券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4005</td>
-                                        <td>满减券_50元</td>
-                                        <td>满减券</td>
-                                        <td>￥50元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
+
                                 </table>
                             </div>
+                            <!----------------------------------已用优惠券------------------------------------->
                             <div class="layui-tab-item">
-                                <table>
+                                <table class="used">
                                     <tr>
                                         <td class="cou_id">序号</td>
                                         <td class="cou_name">优惠券名称</td>
@@ -182,50 +142,12 @@
                                         <td class="cou_get">领取时间</td>
                                         <td class="cou_use">使用日期</td>
                                     </tr>
-                                    <tr>
-                                        <td>4001</td>
-                                        <td>新人券_10元</td>
-                                        <td>新人券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4002</td>
-                                        <td>满减券_10元</td>
-                                        <td>满减券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4003</td>
-                                        <td>假日券_10元</td>
-                                        <td>假日券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4004</td>
-                                        <td>分享券_10元</td>
-                                        <td>分享券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4005</td>
-                                        <td>满减券_50元</td>
-                                        <td>满减券</td>
-                                        <td>￥50元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
+
                                 </table>
                             </div>
+                            <!----------------------------------过期优惠券------------------------------------->
                             <div class="layui-tab-item">
-                                <table>
+                                <table class="expired">
                                     <tr>
                                         <td class="cou_id">序号</td>
                                         <td class="cou_name">优惠券名称</td>
@@ -234,46 +156,7 @@
                                         <td class="cou_get">领取时间</td>
                                         <td class="cou_over">截至日期</td>
                                     </tr>
-                                    <tr>
-                                        <td>4001</td>
-                                        <td>新人券_10元</td>
-                                        <td>新人券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4002</td>
-                                        <td>满减券_10元</td>
-                                        <td>满减券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4003</td>
-                                        <td>假日券_10元</td>
-                                        <td>假日券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4004</td>
-                                        <td>分享券_10元</td>
-                                        <td>分享券</td>
-                                        <td>￥10元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4005</td>
-                                        <td>满减券_50元</td>
-                                        <td>满减券</td>
-                                        <td>￥50元</td>
-                                        <td>2023-01-01 00:00:00</td>
-                                        <td>2023-12-31 23:59:59</td>
-                                    </tr>
+
                                 </table>
                             </div>
                         </div>
@@ -308,6 +191,8 @@
                 $('#info').attr('href', "${pageContext.request.contextPath}/customer/custInfo/" + custId);
                 // 更新全部订单超链接的URL
                 $('#myorderall').attr('href', "${pageContext.request.contextPath}/myorder/customer/" + custId);
+                //加载全部优惠券
+                loadAllReceivedCoupons();
             }
         })
     }
@@ -397,6 +282,84 @@
                 $("#validCouList").html(couHtml);
             })
     }
+
+    //查询用户拥有的所有优惠券
+    function loadAllReceivedCoupons(){
+        var url = "${pageContext.request.contextPath}/coupon/receivedall/"+custId;
+        var counn1="";
+        var counn2="";
+        var counn3="";
+        $.get(url
+            ,null
+            , function (result){
+                console.log(result);
+                console.log(JSON.stringify(result));
+                var receicedallcouList=result.data;//存放优惠券的集合
+                console.log(receicedallcouList)
+
+                for(var i=0;i<receicedallcouList.length;i++){
+                    var couId=receicedallcouList[i].couponReceive.couDetailId;
+                    console.log(couId)
+                    var couName=receicedallcouList[i].coupon.couName;
+                    console.log(couName)
+                    var couCategory=receicedallcouList[i].coupon.couCategory;
+                    var couPrice=receicedallcouList[i].coupon.couPrice;
+                    var couReceivedTime=receicedallcouList[i].couponReceive.couReceiveTime;//领取时间
+                    var couUseTime=receicedallcouList[i].couponReceive.couUseTime;//使用时间
+                    var couEndTime=receicedallcouList[i].couponReceive.couEndTime;//截至时间
+                    var couUsageStatus=receicedallcouList[i].couponReceive.couUsageStatus;//优惠券使用状态
+                    console.log(couUsageStatus)
+
+                    if (couUsageStatus === 0){//可使用优惠券
+                        var couHtml1 =
+                            '<tr>'+
+                            '<td>' + couId + '</td>'+
+                            '<td>' + couName + '</td>'+
+                            '<td>' + couCategory + '</td>'+
+                            '<td>' + '￥' + couPrice + '</td>'+
+                            '<td>' + couReceivedTime + '</td>'+
+                            '<td>' + couEndTime + '</td>'+
+                            '</tr>';
+                        counn1=counn1+couHtml1;
+                        // $('.usable').find('tbody').append(tr);// 将查询到的每个优惠券数据添加到表格中
+                    }
+
+                    if (couUsageStatus === 1){//已使用优惠券
+                        var couHtml2 =
+                            '<tr>'+
+                            '<td>' + couId + '</td>'+
+                            '<td>' + couName + '</td>'+
+                            '<td>' + couCategory + '</td>'+
+                            '<td>' + '￥' + couPrice + '</td>'+
+                            '<td>' + couReceivedTime + '</td>'+
+                            '<td>' + couUseTime + '</td>'+
+                            '</tr>';
+                        counn2=counn2+couHtml2;
+                        // $('.used').find('tbody').append(tr);// 将查询到的每个优惠券数据添加到表格中
+                    }
+
+                    if (couUsageStatus === 2){//已过期优惠券
+                        var couHtml3=
+                            '<tr>'+
+                            '<td>' + couId + '</td>'+
+                            '<td>' + couName + '</td>'+
+                            '<td>' + couCategory + '</td>'+
+                            '<td>' + '￥' + couPrice + '</td>'+
+                            '<td>' + couReceivedTime + '</td>'+
+                            '<td>' + couEndTime + '</td>'+
+                            '</tr>';
+                        // $('.expired').find('tbody').append(tr);// 将查询到的每个优惠券数据添加到表格中
+                        counn3=counn3+couHtml3;
+                    }
+                }
+
+                $(".usable").append(counn1)
+                $(".used").append(counn2)
+                $(".expired").append(counn3)
+            }
+        )
+    }
+
 </script>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 

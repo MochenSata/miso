@@ -32,12 +32,14 @@ public class CouponController {
     @Autowired
     private AmqpTemplate rabbitTemplate;
 
+    //查询所有可领取的优惠券
     @GetMapping("/coupon/all")
     @ResponseBody
     public ServerResult getAllValidCoupon(){
             return couponService.getAllValidCoupon();
     }
 
+    //用户领取优惠券
     @PostMapping("/coupon/receive")
     @ResponseBody
     public ServerResult receiveCoupon(@RequestParam("couponId") Integer couId,
@@ -48,9 +50,7 @@ public class CouponController {
 
     }
 
-
-
-
+    //查询用户已领取，可用的优惠券（状态为：0）
     @GetMapping("/coupon/{id}")
     @ResponseBody
     public ServerResult getCustomerCoupon(@PathVariable("id") Integer custId){
@@ -59,6 +59,8 @@ public class CouponController {
         System.out.println(coupon);
         return coupon;
     }
+
+    //优惠券平台发布优惠券
     @PostMapping("/coupon/save")
     @ResponseBody
     public ServerResult saveCoupon(@RequestParam("couName") String couName,
@@ -150,6 +152,17 @@ public class CouponController {
         ServerResult result = couponService.deleteCouponByCouId(couId);
         System.out.println("要删除的优惠券为：" + result);
         return result;
+    }
+
+    //查询用户拥有的所有优惠券
+    @GetMapping("/coupon/receivedall/{id}")
+    @ResponseBody
+    public ServerResult getAllCouponByCustId(@PathVariable("id") Integer custId){
+        System.out.println("当前用户的custId:"+custId);
+        ServerResult coupon = iCouponReceiveService.getAllCouponByCustId(custId);
+        System.out.println("用户拥有的所有优惠券为：" + coupon);
+        return coupon;
+
     }
 
 
