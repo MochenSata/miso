@@ -235,6 +235,7 @@
                         var laydate = layui.laydate;
                         const rangeDate = laydate.render({
                             elem: '#test6'
+                            ,min:new Date().toDateString()
                             , range: ['#test-startDate-1', '#test-endDate-1'],
                             ready: function(){
 

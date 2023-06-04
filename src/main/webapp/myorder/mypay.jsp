@@ -418,6 +418,7 @@
                     var laydate = layui.laydate;
                     laydate.render({
                         elem: '#test6'
+                        ,min:new Date().toDateString()
                         //设置开始日期、日期日期的 input 选择器
                         //数组格式为 2.6.6 开始新增，之前版本直接配置 true 或任意分割字符即可
                         , range: true,
