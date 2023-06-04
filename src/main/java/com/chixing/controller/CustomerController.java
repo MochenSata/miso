@@ -66,11 +66,23 @@ public class CustomerController {
         }
     }
 
+    //获得当前用户的token
     @GetMapping("currentCustomer")
     @ResponseBody
     public ServerResult getLoginCustomer(@RequestHeader("token") String token){
         System.out.println("从客户端获得的token是：" + token);
         return  service.getCustomerByToken(token);
+    }
+
+    //用户退出登录
+    @GetMapping("logout/{token}")
+    @ResponseBody
+    public ModelAndView logout(@PathVariable("token") String token){
+        System.out.println("从客户端获得的token是：" + token);
+        ServerResult result= service.deleteToken(token);
+        ModelAndView mav=new ModelAndView();
+        mav.setViewName("redirect:/index.jsp");
+        return mav;
     }
 
     /**

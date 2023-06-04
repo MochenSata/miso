@@ -600,7 +600,7 @@
                                 ,href:"${pageContext.request.contextPath}/myorder/customer/"+id
                             },{
                                 title: '退出登录'
-                                ,href:""
+                                ,href:"${pageContext.request.contextPath}/customer/logout/"+token
                             }]
                             ,click: function(obj){
                                 window.location.href = obj.href;

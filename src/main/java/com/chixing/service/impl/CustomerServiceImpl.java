@@ -38,7 +38,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
     private RedisTemplate<String,Object> redisTemplate;
 
 
-
+    //登录时验证 用户名、密码是否有效
     @Override
     public ServerResult getCustomerByTelnoAndPwd(Long custTelno, String custPwd) {
         LambdaQueryWrapper<Customer> queryWrapper = new LambdaQueryWrapper<>();
@@ -62,6 +62,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
      * 2. 若检验失败，返回错误
      * 3. 若检验成功，则返回登录用户信息 LoginCustomer
      */
+    //获得当前用户的token
     @Override
     public ServerResult getCustomerByToken(String token) {
         LoginCustomer loginCustomer = checkToken(token);
@@ -90,6 +91,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         }
     }
 
+    //根据手机号查询用户数是否注册
     @Override
     public ServerResult isregisterdeBytelno(Long usertelno) {
         QueryWrapper<Customer> wrapper = new QueryWrapper<>();
@@ -127,5 +129,12 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
         if (rows>0)
             return ServerResult.success(200, ResultMsg.success,customer);
         return ServerResult.fail(201, ResultMsg.fail,false);
+    }
+
+    //退出登录（清除对应用户的token）
+    @Override
+    public ServerResult deleteToken(String token) {
+        redisTemplate.delete("token_" + token);
+        return ServerResult.success(200,ResultMsg.success,token);
     }
 }
