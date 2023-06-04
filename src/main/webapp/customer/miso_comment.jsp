@@ -90,7 +90,7 @@
         <div class="comment-titleline">
           <span class="comment-title">期待您的评价</span>
         </div>
-        <form action="${pageContext.request.contextPath}/goComment" method="post">
+        <form action="${pageContext.request.contextPath}/goComment" method="post" class="order-form">
           <div class="comment-score">
             <span class="score-words">您的评分:</span>
             <div id="score-box"><div class="score-sc"></div></div>
@@ -210,23 +210,14 @@
 </script>
 <script>
 
-  document.addEventListener("DOMContentLoaded", function() {
-    var form = document.getElementsByClassName("order-form")[0];
-    form.addEventListener("submit", function(event) {
-      event.preventDefault(); // 阻止表单的默认提交行为
+  $('.order-form').submit(function(event) {
+    const textarea = $('.textarea');
+    const comScore = $('#comScore');
 
-      var tokenStr = localStorage.getItem("token");
-      var token = JSON.parse(tokenStr);
-      console.log(token);
-
-      if (token) {
-        // 已登录状态，直接执行表单的提交行为
-        form.submit();
-      } else {
-        // 未登录状态，弹出提示框
-        alert("你未登录");
-      }
-    });
+    if (!textarea.val() || !comScore.val()) {
+      event.preventDefault(); // 阻止表单提交
+      alert('请填写评价内容并评分后再提交！');
+    }
   });
 </script>
 
