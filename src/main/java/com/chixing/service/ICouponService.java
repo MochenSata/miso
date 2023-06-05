@@ -26,6 +26,9 @@ public interface ICouponService extends IService<Coupon> {
 
     public ServerResult getAllValidCoupon();
 
+    //定时发布
+    public void saveHolidayCoupons();
+
     //优惠券自动过期,修改优惠券状态为1：已失效
     public List<Coupon> updateCouponStatusByDate();
 }
