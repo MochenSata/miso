@@ -1,39 +1,50 @@
-# Miso项目
+# Miso民宿
 
-#### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+##### Miso:从民宿的拼音缩写而来，也是一个日文单词，意思是味噌汤，寓意民宿可以提供美味的食物和温暖的服务。
+
+## 介绍
+
+```
+Miso是一个专注于提供特色民宿的网站，让你在旅行中感受当地的风土人情和美食文化。无论你想要住在山间小屋、海边别墅、城市公寓还是乡村农庄，Miso都能为你找到合适的民宿主人，让你享受温馨舒适的住宿体验。Miso不仅是一个预订平台，更是一个交流平台，你可以分享你的生活故事和旅行心得。Miso，让旅行变得更有味道。
+```
 
 #### 软件架构
-软件架构说明
 
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
+基于SpringBoot进行开发，数据库采用Mysql8
 
 #### 参与贡献
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+1. Fork 本仓库
 
+2. 新建 Feat_xxx 分支
+
+3. 提交代码
+
+4. 新建 Pull Request
+
+   贡献者：
+
+   项目组长：ChenSurp
+
+   管理员：Tianbu1a、qjc、lxh、fyj
 
 #### 特技
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. 项目地址：git@gitee.com:miso-project-team/miso.git
+
+建表时注意
+
+```
+1. "删除" --  修改状态 status
+
+2. 订单表(或 订单详情表 ) 要有商品的信息 
+
+   为了防止 商品下架或失效之后, 在可以订单列表中继续看到原来的商品部分信息
+
+   在点击查看商品详情的时候, 商品就已经下架或过期
+
+3. 每张表加上这几个字段:
+
+   create_time , update_time, status , version , other1, other2
+```
+
