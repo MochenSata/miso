@@ -386,5 +386,52 @@
     }
 
 </script>
+<div id="invitationMsg"></div>
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function() {
+            var ws;
+            //检测浏览器是否支持webSocket
+            if("WebSocket" in window){
+                console.log("您的浏览器支持webSocket!");
+
+                let clientID =$("#custId").text();
+                console.log(clientID)
+                //创建 WebSocket 对象,注意请求路径！！！！
+                ws = new WebSocket("ws://localhost:8080/miso/testWebSocket/"+clientID);
+
+                //与服务端建立连接时触发
+                ws.onopen = function(){
+                    //模拟发送数据到服务器
+                    ws.send("你好服务端！我是客户端 ");
+                }
+
+                //接收到服务端消息时触发
+                ws.onmessage = function (evt) {
+                    let received_msg = evt.data;
+                    var invitationMsg = $("#invitationMsg");
+                    invitationMsg.css("display", "block");
+                    invitationMsg.text(received_msg);
+
+                    setTimeout(function() {
+                        invitationMsg.css("opacity", "0");
+                        setTimeout(function() {
+                            invitationMsg.css("display", "none");
+                            invitationMsg.css("opacity", "1");
+                        }, 500);
+                    }, 5000);
+                };
+
+                //服务端关闭连接时触发
+                ws.onclose = function() {
+                    console.error("连接已经关闭.....")
+                };
+            }else{
+                $("#invitationMsg").html("您的浏览器不支持webSocket！");
+            }
+        }, 3000); // 延时加载时间，单位为毫秒
+    });
+
+</script>
 </body>
 </html>

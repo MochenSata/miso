@@ -84,9 +84,16 @@ public class CouponController {
         coupon.setCouValidTime(couValidTime);
         coupon.setCouInvalidTime(couInvalidTime);
         boolean result=couponService.save(coupon);
-        if (result)
+        if (result){
+            Map<String ,Object> map = new HashMap<>();
+            map.put("couName",couName);
+            rabbitTemplate.convertAndSend("CouponWsExchange","CouponWsKey",map,message ->{
+                return  message;
+            });
             return ServerResult.success(200,"新增优惠券成功",true);
-        return ServerResult.fail(201,"新增优惠券失败",false);
+        }else {
+            return ServerResult.fail(201,"新增优惠券失败",false);
+        }
     }
 
     //邀请码页面
