@@ -51,6 +51,7 @@
             event.preventDefault(); // 阻止默认提交行为
             var input_usertelno = $(".usertelno").val();
             var input_userpwd = $(".userpwd").val();
+            var input_verification = $("#verification").val();
 
             // ajax提交用户名+密码到后台程序
             $.ajax({
@@ -58,7 +59,8 @@
                 type: "POST",
                 data: {
                     usertelno: input_usertelno,
-                    userpwd: input_userpwd
+                    userpwd: input_userpwd,
+                    verification:input_verification
                 },
                 success:function(rows) {
                     console.log(rows)
