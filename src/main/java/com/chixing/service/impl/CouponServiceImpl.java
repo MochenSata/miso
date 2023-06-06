@@ -77,7 +77,7 @@ public class CouponServiceImpl extends ServiceImpl<CouponMapper, Coupon> impleme
     public ServerResult getAllValidCoupon() {
         QueryWrapper<Coupon> wrapper = new QueryWrapper<>();
         wrapper.eq("cou_status", "0");
-        wrapper.eq("cou_category", "满减券");
+        wrapper.eq("cou_category", "满减券").or().eq("cou_category","假日券");
         wrapper.lt("cou_valid_time", LocalDateTime.now());
         wrapper.gt("cou_invalid_time", LocalDateTime.now());
         List<Coupon> couponList = couponMapper.selectList(wrapper);
