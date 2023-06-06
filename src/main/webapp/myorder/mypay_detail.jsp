@@ -137,10 +137,10 @@
                 <div class="form">
                     <form action="${pageContext.request.contextPath}/pay/alipay" method="post">
                         <input type="hidden" value="${myorderDetailVO.custId}" name="custId">
-                        <input type="hidden" value="${myorderDetailVO.myorderId}" name="myorderId">
+                        <input type="hidden" id="myorderId" value="" name="myorderId">
                         <input type="hidden" value="${myorderDetailVO.orderCountAndDataVO.houseId}" name="houseId">
                         <input type="hidden" value="${myorderDetailVO.orderCountAndDataVO.houseName}" name="houseName">
-                        <input type="hidden" value="${myorderDetailVO.getMyorderNum()}" name="myorderNum">
+                        <input type="hidden" id="myorderNum" value="${myorderDetailVO.getMyorderNum()}" name="myorderNum">
                         <input type="hidden" value="${myorderDetailVO.myorderPrice}" name="myorderPrice">
                         <input type="submit" value="支付" class="quzhifu">
                     </form>
@@ -164,6 +164,30 @@
                 $(".repeattoken").val(result)
             }
         })
+    }
+</script>
+
+<script>
+    MyorderByOrderNum();
+    function MyorderByOrderNum() {
+        var myorderNum = $('#myorderNum').val();
+        $.ajax({
+            type: "GET",
+            url: "${pageContext.request.contextPath}/myorder/" + myorderNum,
+
+            success: function (result) {
+                if (result.code === 200) {
+                    console.log(result.code);
+                    $('#myorderId').val(result.data.myorderId);
+                }else {
+                    console.log(result.data);
+                    window.location.href = "fail.jsp";
+                }
+            },
+            error: function (result) {
+
+            }
+        });
     }
 </script>
 

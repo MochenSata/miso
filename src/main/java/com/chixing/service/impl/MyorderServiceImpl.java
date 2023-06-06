@@ -180,15 +180,14 @@ public class MyorderServiceImpl extends ServiceImpl<MyorderMapper, Myorder> impl
             //存储到订单表
             Myorder myorder = new Myorder();
             myorder.setCustId(myorderDetailVO.getCustId());
-            String myorderNum = UUID.randomUUID().toString().replace("-", "");
-            myorderDetailVO.setMyorderNum(myorderNum);
+            String myorderNum =myorderDetailVO.getMyorderNum();
             myorder.setMyorderNum(myorderNum);
             myorder.setHouseId(myorderDetailVO.getOrderCountAndDataVO().getHouseId());
             myorder.setHouseName(myorderDetailVO.getOrderCountAndDataVO().getHouseName());
             myorder.setHouseMainpicture(myorderDetailVO.getOrderCountAndDataVO().getHouseMainpicture());
             myorder.setHousePrice(myorderDetailVO.getOrderCountAndDataVO().getHousePrice());
             myorder.setMyorderCreateTime(LocalDateTime.now());
-            if (myorderDetailVO.getCouNum() != null && myorderDetailVO.getCouNum() !="") {
+            if (myorderDetailVO.getCouNum() != null && !(myorderDetailVO.getCouNum().isEmpty())) {
                 myorder.setCouNum(myorderDetailVO.getCouNum());
                 myorder.setCouPrice(myorderDetailVO.getCouPrice());
                 QueryWrapper<CouponReceive> wrapper = new QueryWrapper<>();

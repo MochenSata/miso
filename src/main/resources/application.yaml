@@ -7,7 +7,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/misodb?serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/miso_demo?serverTimezone=Asia/Shanghai
     username: root
     password: root
   mvc:
@@ -17,6 +17,22 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirm-type: correlated  # 生产者发送消息到交换机 消息确认
+    publisher-returns: true  # 交换机绑定到队列 消息确认
+
+    listener:
+      simple:
+        acknowledge-mode: manual  #消息手动确认
+
+        #削峰限流
+        prefetch: 1  #消费者每次从队列中取几个消息
+        concurrency: 3 #消费者数量
+        max-concurrency: 10  #启动消费者最大数量
   redis:
     database: 0
     host: localhost

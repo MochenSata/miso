@@ -1,7 +1,9 @@
 package com.chixing.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chixing.annotation.AutoIdempotent;
 import com.chixing.mapper.MyorderMapper;
 import com.chixing.pojo.Myorder;
 import com.chixing.pojo.MyorderDetailVO;
@@ -10,6 +12,7 @@ import com.chixing.pojo.OrderCountAndDataVO;
 import com.chixing.service.IMyorderOccupyService;
 import com.chixing.service.IMyorderService;
 import com.chixing.util.LockUtil;
+import com.chixing.util.ResultMsg;
 import com.chixing.util.ServerResult;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,9 @@ import java.util.*;
 public class MyorderController {
     @Autowired
     private IMyorderService myorderService;
+
+    @Autowired
+    private AmqpTemplate rabbitTemplate;
 
     //点击个人中心跳转个人中心并查找我的所有订单
     @GetMapping("/customer/{id}")
@@ -87,7 +93,20 @@ public class MyorderController {
         return mav;
     }
 
-    //下订单存储到数据库中
+    //查询订单详情
+    @GetMapping("{myorderNum}")
+    @ResponseBody
+    public ServerResult detailOrder(@PathVariable("myorderNum") String myorderNum){
+        QueryWrapper<Myorder> myorderQueryWrapper = new QueryWrapper<>();
+        myorderQueryWrapper.eq("myorder_num", myorderNum);
+        Myorder myorder = myorderService.getOne(myorderQueryWrapper);
+        System.out.println("要查询的订单为：" + myorder);
+        if(myorder==null)
+            return ServerResult.fail(405, ResultMsg.no_data,null);
+        return ServerResult.success(200, ResultMsg.success,myorder);
+    }
+
+/*    //下订单存储到数据库中
     @PostMapping("save")
     @ResponseBody
     public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO){
@@ -100,6 +119,26 @@ public class MyorderController {
             mav.addObject("myorderDetailVO", myorderDetailVO);
             mav.setViewName("myorder/mypay_detail");
         }
+        return mav;
+    }*/
+
+    //下订单存储到数据库中
+    @AutoIdempotent
+    @PostMapping("save")
+//    @ResponseBody
+    public ModelAndView saveOrder(MyorderDetailVO myorderDetailVO){
+        // String byte[]
+        String myorderNum = UUID.randomUUID().toString().replace("-", "");
+        myorderDetailVO.setMyorderNum(myorderNum);
+        System.out.println("生产者：。。。"+myorderDetailVO);
+        String msg = JSON.toJSONString(myorderDetailVO);
+        rabbitTemplate.convertAndSend("order-Clipping-exchange","orderClippingkey1",msg,message ->{
+            System.out.println("加入订单队列");
+            return  message;
+        });
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("myorderDetailVO", myorderDetailVO);
+        mav.setViewName("myorder/mypay_detail");
         return mav;
     }
 
