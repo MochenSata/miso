@@ -23,13 +23,13 @@ public class OrderClippingConsumer {
 
     @RabbitHandler
     @RabbitListener(queues = "order-queue")
-    public void saveOrder(String msg, Channel channel, Message message){
+    public void saveOrder(String msg, Channel channel, Message message) throws InterruptedException {
         System.out.println("执行消费者");
         MyorderDetailVO myorderDetailVO= JSON.parseObject(msg,MyorderDetailVO.class);// json string --->object
         System.out.println("消费者：。。。"+myorderDetailVO);
         ServerResult result = myorderService.saveOrder(myorderDetailVO);
         System.out.println("消费者：。。。"+result);
-
+        Thread.sleep(2000L);
         try {
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (IOException e) {

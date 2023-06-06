@@ -168,7 +168,9 @@
 </script>
 
 <script>
-    MyorderByOrderNum();
+    setTimeout(function(){
+        MyorderByOrderNum();
+    }, 1000); // 延时1秒
     function MyorderByOrderNum() {
         var myorderNum = $('#myorderNum').val();
         $.ajax({
