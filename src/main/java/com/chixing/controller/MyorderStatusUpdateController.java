@@ -29,7 +29,7 @@ public class MyorderStatusUpdateController {
     @Autowired
     private HouseMapper houseMapper;
 
-    @Scheduled(cron = "0 35 14  * * ?")//每天零点执行
+    @Scheduled(cron = "0 05 12  * * ?")//每天十二点执行
     public void updateOrderStatus(){
         List<Myorder> myorderList = myorderService.updateOrderStatusByDate();
         for(Myorder myorder : myorderList){

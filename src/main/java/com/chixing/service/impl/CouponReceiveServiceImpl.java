@@ -231,7 +231,7 @@ public class CouponReceiveServiceImpl extends ServiceImpl<CouponReceiveMapper, C
     @Override
     public List<CouponReceive> updateReceivedCouponStatusByDate() {
         QueryWrapper<CouponReceive> couponReceiveQueryWrapper = new QueryWrapper<>();
-        couponReceiveQueryWrapper.eq("cou_status", 0);//找到未使用的优惠券
+        couponReceiveQueryWrapper.eq("cou_usage_status", 0);//找到未使用的优惠券
         List<CouponReceive> couponReceiveList = couponReceiveMapper.selectList(couponReceiveQueryWrapper);
         System.out.println("未使用的优惠券有：" + couponReceiveList);
         return couponReceiveList;
