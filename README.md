@@ -32,19 +32,4 @@ Miso是一个专注于提供特色民宿的网站，让你在旅行中感受当�
 
 1. 项目地址：git@gitee.com:miso-project-team/miso.git
 
-建表时注意
-
-```
-1. "删除" --  修改状态 status
-
-2. 订单表(或 订单详情表 ) 要有商品的信息 
-
-   为了防止 商品下架或失效之后, 在可以订单列表中继续看到原来的商品部分信息
-
-   在点击查看商品详情的时候, 商品就已经下架或过期
-
-3. 每张表加上这几个字段:
-
-   create_time , update_time, status , version , other1, other2
-```
 
