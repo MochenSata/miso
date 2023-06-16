@@ -18,40 +18,42 @@ public class CouponStatusUpdateController {
     private ICouponService couponService;
     @Autowired
     private ICouponReceiveService couponReceiveService;
+    @Autowired
+    private WebSocketProcess webSocketProcess;
 
     //优惠券平台的优惠券到期自动失效
-    @Scheduled(cron = "0 15 19 * * ?")//每天零点执行
+    @Scheduled(cron = "0 00 12 * * ?")//每天十二点执行
     public void updateCouponStatus(){
         List<Coupon> couponList = couponService.updateCouponStatusByDate();
         for (Coupon coupon : couponList){
             if(coupon.getCouInvalidTime().isBefore(LocalDateTime.now())){//失效时间已到
                 coupon.setCouStatus(1);//更新优惠券状态为1：已失效
                 boolean result = couponService.updateById(coupon);//更新优惠券状态到数据库
-                if (result){
-                    System.out.println("优惠券已过期，无法继续使用！");
-                }
-            }else {
-                System.out.println("优惠券未过期，可继续使用！");
             }
-
         }
     }
 
+
     //用户领取的优惠券到期自动失效
-    @Scheduled(cron = "0 15 19 * * ?")//每天零点执行
+    @Scheduled(fixedRate = 600000)//每十分钟执行一次
     public void updateReceivedCouponStatus(){
         List<CouponReceive> couponList = couponReceiveService.updateReceivedCouponStatusByDate();
         for (CouponReceive couponReceive : couponList){
             if(couponReceive.getCouEndTime().isBefore(LocalDateTime.now())){//失效时间已到
                 couponReceive.setCouUsageStatus(2);//更新优惠券状态为2：已过期
+                Integer custId=couponReceive.getCustId();
+                String couNum=couponReceive.getCouNum();
                 boolean result = couponReceiveService.updateById(couponReceive);//更新优惠券状态到数据库
-                if (result){
-                    System.out.println("用户领取的优惠券已过期，无法继续使用！");
+                String msg="优惠券编号为："+couNum+"的优惠券已过期";
+                try {
+                    webSocketProcess.sendMessage(custId, msg);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }else {
-                System.out.println("用户领取的优惠券未过期，可继续使用！");
-            }
 
+            }
         }
     }
 }
+
+
